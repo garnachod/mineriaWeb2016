@@ -1,0 +1,302 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>DBbridge.ConsultasCassandraSpark &mdash; documentación de ConcursoPolicia - 1</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/translations.js"></script>
+    <link rel="top" title="documentación de ConcursoPolicia - 1" href="../../index.html" />
+    <link rel="up" title="Código de módulo" href="../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Código fuente para DBbridge.ConsultasCassandraSpark</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1">#Para prueba unitarias</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">lib_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">&#39;/home/dani/tfg/sources&#39;</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lib_path</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">Cassandra.ConexionCassandra</span> <span class="kn">import</span> <span class="n">ConexionCassandra</span>
+<span class="c1">#from spark.SparkContexto import SparkContexto</span>
+<span class="kn">from</span> <span class="nn">StaticFuncSpark</span> <span class="kn">import</span> <span class="n">StaticFuncSpark</span>
+<span class="kn">from</span> <span class="nn">blist</span> <span class="kn">import</span> <span class="n">blist</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+
+<div class="viewcode-block" id="ConsultasCassandraSpark"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandraSpark.ConsultasCassandraSpark">[documentos]</a><span class="k">class</span> <span class="nc">ConsultasCassandraSpark</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;docstring for ConsultasCassandraSpark&quot;&quot;&quot;</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="nb">super</span><span class="p">(</span><span class="n">ConsultasCassandraSpark</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span> <span class="o">=</span> <span class="n">ConexionCassandra</span><span class="p">()</span><span class="o">.</span><span class="n">getSession</span><span class="p">()</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">sc</span> <span class="o">=</span> <span class="bp">None</span> <span class="c1">#SparkContexto().getContexto()</span>
+
+
+
+<div class="viewcode-block" id="ConsultasCassandraSpark.getAllTweetsNoRtStatusFiltrLangCS"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandraSpark.ConsultasCassandraSpark.getAllTweetsNoRtStatusFiltrLangCS">[documentos]</a>	<span class="k">def</span> <span class="nf">getAllTweetsNoRtStatusFiltrLangCS</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lang</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT status, lang FROM tweets WHERE orig_tweet = 0;&quot;</span>
+
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+			<span class="n">retorno</span> <span class="o">=</span> <span class="n">blist</span><span class="p">([])</span>
+			<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
+				<span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">lang</span><span class="p">:</span>
+					<span class="n">retorno</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+			<span class="k">return</span> <span class="n">retorno</span>
+			<span class="c1">#rows_paralelas = self.sc.parallelize(rows)</span>
+			<span class="c1">#filtro_lang = lambda x: [x[0]] if lang == x[1] else []</span>
+			<span class="c1">#return rows_paralelas.flatMap(filtro_lang).collect()</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;getAllTweetsStatusCassandra&quot;</span>
+			<span class="k">print</span> <span class="n">e</span></div>
+
+	<span class="c1">#tupla no_rt, si_rt</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	def getNumTweetsRTCS(self):</span>
+<span class="sd">		query =&quot;SELECT orig_tweet FROM tweets;&quot;</span>
+<span class="sd">		try:</span>
+<span class="sd">			tini = time.time()</span>
+<span class="sd">			rows = self.session_cassandra.execute(query)</span>
+<span class="sd">			print &quot;tiempo Cassandra&quot;</span>
+<span class="sd">			print time.time() - tini</span>
+<span class="sd">			tini = time.time()</span>
+<span class="sd">			rows_paralelas = self.sc.parallelize(rows)</span>
+<span class="sd">			print &quot;tiempo parallelize&quot;</span>
+<span class="sd">			print time.time() - tini</span>
+<span class="sd">			filtro_si_rt = lambda x: 1 if x[0] != 0 else 0</span>
+<span class="sd">			filtro_no_rt = lambda x: 1 if x[0] == 0 else 0</span>
+<span class="sd">			reduce_f = lambda x, y: x + y</span>
+<span class="sd">			return rows_paralelas.map(filtro_no_rt).reduce(reduce_f), rows_paralelas.map(filtro_si_rt).reduce(reduce_f)</span>
+<span class="sd">			</span>
+<span class="sd">		except Exception, e:</span>
+<span class="sd">			print str(e)</span>
+<span class="sd">			return False</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="c1">#tupla no_rt, si_rt</span>
+<div class="viewcode-block" id="ConsultasCassandraSpark.getNumTweetsRTCS"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandraSpark.ConsultasCassandraSpark.getNumTweetsRTCS">[documentos]</a>	<span class="k">def</span> <span class="nf">getNumTweetsRTCS</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getNumTweetsRTCSDistrib</span><span class="p">()</span>
+		<span class="sd">&quot;&quot;&quot;query =&quot;SELECT orig_tweet FROM tweets;&quot;</span>
+<span class="sd">		try:</span>
+<span class="sd">			rows = self.session_cassandra.execute(query)</span>
+<span class="sd">			count_no_rt = 0</span>
+<span class="sd">			count_si_rt = 0</span>
+<span class="sd">			for row in rows:</span>
+<span class="sd">				if row[0] == 0:</span>
+<span class="sd">					count_no_rt += 1</span>
+<span class="sd">				else:</span>
+<span class="sd">					count_si_rt += 1</span>
+<span class="sd">				</span>
+<span class="sd">			return count_no_rt, count_si_rt</span>
+
+<span class="sd">		except Exception, e:</span>
+<span class="sd">			print str(e)</span>
+<span class="sd">			return False&quot;&quot;&quot;</span></div>
+	<span class="c1">#no_media , si_media</span>
+<div class="viewcode-block" id="ConsultasCassandraSpark.getNumTweetsMediaCS"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandraSpark.ConsultasCassandraSpark.getNumTweetsMediaCS">[documentos]</a>	<span class="k">def</span> <span class="nf">getNumTweetsMediaCS</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span><span class="s2">&quot;SELECT media_urls FROM tweets WHERE orig_tweet = 0;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+
+			<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+
+			<span class="n">rows_paralelas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+			<span class="n">filtro_si_media</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="k">else</span> <span class="mi">0</span>
+			<span class="n">filtro_no_media</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="mi">0</span>
+			<span class="n">reduce_f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+			<span class="k">return</span> <span class="n">rows_paralelas</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">filtro_no_media</span><span class="p">)</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">reduce_f</span><span class="p">),</span> <span class="n">rows_paralelas</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">filtro_si_media</span><span class="p">)</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">reduce_f</span><span class="p">)</span>
+			
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+	<span class="c1">#no_media, si_media</span>
+<div class="viewcode-block" id="ConsultasCassandraSpark.getAverageRTMediaCS"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandraSpark.ConsultasCassandraSpark.getAverageRTMediaCS">[documentos]</a>	<span class="k">def</span> <span class="nf">getAverageRTMediaCS</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT media_urls, retweet_count FROM tweets WHERE orig_tweet = 0;&quot;</span>
+
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+			<span class="n">rows_paralelas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+			<span class="n">filtro_si_media</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="k">else</span> <span class="mi">0</span>
+			<span class="n">filtro_no_media</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="mi">0</span>
+			<span class="n">filtro_si_media_total</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="k">else</span> <span class="mi">0</span>
+			<span class="n">filtro_no_media_total</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="mi">0</span>
+			<span class="n">reduce_f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+
+			<span class="n">total_si_media</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">rows_paralelas</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">filtro_si_media_total</span><span class="p">)</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">reduce_f</span><span class="p">))</span>
+			<span class="n">total_no_media</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">rows_paralelas</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">filtro_no_media_total</span><span class="p">)</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">reduce_f</span><span class="p">))</span>
+
+			<span class="k">return</span> <span class="n">rows_paralelas</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">filtro_no_media</span><span class="p">)</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">reduce_f</span><span class="p">)</span><span class="o">/</span><span class="n">total_no_media</span><span class="p">,</span> <span class="n">rows_paralelas</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">filtro_si_media</span><span class="p">)</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">reduce_f</span><span class="p">)</span><span class="o">/</span><span class="n">total_si_media</span>
+
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+	<span class="c1">#no_media, si_media</span>
+<div class="viewcode-block" id="ConsultasCassandraSpark.getAverageRTMediaByIDUserCS"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandraSpark.ConsultasCassandraSpark.getAverageRTMediaByIDUserCS">[documentos]</a>	<span class="k">def</span> <span class="nf">getAverageRTMediaByIDUserCS</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT media_urls, retweet_count, orig_tweet FROM tweets WHERE tuser = </span><span class="si">%s</span><span class="s2">;&quot;</span>
+
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">user_id</span><span class="p">])</span>
+			<span class="n">rows_paralelas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+			<span class="n">filtro_si_media</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+			<span class="n">filtro_no_media</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+			<span class="n">filtro_si_media_total</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+			<span class="n">filtro_no_media_total</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+			<span class="n">reduce_f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+
+			<span class="n">total_si_media</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">rows_paralelas</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">filtro_si_media_total</span><span class="p">)</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">reduce_f</span><span class="p">))</span>
+			<span class="n">total_no_media</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">rows_paralelas</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">filtro_no_media_total</span><span class="p">)</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">reduce_f</span><span class="p">))</span>
+
+			<span class="k">return</span> <span class="n">rows_paralelas</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">filtro_no_media</span><span class="p">)</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">reduce_f</span><span class="p">)</span><span class="o">/</span><span class="n">total_no_media</span><span class="p">,</span> <span class="n">rows_paralelas</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">filtro_si_media</span><span class="p">)</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">reduce_f</span><span class="p">)</span><span class="o">/</span><span class="n">total_si_media</span>
+
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasCassandraSpark.getTweetContainsTextCS"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandraSpark.ConsultasCassandraSpark.getTweetContainsTextCS">[documentos]</a>	<span class="k">def</span> <span class="nf">getTweetContainsTextCS</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT status FROM tweets WHERE orig_tweet = 0;&quot;</span>
+
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+			<span class="n">rows_paralelas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+			<span class="n">filtro_si_text</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="k">if</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">else</span> <span class="p">[]</span>
+		
+			<span class="k">return</span> <span class="n">rows_paralelas</span><span class="o">.</span><span class="n">flatMap</span><span class="p">(</span><span class="n">filtro_si_text</span><span class="p">)</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasCassandraSpark.getTweetContainsTextAndLangCS"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandraSpark.ConsultasCassandraSpark.getTweetContainsTextAndLangCS">[documentos]</a>	<span class="k">def</span> <span class="nf">getTweetContainsTextAndLangCS</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">lang</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT status, id_twitter FROM tweets WHERE lang = </span><span class="si">%s</span><span class="s2"> AND orig_tweet = 0 ALLOW FILTERING;&quot;</span>
+
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">lang</span><span class="p">])</span>
+			<span class="n">rows_paralelas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+			<span class="n">filtro_si_text</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="k">if</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">else</span> <span class="p">[]</span>
+		
+			<span class="k">return</span> <span class="n">rows_paralelas</span><span class="o">.</span><span class="n">flatMap</span><span class="p">(</span><span class="n">filtro_si_text</span><span class="p">)</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasCassandraSpark.getNumTweetsRTCSDistrib"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandraSpark.ConsultasCassandraSpark.getNumTweetsRTCSDistrib">[documentos]</a>	<span class="k">def</span> <span class="nf">getNumTweetsRTCSDistrib</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="n">conjuntos</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">635510762140598272</span><span class="p">),</span> <span class="p">(</span><span class="mi">635510762140598272</span><span class="p">,</span> <span class="mi">635600238766632960</span><span class="p">),</span> <span class="p">(</span><span class="mi">635600238766632960</span><span class="p">,</span> <span class="mi">635684252449828865</span><span class="p">),</span> <span class="p">(</span><span class="mi">635684252449828865</span><span class="p">,</span> <span class="mi">635792116199755778</span><span class="p">),</span> <span class="p">(</span><span class="mi">635792116199755778</span><span class="p">,</span> <span class="mi">635991646602027008</span><span class="p">),</span> <span class="p">(</span><span class="mi">635991646602027008</span><span class="p">,</span> <span class="mi">636080387106574336</span><span class="p">),</span> <span class="p">(</span><span class="mi">636080387106574336</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span>
+		
+		<span class="n">conjuntos_paralelos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="n">conjuntos</span><span class="p">)</span>
+		<span class="n">array</span> <span class="o">=</span> <span class="n">conjuntos_paralelos</span><span class="o">.</span><span class="n">flatMap</span><span class="p">(</span><span class="n">StaticFuncSpark</span><span class="o">.</span><span class="n">getTweetsAndCount</span><span class="p">)</span><span class="o">.</span><span class="n">reduceByKey</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+
+		<span class="n">si_rt</span> <span class="o">=</span> <span class="mi">0</span>
+		<span class="n">no_rt</span> <span class="o">=</span> <span class="mi">0</span>
+		<span class="k">for</span> <span class="n">tupla</span> <span class="ow">in</span> <span class="n">array</span><span class="p">:</span>
+			<span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">tupla</span>
+			<span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;si_rt&quot;</span><span class="p">:</span>
+				<span class="n">si_rt</span> <span class="o">=</span> <span class="n">value</span>
+			<span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;no_rt&quot;</span><span class="p">:</span>
+				<span class="n">no_rt</span> <span class="o">=</span> <span class="n">value</span>
+
+		<span class="k">return</span> <span class="n">no_rt</span><span class="p">,</span> <span class="n">si_rt</span></div></div>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+	<span class="n">ccs</span> <span class="o">=</span> <span class="n">ConsultasCassandraSpark</span><span class="p">()</span>
+	<span class="n">tiempo_inicio</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+	<span class="c1">#print ccs.getNumTweetsMediaCS()</span>
+	<span class="n">tiempo_fin</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+	<span class="k">print</span> <span class="n">tiempo_fin</span> <span class="o">-</span> <span class="n">tiempo_inicio</span>
+	<span class="n">tiempo_inicio</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+	<span class="k">print</span> <span class="n">ccs</span><span class="o">.</span><span class="n">getNumTweetsRTCS</span><span class="p">()</span>
+	<span class="n">tiempo_fin</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+	<span class="k">print</span> <span class="n">tiempo_fin</span> <span class="o">-</span> <span class="n">tiempo_inicio</span>
+	<span class="n">tiempo_inicio</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+	<span class="c1">#print ccs.getAverageRTMediaCS()</span>
+	<span class="n">tiempo_fin</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+	<span class="k">print</span> <span class="n">tiempo_fin</span> <span class="o">-</span> <span class="n">tiempo_inicio</span>
+	<span class="n">tiempo_inicio</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+	<span class="c1">#print ccs.getTweetContainsTextCS(&#39;:-(&#39;)</span>
+	<span class="k">print</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">tiempo_inicio</span>
+	<span class="n">tiempo_inicio</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+	<span class="c1">#print ccs.getNumTweetsRTCSDistrib()</span>
+	<span class="k">print</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">tiempo_inicio</span>
+	<span class="c1">#for item in ccs.getTweetContainsText(&#39;:-(&#39;):</span>
+	<span class="c1">#	print item</span>
+	<span class="c1">#time.sleep(200)</span>
+	<span class="c1">#print ccs.getAllTweetsNoRtStatusFiltrLangCS(&#39;es&#39;)</span>
+	<span class="k">print</span> <span class="nb">len</span><span class="p">(</span><span class="n">ccs</span><span class="o">.</span><span class="n">getTweetContainsTextAndLangCS</span><span class="p">(</span><span class="s1">&#39;:-(&#39;</span><span class="p">,</span> <span class="s1">&#39;es&#39;</span><span class="p">))</span>
+	
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	export SPARK_HOME=/home/dani/spark/spark-1.4.0</span>
+<span class="sd">	export PATH=$PATH:$SPARK_HOME</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Código de módulo</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Búsqueda rápida</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Ir a" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Introduzca los términos de búsqueda o un nombre de módulo, clase o función.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Daniel Garnacho, Diego Castaño.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

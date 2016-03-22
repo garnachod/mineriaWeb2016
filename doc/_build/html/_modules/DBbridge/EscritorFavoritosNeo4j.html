@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>DBbridge.EscritorFavoritosNeo4j &mdash; documentación de ConcursoPolicia - 1</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/translations.js"></script>
+    <link rel="top" title="documentación de ConcursoPolicia - 1" href="../../index.html" />
+    <link rel="up" title="Código de módulo" href="../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Código fuente para DBbridge.EscritorFavoritosNeo4j</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">Escritor</span> <span class="kn">import</span> <span class="n">Escritor</span>
+<span class="kn">from</span> <span class="nn">Neo4j.ConexionNeo4j</span> <span class="kn">import</span> <span class="n">ConexionNeo4j</span>
+<span class="kn">from</span> <span class="nn">py2neo</span> <span class="kn">import</span> <span class="n">cypher</span>
+<span class="kn">from</span> <span class="nn">ConsultasGeneral</span> <span class="kn">import</span> <span class="n">ConsultasGeneral</span>
+
+
+<div class="viewcode-block" id="EscritorFavoritosNeo4j"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.EscritorFavoritosNeo4j.EscritorFavoritosNeo4j">[documentos]</a><span class="k">class</span> <span class="nc">EscritorFavoritosNeo4j</span><span class="p">(</span><span class="n">Escritor</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;docstring for EscritorFavoritosNeo4j&quot;&quot;&quot;</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">searchID</span><span class="p">):</span>
+		<span class="nb">super</span><span class="p">(</span><span class="n">EscritorFavoritosNeo4j</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">searchID</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="n">ConexionNeo4j</span><span class="p">()</span><span class="o">.</span><span class="n">getGraph</span><span class="p">()</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">consultas</span> <span class="o">=</span> <span class="n">ConsultasGeneral</span><span class="p">()</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">usuarios_creados_historico</span> <span class="o">=</span> <span class="p">{}</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">tweets_creados_historico</span> <span class="o">=</span> <span class="p">{}</span>
+
+		
+<div class="viewcode-block" id="EscritorFavoritosNeo4j.escribe"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.EscritorFavoritosNeo4j.EscritorFavoritosNeo4j.escribe">[documentos]</a>	<span class="k">def</span> <span class="nf">escribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+		<span class="n">usuarios_crear</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="n">tweets_crear</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="k">for</span> <span class="n">usuario</span><span class="p">,</span> <span class="n">tweet_id</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+			<span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">usuario</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">usuarios_creados_historico</span><span class="p">:</span>
+				<span class="k">pass</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="n">usuarios_crear</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">usuario</span><span class="p">)</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">usuarios_creados_historico</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">usuario</span><span class="p">)]</span> <span class="o">=</span> <span class="bp">True</span>
+
+			<span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">tweet_id</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tweets_creados_historico</span><span class="p">:</span>
+				<span class="k">pass</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="n">tweets_crear</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tweet_id</span><span class="p">)</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">tweets_creados_historico</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">tweet_id</span><span class="p">)]</span> <span class="o">=</span> <span class="bp">True</span>
+		
+			
+		<span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">usuarios_crear</span><span class="p">,</span> <span class="n">tweets_crear</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="EscritorFavoritosNeo4j.write"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.EscritorFavoritosNeo4j.EscritorFavoritosNeo4j.write">[documentos]</a>	<span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodos_crear</span><span class="p">,</span> <span class="n">tweets_crear</span><span class="p">,</span> <span class="n">relaciones</span><span class="p">):</span>
+		<span class="n">tx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">cypher</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span>
+		
+		<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">nodoCrea</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nodos_crear</span><span class="p">):</span>
+			<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;MERGE (n:user {id_twitter:&quot;</span> <span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">nodoCrea</span><span class="p">)</span> <span class="o">+</span><span class="s2">&quot;})&quot;</span>
+			<span class="n">tx</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+			<span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+				<span class="n">tx</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
+		<span class="n">tx</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
+		<span class="n">tx</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+		<span class="n">tx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">cypher</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span>
+		<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">nodoCrea</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tweets_crear</span><span class="p">):</span>
+			<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;MERGE (n:tweet {id_twitter:&quot;</span> <span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">nodoCrea</span><span class="p">)</span> <span class="o">+</span><span class="s2">&quot;})&quot;</span>
+			<span class="n">tx</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+			<span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+				<span class="n">tx</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
+		<span class="n">tx</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
+		<span class="n">tx</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+		<span class="c1">#########################</span>
+		<span class="c1">## Una vez tenemos los nodos se crea el camino si no existe</span>
+		<span class="c1">#print &quot;usuarios creados&quot;</span>
+		
+		<span class="n">tx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">cypher</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span>
+		<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> 
+		<span class="k">for</span> <span class="n">usuario1</span><span class="p">,</span> <span class="n">tweet_id</span> <span class="ow">in</span> <span class="n">relaciones</span><span class="p">:</span>
+			<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;MATCH (np:user { id_twitter: &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">usuario1</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot; }),(tw:tweet { id_twitter: &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">tweet_id</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;}) MERGE (np)-[r:FAV]-&gt;(tw) ON CREATE SET r.since = timestamp()&quot;</span> 
+			<span class="c1">#query = &quot;MATCH (np { id_twitter: &quot;+str(nodo_principal_id)+&quot; }),(nf { id_twitter: &quot;+str(identificador)+&quot;}) CREATE UNIQUE (nf)-[r:FOLLOW {since:&quot;+str(time.time())+&quot;}]-&gt;(np)&quot;			</span>
+			<span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+			<span class="n">tx</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+			<span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">50</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+				<span class="n">tx</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
+		<span class="n">tx</span><span class="o">.</span><span class="n">process</span><span class="p">()</span>
+		<span class="n">tx</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Código de módulo</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Búsqueda rápida</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Ir a" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Introduzca los términos de búsqueda o un nombre de módulo, clase o función.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Daniel Garnacho, Diego Castaño.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

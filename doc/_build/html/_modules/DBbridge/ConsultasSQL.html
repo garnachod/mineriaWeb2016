@@ -1,0 +1,325 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>DBbridge.ConsultasSQL &mdash; documentación de ConcursoPolicia - 1</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/translations.js"></script>
+    <link rel="top" title="documentación de ConcursoPolicia - 1" href="../../index.html" />
+    <link rel="up" title="Código de módulo" href="../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Código fuente para DBbridge.ConsultasSQL</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">PostgreSQL.ConexionSQL</span> <span class="kn">import</span> <span class="n">ConexionSQL</span> 
+
+<div class="viewcode-block" id="ConsultasSQL"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasSQL.ConsultasSQL">[documentos]</a><span class="k">class</span> <span class="nc">ConsultasSQL</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;docstring for ConsultasSQL&quot;&quot;&quot;</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="nb">super</span><span class="p">(</span><span class="n">ConsultasSQL</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+		<span class="n">conSql</span> <span class="o">=</span> <span class="n">ConexionSQL</span><span class="p">()</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">conn_sql</span> <span class="o">=</span> <span class="n">conSql</span><span class="o">.</span><span class="n">getConexion</span><span class="p">()</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">cur_sql</span> <span class="o">=</span> <span class="n">conSql</span><span class="o">.</span><span class="n">getCursor</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="ConsultasSQL.getTweetsUsuarioSQL"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasSQL.ConsultasSQL.getTweetsUsuarioSQL">[documentos]</a>	<span class="k">def</span> <span class="nf">getTweetsUsuarioSQL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">twitterUser</span><span class="p">,</span> <span class="n">use_max_id</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">max_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+		<span class="k">if</span> <span class="n">use_max_id</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
+			<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT t.status, t.favorite_count, t.retweet_count, t.is_retweet, t.media_url, u.screen_name FROM tweets as t, users as u WHERE u.screen_name = </span><span class="si">%s</span><span class="s2"> and u.id_twitter = t.tuser order by t.created_at DESC LIMIT </span><span class="si">%s</span><span class="s2">;&quot;</span>
+			<span class="k">try</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">cur_sql</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">twitterUser</span><span class="p">,</span> <span class="p">])</span>
+				<span class="n">row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur_sql</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+				
+				<span class="k">return</span> <span class="n">row</span>
+			<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+				<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+				<span class="k">return</span> <span class="bp">False</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT t.status, t.favorite_count, t.retweet_count, t.is_retweet, t.media_url, u.screen_name FROM tweets as t, users as u WHERE u.screen_name = </span><span class="si">%s</span><span class="s2"> and u.id_twitter = t.tuser order by t.created_at DESC LIMIT </span><span class="si">%s</span><span class="s2">;&quot;</span>
+			<span class="k">try</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">cur_sql</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">twitterUser</span><span class="p">,</span> <span class="n">limit</span><span class="p">])</span>
+				<span class="n">row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur_sql</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+				
+				<span class="k">return</span> <span class="n">row</span>
+			<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+				<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+				<span class="k">return</span> <span class="bp">False</span></div>
+		
+<div class="viewcode-block" id="ConsultasSQL.getUserIDByScreenNameSQL"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasSQL.ConsultasSQL.getUserIDByScreenNameSQL">[documentos]</a>	<span class="k">def</span> <span class="nf">getUserIDByScreenNameSQL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">twitterUser</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT id_twitter FROM users WHERE screen_name = </span><span class="si">%s</span><span class="s2"> LIMIT 1;&quot;</span>
+
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur_sql</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">twitterUser</span><span class="p">,])</span>
+			<span class="n">row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur_sql</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+			
+			<span class="k">return</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="ConsultasSQL.getLastTweetCollectedScreenNameSQL"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasSQL.ConsultasSQL.getLastTweetCollectedScreenNameSQL">[documentos]</a>	<span class="k">def</span> <span class="nf">getLastTweetCollectedScreenNameSQL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screen_name</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT last_tweet_collected FROM users WHERE screen_name=</span><span class="si">%s</span><span class="s2">;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="k">print</span> <span class="n">screen_name</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">screen_name</span><span class="p">,</span> <span class="p">])</span>
+			<span class="n">row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+			<span class="k">if</span> <span class="n">row</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+				<span class="k">return</span> <span class="mi">0</span>
+			<span class="k">if</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+				<span class="k">return</span> <span class="mi">0</span>
+
+			<span class="c1">#print long(row[0])</span>
+			<span class="k">return</span> <span class="nb">long</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+		
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="ConsultasSQL.setLastTweetCollectedScreenNameSQL"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasSQL.ConsultasSQL.setLastTweetCollectedScreenNameSQL">[documentos]</a>	<span class="k">def</span> <span class="nf">setLastTweetCollectedScreenNameSQL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screen_name</span><span class="p">,</span> <span class="n">maximo</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;UPDATE users SET last_tweet_collected=</span><span class="si">%s</span><span class="s2"> WHERE screen_name=</span><span class="si">%s</span><span class="s2">;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">maximo</span><span class="p">,</span> <span class="n">screen_name</span><span class="p">])</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+			<span class="k">return</span> <span class="bp">True</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasSQL.getTweetStatusSQL"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasSQL.ConsultasSQL.getTweetStatusSQL">[documentos]</a>	<span class="k">def</span> <span class="nf">getTweetStatusSQL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identificador</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT status FROM tweets WHERE id_twitter = </span><span class="si">%s</span><span class="s2">;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">identificador</span><span class="p">,</span> <span class="p">])</span>
+			<span class="n">row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+
+			<span class="k">return</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+
+<div class="viewcode-block" id="ConsultasSQL.getTweetByIDLargeSQL"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasSQL.ConsultasSQL.getTweetByIDLargeSQL">[documentos]</a>	<span class="k">def</span> <span class="nf">getTweetByIDLargeSQL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identificador</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT t.status, t.favorite_count, t.retweet_count, t.is_retweet, t.media_url, u.screen_name </span>
+<span class="s2">				   FROM tweets as t, users as u </span>
+<span class="s2">				   WHERE t.id_twitter = </span><span class="si">%s</span><span class="s2"> and t.tuser = u.id_twitter LIMIT 1;&quot;&quot;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">identificador</span><span class="p">,</span> <span class="p">])</span>
+			<span class="n">row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+
+			<span class="k">return</span> <span class="n">row</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+
+<div class="viewcode-block" id="ConsultasSQL.getTweetsTopicsSQL"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasSQL.ConsultasSQL.getTweetsTopicsSQL">[documentos]</a>	<span class="k">def</span> <span class="nf">getTweetsTopicsSQL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">topics</span><span class="p">):</span>
+		<span class="c1">#SELECT * from tweets WHERE status LIKE &#39;%beta%&#39; or status LIKE &#39;%@garnachod%&#39;</span>
+
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT t.status, t.favorite_count, t.retweet_count, t.is_retweet, t.media_url, u.screen_name &quot;</span>
+		<span class="n">query</span> <span class="o">+=</span> <span class="s2">&quot;FROM tweets as t, users as u &quot;</span>
+		<span class="n">query</span> <span class="o">+=</span> <span class="s2">&quot;WHERE (&quot;</span>
+		<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+		<span class="k">for</span> <span class="n">topic</span> <span class="ow">in</span> <span class="n">topics</span><span class="p">:</span>
+			<span class="k">if</span> <span class="s2">&quot; &quot;</span> <span class="ow">in</span> <span class="n">topic</span><span class="p">:</span>
+				<span class="n">subtopics</span> <span class="o">=</span> <span class="n">topic</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+				<span class="n">topics</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;%&#39;</span>
+				<span class="k">for</span> <span class="n">subtopic</span> <span class="ow">in</span> <span class="n">subtopics</span><span class="p">:</span>
+					<span class="n">topics</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">subtopic</span> <span class="o">+</span> <span class="s1">&#39;%&#39;</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="n">topics</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;%&#39;</span> <span class="o">+</span> <span class="n">topic</span> <span class="o">+</span> <span class="s1">&#39;%&#39;</span>
+
+			<span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+				<span class="n">query</span> <span class="o">+=</span> <span class="s2">&quot; status LIKE </span><span class="si">%s</span><span class="s2">&quot;</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="n">query</span> <span class="o">+=</span> <span class="s2">&quot; or status LIKE </span><span class="si">%s</span><span class="s2">&quot;</span>
+			<span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+
+		<span class="n">query</span> <span class="o">+=</span> <span class="s2">&quot;  ) and is_retweet is False and (lang = &#39;es&#39; or lang = &#39;en&#39;) and t.tuser = u.id_twitter order by t.created_at DESC LIMIT 2000;&quot;</span>
+		<span class="k">print</span> <span class="n">query</span>
+		<span class="k">print</span> <span class="n">topics</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">topics</span><span class="p">)</span>
+			<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+			
+			<span class="k">return</span> <span class="n">rows</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+
+<div class="viewcode-block" id="ConsultasSQL.getIDsTweetsTrainSQL"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasSQL.ConsultasSQL.getIDsTweetsTrainSQL">[documentos]</a>	<span class="k">def</span> <span class="nf">getIDsTweetsTrainSQL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">topics</span><span class="p">,</span> <span class="n">limit</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT t.id_twitter &quot;</span>
+		<span class="n">query</span> <span class="o">+=</span> <span class="s2">&quot;FROM tweets as t &quot;</span>
+		<span class="n">query</span> <span class="o">+=</span> <span class="s2">&quot;WHERE (&quot;</span>
+		<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+		<span class="k">for</span> <span class="n">topic</span> <span class="ow">in</span> <span class="n">topics</span><span class="p">:</span>
+			<span class="k">if</span> <span class="s2">&quot; &quot;</span> <span class="ow">in</span> <span class="n">topic</span><span class="p">:</span>
+				<span class="n">subtopics</span> <span class="o">=</span> <span class="n">topic</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+				<span class="n">topics</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;%&#39;</span>
+				<span class="k">for</span> <span class="n">subtopic</span> <span class="ow">in</span> <span class="n">subtopics</span><span class="p">:</span>
+					<span class="n">topics</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">subtopic</span> <span class="o">+</span> <span class="s1">&#39;%&#39;</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="n">topics</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;%&#39;</span> <span class="o">+</span> <span class="n">topic</span> <span class="o">+</span> <span class="s1">&#39;%&#39;</span>
+
+
+			<span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+				<span class="n">query</span> <span class="o">+=</span> <span class="s2">&quot; status LIKE </span><span class="si">%s</span><span class="s2">&quot;</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="n">query</span> <span class="o">+=</span> <span class="s2">&quot; or status LIKE </span><span class="si">%s</span><span class="s2">&quot;</span>
+			<span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+
+		<span class="n">query</span> <span class="o">+=</span> <span class="s2">&quot;  ) and is_retweet = False and id_twitter not in (SELECT id_tweet FROM tweets_entrenamiento) and (lang = &#39;es&#39; or lang = &#39;en&#39;) order by t.created_at DESC LIMIT </span><span class="si">%s</span><span class="s2">;&quot;</span>
+
+		<span class="n">parameters</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">topics</span><span class="p">)</span>
+		<span class="n">parameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">limit</span><span class="p">)</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">parameters</span><span class="p">)</span>
+			<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+			
+			<span class="k">return</span> <span class="n">rows</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasSQL.getNumTweetsNoRTSQL"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasSQL.ConsultasSQL.getNumTweetsNoRTSQL">[documentos]</a>	<span class="k">def</span> <span class="nf">getNumTweetsNoRTSQL</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span><span class="s2">&quot;SELECT count(id_twitter) FROM tweets WHERE is_retweet = FALSE;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+			<span class="n">num</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+			
+			<span class="k">return</span> <span class="n">num</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasSQL.getNumTweetsSiRT"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasSQL.ConsultasSQL.getNumTweetsSiRT">[documentos]</a>	<span class="k">def</span> <span class="nf">getNumTweetsSiRT</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span><span class="s2">&quot;SELECT count(id_twitter) FROM tweets WHERE is_retweet = TRUE;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+			<span class="n">num</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+			
+			<span class="k">return</span> <span class="n">num</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasSQL.getNumTweetsNoMediaSQL"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasSQL.ConsultasSQL.getNumTweetsNoMediaSQL">[documentos]</a>	<span class="k">def</span> <span class="nf">getNumTweetsNoMediaSQL</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span><span class="s2">&quot;SELECT count(id_twitter) FROM tweets WHERE media_url is NULL and is_retweet = FALSE;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+			<span class="n">num</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+			
+			<span class="k">return</span> <span class="n">num</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasSQL.getNumTweetsSiMediaSQL"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasSQL.ConsultasSQL.getNumTweetsSiMediaSQL">[documentos]</a>	<span class="k">def</span> <span class="nf">getNumTweetsSiMediaSQL</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span><span class="s2">&quot;SELECT count(id_twitter) FROM tweets WHERE media_url is NOT NULL and is_retweet = FALSE;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+			<span class="n">num</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+			
+			<span class="k">return</span> <span class="n">num</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasSQL.getTweetsEntrenamientoListarSQL"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasSQL.ConsultasSQL.getTweetsEntrenamientoListarSQL">[documentos]</a>	<span class="k">def</span> <span class="nf">getTweetsEntrenamientoListarSQL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identificador</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT t.status, t.favorite_count, t.retweet_count, t.is_retweet, t.media_url, u.screen_name, t.id_twitter, te.clase </span>
+<span class="s2">				FROM tweets as t, users as u, tweets_entrenamiento as te , listas_entrenamiento as li</span>
+<span class="s2">				WHERE te.clase != &#39;no_usar&#39; and li.id = id_lista and li.id = </span><span class="si">%s</span><span class="s2"> and te.id_tweet = t.id_twitter and u.id_twitter = t.tuser order by te.id DESC;</span>
+<span class="s2">				&quot;&quot;&quot;</span>
+		
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">identificador</span><span class="p">,</span> <span class="p">])</span>
+			<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+			
+			<span class="k">return</span> <span class="n">rows</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasSQL.getTweetsAndClassTrainSQL"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasSQL.ConsultasSQL.getTweetsAndClassTrainSQL">[documentos]</a>	<span class="k">def</span> <span class="nf">getTweetsAndClassTrainSQL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_lista</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT status, clase FROM tweets as t, tweets_entrenamiento as tw WHERE t.id_twitter = tw.id_tweet and tw.id_lista = </span><span class="si">%s</span><span class="s2"> and tw.clase != &#39;no_usar&#39;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">id_lista</span><span class="p">,</span> <span class="p">])</span>
+			<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+			<span class="k">return</span> <span class="n">rows</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Código de módulo</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Búsqueda rápida</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Ir a" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Introduzca los términos de búsqueda o un nombre de módulo, clase o función.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Daniel Garnacho, Diego Castaño.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

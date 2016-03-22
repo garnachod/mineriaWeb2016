@@ -1,0 +1,512 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>DBbridge.ConsultasGeneral &mdash; documentación de ConcursoPolicia - 1</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/translations.js"></script>
+    <link rel="top" title="documentación de ConcursoPolicia - 1" href="../../index.html" />
+    <link rel="up" title="Código de módulo" href="../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Código fuente para DBbridge.ConsultasGeneral</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">PostgreSQL.ConexionSQL</span> <span class="kn">import</span> <span class="n">ConexionSQL</span> 
+<span class="kn">from</span> <span class="nn">Cassandra.ConexionCassandra</span> <span class="kn">import</span> <span class="n">ConexionCassandra</span>
+<span class="kn">from</span> <span class="nn">ConsultasSQL</span> <span class="kn">import</span> <span class="n">ConsultasSQL</span>
+<span class="kn">from</span> <span class="nn">ConsultasCassandra</span> <span class="kn">import</span> <span class="n">ConsultasCassandra</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
+
+<div class="viewcode-block" id="ConsultasGeneral"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasGeneral.ConsultasGeneral">[documentos]</a><span class="k">class</span> <span class="nc">ConsultasGeneral</span><span class="p">(</span><span class="n">ConsultasSQL</span><span class="p">,</span> <span class="n">ConsultasCassandra</span><span class="p">):</span> 
+	<span class="sd">&quot;&quot;&quot;docstring for ConsultasGeneral&quot;&quot;&quot;</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="nb">super</span><span class="p">(</span><span class="n">ConsultasGeneral</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+
+		<span class="n">conSql</span> <span class="o">=</span> <span class="n">ConexionSQL</span><span class="p">()</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">conn</span> <span class="o">=</span> <span class="n">conSql</span><span class="o">.</span><span class="n">getConexion</span><span class="p">()</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">cur</span> <span class="o">=</span> <span class="n">conSql</span><span class="o">.</span><span class="n">getCursor</span><span class="p">()</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">cassandra_active</span> <span class="o">=</span> <span class="bp">True</span>
+
+<div class="viewcode-block" id="ConsultasGeneral.setAppSearchTime"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasGeneral.ConsultasGeneral.setAppSearchTime">[documentos]</a>	<span class="k">def</span> <span class="nf">setAppSearchTime</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">searchID</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;UPDATE app_searches SET search_time=</span><span class="si">%s</span><span class="s2"> WHERE id=</span><span class="si">%s</span><span class="s2">;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">time</span><span class="p">,</span> <span class="n">searchID</span><span class="p">])</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+			<span class="k">return</span> <span class="bp">True</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasGeneral.getTareasPendientesTotal"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasGeneral.ConsultasGeneral.getTareasPendientesTotal">[documentos]</a>	<span class="k">def</span> <span class="nf">getTareasPendientesTotal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT * from tareas_programadas where tiempo_fin &gt; CURRENT_TIMESTAMP&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+			<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+			
+			<span class="k">return</span> <span class="n">rows</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasGeneral.getTareasTerminadasTotal"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasGeneral.ConsultasGeneral.getTareasTerminadasTotal">[documentos]</a>	<span class="k">def</span> <span class="nf">getTareasTerminadasTotal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT * from tareas_programadas where tiempo_fin &lt; CURRENT_TIMESTAMP&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+			<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+			
+			<span class="k">return</span> <span class="n">rows</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+
+<div class="viewcode-block" id="ConsultasGeneral.getBusquedaFromIdBusqueda"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasGeneral.ConsultasGeneral.getBusquedaFromIdBusqueda">[documentos]</a>	<span class="k">def</span> <span class="nf">getBusquedaFromIdBusqueda</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idbusqueda</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT search_string, id_user FROM app_searches where id = </span><span class="si">%s</span><span class="s2">;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">idbusqueda</span><span class="p">,</span> <span class="p">])</span>
+			<span class="n">row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+		
+			<span class="k">return</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span></div>
+
+
+<div class="viewcode-block" id="ConsultasGeneral.getTweetStatus"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasGeneral.ConsultasGeneral.getTweetStatus">[documentos]</a>	<span class="k">def</span> <span class="nf">getTweetStatus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identificador</span><span class="p">):</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cassandra_active</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getTweetStatusCassandra</span><span class="p">(</span><span class="n">identificador</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getTweetStatusSQL</span><span class="p">(</span><span class="n">identificador</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ConsultasGeneral.getScreenNameByUserID"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasGeneral.ConsultasGeneral.getScreenNameByUserID">[documentos]</a>	<span class="k">def</span> <span class="nf">getScreenNameByUserID</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identificador</span><span class="p">):</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cassandra_active</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getScreenNameByUserIDCassandra</span><span class="p">(</span><span class="n">identificador</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;No implementado&#39;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="ConsultasGeneral.getIDTweetsTrainList"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasGeneral.ConsultasGeneral.getIDTweetsTrainList">[documentos]</a>	<span class="k">def</span> <span class="nf">getIDTweetsTrainList</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_lista_entrenamiento</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT id_tweet FROM tweets_entrenamiento as tw WHERE tw.clase != &#39;no_usar&#39; AND tw.id_lista = </span><span class="si">%s</span><span class="s2">;&quot;&quot;&quot;</span>
+		<span class="k">print</span> <span class="n">id_lista_entrenamiento</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">id_lista_entrenamiento</span><span class="p">,</span> <span class="p">])</span>
+			<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+			<span class="n">lista</span> <span class="o">=</span> <span class="p">[]</span>
+			<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
+				<span class="n">lista</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+			<span class="k">return</span> <span class="n">lista</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasGeneral.getIDsANDClassEntrenamiento"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasGeneral.ConsultasGeneral.getIDsANDClassEntrenamiento">[documentos]</a>	<span class="k">def</span> <span class="nf">getIDsANDClassEntrenamiento</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identificador_lista</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT id_tweet, clase FROM tweets_entrenamiento WHERE id_lista = </span><span class="si">%s</span><span class="s2"> AND clase != &#39;no_usar&#39;;&quot;</span>
+
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">identificador_lista</span><span class="p">,</span> <span class="p">])</span>
+			<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+			
+			<span class="k">return</span> <span class="n">rows</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasGeneral.getTweetsAndClassTrain"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasGeneral.ConsultasGeneral.getTweetsAndClassTrain">[documentos]</a>	<span class="k">def</span> <span class="nf">getTweetsAndClassTrain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_lista</span><span class="p">):</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cassandra_active</span><span class="p">:</span>
+			<span class="n">Row</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;Row&#39;</span><span class="p">,</span> <span class="s1">&#39;status, clase&#39;</span><span class="p">)</span>
+			<span class="n">tweets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getIDsANDClassEntrenamiento</span><span class="p">(</span><span class="n">id_lista</span><span class="p">)</span>
+			<span class="n">retorno</span> <span class="o">=</span> <span class="p">[]</span>
+			<span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="n">tweets</span><span class="p">:</span>
+				<span class="n">status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getTweetStatusCassandra</span><span class="p">(</span><span class="n">tweet</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+				<span class="n">row</span> <span class="o">=</span> <span class="n">Row</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">tweet</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+				<span class="n">retorno</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+
+			<span class="k">return</span> <span class="n">retorno</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getTweetsAndClassTrainSQL</span><span class="p">(</span><span class="n">id_lista</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ConsultasGeneral.creaListaEntrenamiento"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasGeneral.ConsultasGeneral.creaListaEntrenamiento">[documentos]</a>	<span class="k">def</span> <span class="nf">creaListaEntrenamiento</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nombre</span><span class="p">,</span> <span class="n">id_usuario</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;INSERT INTO listas_entrenamiento (nombre, id_username) VALUES (</span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">)&quot;&quot;&quot;</span>
+		<span class="c1">#query = &quot;INSERT INTO tweets_entrenamiento (id_tweet,clase) VALUES (%s,%s);&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">nombre</span><span class="p">,</span> <span class="n">id_usuario</span><span class="p">])</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+			<span class="k">return</span> <span class="bp">True</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;error en creaListaEntrenamiento&quot;</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasGeneral.getListasEntrenamiento"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasGeneral.ConsultasGeneral.getListasEntrenamiento">[documentos]</a>	<span class="k">def</span> <span class="nf">getListasEntrenamiento</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_usuario</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT id, nombre FROM listas_entrenamiento WHERE id_username = </span><span class="si">%s</span><span class="s2">;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">id_usuario</span><span class="p">,</span> <span class="p">])</span>
+			<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+			<span class="k">return</span> <span class="n">rows</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+	
+<div class="viewcode-block" id="ConsultasGeneral.deleteListaEntrenamiento"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasGeneral.ConsultasGeneral.deleteListaEntrenamiento">[documentos]</a>	<span class="k">def</span> <span class="nf">deleteListaEntrenamiento</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identificador</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s1">&#39;DELETE FROM listas_entrenamiento WHERE id=</span><span class="si">%s</span><span class="s1">;&#39;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">identificador</span><span class="p">,</span> <span class="p">])</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+			<span class="k">return</span> <span class="bp">True</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;error en deleteListaEntrenamiento&quot;</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasGeneral.getTweetByIDLarge"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasGeneral.ConsultasGeneral.getTweetByIDLarge">[documentos]</a>	<span class="k">def</span> <span class="nf">getTweetByIDLarge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identificador</span><span class="p">):</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cassandra_active</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getTweetByIDLargeCassandra</span><span class="p">(</span><span class="n">identificador</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getTweetByIDLargeSQL</span><span class="p">(</span><span class="n">identificador</span><span class="p">)</span></div>
+
+
+	<span class="c1">#TODO Controlar los tiempos segun crece la DB</span>
+<div class="viewcode-block" id="ConsultasGeneral.getIDsTweetsTrain"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasGeneral.ConsultasGeneral.getIDsTweetsTrain">[documentos]</a>	<span class="k">def</span> <span class="nf">getIDsTweetsTrain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">topics</span><span class="p">,</span> <span class="n">limit</span><span class="p">,</span> <span class="n">lista_id</span><span class="p">):</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cassandra_active</span><span class="p">:</span>
+			<span class="c1">#busca los tweets y eliminar los ids que ya se hayan insertado</span>
+			<span class="n">tweets_ya_insertados</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getIDsTweetsEnTrain</span><span class="p">(</span><span class="n">lista_id</span><span class="p">)</span>
+			<span class="c1">#print len(tweets_ya_insertados)</span>
+			<span class="c1">#aumenta el limite mirando los tweets en la lista</span>
+			<span class="n">limit</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tweets_ya_insertados</span><span class="p">)</span> <span class="o">+</span> <span class="n">limit</span>
+			<span class="n">tweets_no_filtrados</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getIDsTweetsTrainCassandra</span><span class="p">(</span><span class="n">topics</span><span class="p">,</span> <span class="n">limit</span><span class="p">)</span>
+			<span class="n">tweets_filtrados</span> <span class="o">=</span> <span class="p">[]</span>
+			<span class="k">for</span> <span class="n">tweet_no_filtrados</span> <span class="ow">in</span> <span class="n">tweets_no_filtrados</span><span class="p">:</span>
+				<span class="k">if</span> <span class="n">tweet_no_filtrados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tweets_ya_insertados</span><span class="p">:</span>
+					<span class="n">tweets_filtrados</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tweet_no_filtrados</span><span class="p">)</span>
+
+			<span class="k">return</span> <span class="n">tweets_filtrados</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">topics_sql</span> <span class="o">=</span> <span class="n">topics</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="p">,</span> <span class="s2">&quot;,&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getIDsTweetsTrainSQL</span><span class="p">(</span><span class="n">topics_sql</span><span class="p">,</span> <span class="n">limit</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ConsultasGeneral.getIDsTweetsEnTrain"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasGeneral.ConsultasGeneral.getIDsTweetsEnTrain">[documentos]</a>	<span class="k">def</span> <span class="nf">getIDsTweetsEnTrain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lista_id</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;Retorna un diccionario {} de IDs para que sea sencillo hacer un filtrado&quot;&quot;&quot;</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT id_tweet FROM tweets_entrenamiento WHERE id_lista = </span><span class="si">%s</span><span class="s2">;&quot;</span>
+
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">lista_id</span><span class="p">,</span> <span class="p">])</span>
+			<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+			<span class="n">retorno</span> <span class="o">=</span> <span class="p">{}</span>
+			<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
+				<span class="n">retorno</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">1</span>
+
+			<span class="k">return</span> <span class="n">retorno</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;error en getIDsTweetsEnTrain&quot;</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasGeneral.setTweetTrainID"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasGeneral.ConsultasGeneral.setTweetTrainID">[documentos]</a>	<span class="k">def</span> <span class="nf">setTweetTrainID</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identificador</span><span class="p">,</span> <span class="n">clase</span><span class="p">,</span> <span class="n">id_lista</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;INSERT INTO tweets_entrenamiento (id_tweet, clase, id_lista)</span>
+<span class="s2">					SELECT </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2"></span>
+<span class="s2">					WHERE NOT EXISTS (SELECT id FROM tweets_entrenamiento WHERE id_tweet=</span><span class="si">%s</span><span class="s2"> AND id_lista=</span><span class="si">%s</span><span class="s2">);&quot;&quot;&quot;</span>
+
+		<span class="c1">#query = &quot;INSERT INTO tweets_entrenamiento (id_tweet,clase) VALUES (%s,%s);&quot;</span>
+
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">identificador</span><span class="p">,</span> <span class="n">clase</span><span class="p">,</span> <span class="n">id_lista</span><span class="p">,</span> <span class="n">identificador</span><span class="p">,</span> <span class="n">id_lista</span><span class="p">])</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+			<span class="k">return</span> <span class="bp">True</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;error en setTweetTrainID&quot;</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasGeneral.getClaseTrainID"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasGeneral.ConsultasGeneral.getClaseTrainID">[documentos]</a>	<span class="k">def</span> <span class="nf">getClaseTrainID</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identificador</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT clase FROM tweets_entrenamiento WHERE id_tweet = </span><span class="si">%s</span><span class="s2">;&quot;&quot;&quot;</span>
+
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">identificador</span><span class="p">,</span> <span class="p">])</span>
+			<span class="n">row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+			<span class="k">if</span> <span class="n">row</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+				<span class="k">return</span> <span class="bp">False</span>
+
+			<span class="k">return</span> <span class="n">row</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;error en getClaseTrainID&quot;</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasGeneral.changeClaseTweet"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasGeneral.ConsultasGeneral.changeClaseTweet">[documentos]</a>	<span class="k">def</span> <span class="nf">changeClaseTweet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identificador</span><span class="p">,</span> <span class="n">clase</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;UPDATE tweets_entrenamiento SET clase = </span><span class="si">%s</span><span class="s2"> WHERE id_tweet = </span><span class="si">%s</span><span class="s2">;&quot;&quot;&quot;</span>
+
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">clase</span><span class="p">,</span> <span class="n">identificador</span><span class="p">])</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+			<span class="k">return</span> <span class="bp">True</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;error en changeClaseTweet&quot;</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasGeneral.creaEntrenamientoRetID"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasGeneral.ConsultasGeneral.creaEntrenamientoRetID">[documentos]</a>	<span class="k">def</span> <span class="nf">creaEntrenamientoRetID</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tipo</span><span class="p">,</span> <span class="n">id_lista_entrenamiento</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;INSERT INTO entrenamientos (tipo, id_lista_entrenamiento) VALUES (</span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">) RETURNING id;&quot;&quot;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">tipo</span><span class="p">,</span> <span class="n">id_lista_entrenamiento</span><span class="p">])</span>
+			<span class="n">Id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+			<span class="k">return</span> <span class="n">Id</span>
+			
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="o">-</span><span class="mi">1</span></div>
+
+<div class="viewcode-block" id="ConsultasGeneral.editEntrenamiento"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasGeneral.ConsultasGeneral.editEntrenamiento">[documentos]</a>	<span class="k">def</span> <span class="nf">editEntrenamiento</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identificador</span><span class="p">,</span> <span class="n">ficheroARFF</span><span class="p">,</span> <span class="n">ficheroJSON</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;UPDATE entrenamientos SET fichero_arff = </span><span class="si">%s</span><span class="s2">, fichero_json = </span><span class="si">%s</span><span class="s2">, porcentaje_fallo = </span><span class="si">%s</span><span class="s2"> WHERE id = </span><span class="si">%s</span><span class="s2">;&quot;&quot;&quot;</span>
+
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">ficheroARFF</span><span class="p">,</span> <span class="n">ficheroJSON</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span> <span class="n">identificador</span><span class="p">])</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+			<span class="k">return</span> <span class="bp">True</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;error en editEntrenamiento&quot;</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasGeneral.getFilesLastTrainTweet"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasGeneral.ConsultasGeneral.getFilesLastTrainTweet">[documentos]</a>	<span class="k">def</span> <span class="nf">getFilesLastTrainTweet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_lista</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT fichero_arff, fichero_json FROM entrenamientos WHERE tipo = &#39;tweet&#39; and id_lista_entrenamiento = </span><span class="si">%s</span><span class="s2"> and fichero_arff != &#39;&#39; ORDER BY id DESC LIMIT 1;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">id_lista</span><span class="p">,</span> <span class="p">])</span>
+			<span class="n">row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+
+			<span class="k">return</span> <span class="n">row</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;error en getFilesLastTrainTweet&quot;</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasGeneral.getTweetsIdBusquedaNoAnalizada"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasGeneral.ConsultasGeneral.getTweetsIdBusquedaNoAnalizada">[documentos]</a>	<span class="k">def</span> <span class="nf">getTweetsIdBusquedaNoAnalizada</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">searchID</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT j.id_tweet FROM join_search_tweet as j WHERE j.id_search = </span><span class="si">%s</span><span class="s2"> AND j.id_tweet NOT IN (SELECT c.id_tweet from clasificaciontweets as c);&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">searchID</span><span class="p">,</span> <span class="p">])</span>
+			<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+			<span class="k">return</span> <span class="n">rows</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;error en getTweetsIdBusquedaNoAnalizada&quot;</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasGeneral.getTweetsIdBusquedaTodos"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasGeneral.ConsultasGeneral.getTweetsIdBusquedaTodos">[documentos]</a>	<span class="k">def</span> <span class="nf">getTweetsIdBusquedaTodos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">searchID</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT j.id_tweet FROM join_search_tweet as j WHERE j.id_search = </span><span class="si">%s</span><span class="s2">;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">searchID</span><span class="p">,</span> <span class="p">])</span>
+			<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+
+			<span class="k">return</span> <span class="n">rows</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;error en getTweetsIdBusquedaTodos&quot;</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasGeneral.getSearchIDFromIDTarea"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasGeneral.ConsultasGeneral.getSearchIDFromIDTarea">[documentos]</a>	<span class="k">def</span> <span class="nf">getSearchIDFromIDTarea</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idTarea</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT id_search FROM tareas_programadas WHERE id = </span><span class="si">%s</span><span class="s2">;&quot;&quot;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">idTarea</span><span class="p">,</span> <span class="p">])</span>
+			<span class="n">row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+
+			<span class="k">return</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;error en getSearchIDFromIDTarea&quot;</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasGeneral.insertTweetAnalizado"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasGeneral.ConsultasGeneral.insertTweetAnalizado">[documentos]</a>	<span class="k">def</span> <span class="nf">insertTweetAnalizado</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_tweet</span><span class="p">,</span> <span class="n">clase</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;INSERT INTO clasificaciontweets (id_tweet, clase) VALUES (</span><span class="si">%s</span><span class="s2">, </span><span class="si">%s</span><span class="s2">);&quot;&quot;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">id_tweet</span><span class="p">,</span> <span class="n">clase</span><span class="p">])</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+			<span class="k">return</span> <span class="bp">True</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;error en insertTweetAnalizado&quot;</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasGeneral.editTweetAnalizado"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasGeneral.ConsultasGeneral.editTweetAnalizado">[documentos]</a>	<span class="k">def</span> <span class="nf">editTweetAnalizado</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_tweet</span><span class="p">,</span> <span class="n">clase</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;UPDATE clasificaciontweets set clase=</span><span class="si">%s</span><span class="s2"> WHERE id_tweet=</span><span class="si">%s</span><span class="s2">;&quot;&quot;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">clase</span><span class="p">,</span> <span class="n">id_tweet</span><span class="p">])</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+			<span class="k">return</span> <span class="bp">True</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;error en editTweetAnalizado&quot;</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasGeneral.getIdListaEntrenamientoByIDSearch"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasGeneral.ConsultasGeneral.getIdListaEntrenamientoByIDSearch">[documentos]</a>	<span class="k">def</span> <span class="nf">getIdListaEntrenamientoByIDSearch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_search</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT id_lista_entrenamiento FROM tareas_programadas WHERE id_search = </span><span class="si">%s</span><span class="s2">;&quot;&quot;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">id_search</span><span class="p">,</span> <span class="p">])</span>
+			<span class="n">row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+
+			<span class="k">return</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;error en getIdListaEntrenamientoByIDSearch&quot;</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasGeneral.isListasEntrenamientoFromUser"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasGeneral.ConsultasGeneral.isListasEntrenamientoFromUser">[documentos]</a>	<span class="k">def</span> <span class="nf">isListasEntrenamientoFromUser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_user</span><span class="p">,</span> <span class="n">id_lista</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT * FROM listas_entrenamiento WHERE id_username = </span><span class="si">%s</span><span class="s2"> and id = </span><span class="si">%s</span><span class="s2">;&quot;&quot;&quot;</span>
+
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">id_user</span><span class="p">,</span> <span class="n">id_lista</span><span class="p">])</span>
+			<span class="n">row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+
+			<span class="k">if</span> <span class="n">row</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+				<span class="k">return</span> <span class="bp">False</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="k">return</span> <span class="bp">True</span>
+
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;error en isListasEntrenamientoFromUser&quot;</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+		
+<div class="viewcode-block" id="ConsultasGeneral.getLastTweetCollectedScreenName"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasGeneral.ConsultasGeneral.getLastTweetCollectedScreenName">[documentos]</a>	<span class="k">def</span> <span class="nf">getLastTweetCollectedScreenName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screen_name</span><span class="p">):</span>
+		<span class="k">if</span> <span class="n">screen_name</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;@&#39;</span><span class="p">:</span>
+			<span class="n">screen_name</span> <span class="o">=</span> <span class="n">screen_name</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cassandra_active</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getLastTweetCollectedScreenNameCassandra</span><span class="p">(</span><span class="n">screen_name</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getLastTweetCollectedScreenNameSQL</span><span class="p">(</span><span class="n">screen_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ConsultasGeneral.getLastTweetCollectedIdentificador"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasGeneral.ConsultasGeneral.getLastTweetCollectedIdentificador">[documentos]</a>	<span class="k">def</span> <span class="nf">getLastTweetCollectedIdentificador</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identificador</span><span class="p">):</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cassandra_active</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getLastTweetCollectedIdentificadorCassandra</span><span class="p">(</span><span class="n">identificador</span><span class="p">)</span>
+		<span class="c1">#else:</span>
+		<span class="c1">#	return self.getLastTweetCollectedScreenNameSQL(screen_name)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;No implementado&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ConsultasGeneral.setLastTweetCollectedScreenName"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasGeneral.ConsultasGeneral.setLastTweetCollectedScreenName">[documentos]</a>	<span class="k">def</span> <span class="nf">setLastTweetCollectedScreenName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screen_name</span><span class="p">,</span> <span class="n">maximo</span><span class="p">):</span>
+		<span class="k">if</span> <span class="n">screen_name</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;@&#39;</span><span class="p">:</span>
+			<span class="n">screen_name</span> <span class="o">=</span> <span class="n">screen_name</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cassandra_active</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">setLastTweetCollectedScreenNameCassandra</span><span class="p">(</span><span class="n">screen_name</span><span class="p">,</span> <span class="n">maximo</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">setLastTweetCollectedScreenNameSQL</span><span class="p">(</span><span class="n">screen_name</span><span class="p">,</span> <span class="n">maximo</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ConsultasGeneral.setLastTweetCollectedIdentificador"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasGeneral.ConsultasGeneral.setLastTweetCollectedIdentificador">[documentos]</a>	<span class="k">def</span> <span class="nf">setLastTweetCollectedIdentificador</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identificador</span><span class="p">,</span> <span class="n">maximo</span><span class="p">):</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cassandra_active</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">setLastTweetCollectedIdentificadorCassandra</span><span class="p">(</span><span class="n">identificador</span><span class="p">,</span> <span class="n">maximo</span><span class="p">)</span>
+		<span class="c1">#else:</span>
+		<span class="c1">#	return self.setLastTweetCollectedScreenNameSQL(screen_name, maximo)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;No implementado&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ConsultasGeneral.getQueryFromSearchID"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasGeneral.ConsultasGeneral.getQueryFromSearchID">[documentos]</a>	<span class="k">def</span> <span class="nf">getQueryFromSearchID</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">searchID</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT search_string FROM app_searches where id = </span><span class="si">%s</span><span class="s2">;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">searchID</span><span class="p">,</span> <span class="p">])</span>
+			<span class="n">row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cur</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+
+			<span class="k">return</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasGeneral.getUserIDByScreenName"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasGeneral.ConsultasGeneral.getUserIDByScreenName">[documentos]</a>	<span class="k">def</span> <span class="nf">getUserIDByScreenName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">twitterUser</span><span class="p">):</span>
+		<span class="k">if</span> <span class="n">twitterUser</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;@&#39;</span><span class="p">:</span>
+			<span class="n">twitterUser</span> <span class="o">=</span> <span class="n">twitterUser</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cassandra_active</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getUserIDByScreenNameCassandra</span><span class="p">(</span><span class="n">twitterUser</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getUserIDByScreenNameSQL</span><span class="p">(</span><span class="n">twitterUser</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Código de módulo</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Búsqueda rápida</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Ir a" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Introduzca los términos de búsqueda o un nombre de módulo, clase o función.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Daniel Garnacho, Diego Castaño.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

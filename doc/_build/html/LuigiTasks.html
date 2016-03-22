@@ -1,0 +1,833 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>LuigiTasks package &mdash; documentación de ConcursoPolicia - 1</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="top" title="documentación de ConcursoPolicia - 1" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="luigitasks-package">
+<h1>LuigiTasks package<a class="headerlink" href="#luigitasks-package" title="Enlazar permanentemente con este título">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+<div class="section" id="module-LuigiTasks.ClasificaUsuariosPorIdioma">
+<span id="luigitasks-clasificausuariosporidioma-module"></span><h2>LuigiTasks.ClasificaUsuariosPorIdioma module<a class="headerlink" href="#module-LuigiTasks.ClasificaUsuariosPorIdioma" title="Enlazar permanentemente con este título">¶</a></h2>
+<dl class="class">
+<dt id="LuigiTasks.ClasificaUsuariosPorIdioma.ClasificaUsuariosPorIdioma">
+<em class="property">class </em><code class="descclassname">LuigiTasks.ClasificaUsuariosPorIdioma.</code><code class="descname">ClasificaUsuariosPorIdioma</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/ClasificaUsuariosPorIdioma.html#ClasificaUsuariosPorIdioma"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.ClasificaUsuariosPorIdioma.ClasificaUsuariosPorIdioma" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <code class="xref py py-class docutils literal"><span class="pre">luigi.task.Task</span></code></p>
+<p>Clasifica los usuarios por el idioma que mas usan en sus ultimos N tweets
+N por defecto es 200</p>
+<p>fichero JSON {idioma: [lista de identificadores de usuario]}</p>
+<dl class="method">
+<dt id="LuigiTasks.ClasificaUsuariosPorIdioma.ClasificaUsuariosPorIdioma.output">
+<code class="descname">output</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/ClasificaUsuariosPorIdioma.html#ClasificaUsuariosPorIdioma.output"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.ClasificaUsuariosPorIdioma.ClasificaUsuariosPorIdioma.output" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.ClasificaUsuariosPorIdioma.ClasificaUsuariosPorIdioma.readDicOld">
+<code class="descname">readDicOld</code><span class="sig-paren">(</span><em>diffDays=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/ClasificaUsuariosPorIdioma.html#ClasificaUsuariosPorIdioma.readDicOld"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.ClasificaUsuariosPorIdioma.ClasificaUsuariosPorIdioma.readDicOld" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.ClasificaUsuariosPorIdioma.ClasificaUsuariosPorIdioma.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/ClasificaUsuariosPorIdioma.html#ClasificaUsuariosPorIdioma.run"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.ClasificaUsuariosPorIdioma.ClasificaUsuariosPorIdioma.run" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="LuigiTasks.ClasificaUsuariosPorIdioma.ClasificaUsuariosPorIdioma.task_namespace">
+<code class="descname">task_namespace</code><em class="property"> = None</em><a class="headerlink" href="#LuigiTasks.ClasificaUsuariosPorIdioma.ClasificaUsuariosPorIdioma.task_namespace" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextoPorIdioma_semantic">
+<em class="property">class </em><code class="descclassname">LuigiTasks.ClasificaUsuariosPorIdioma.</code><code class="descname">GeneraTextoPorIdioma_semantic</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/ClasificaUsuariosPorIdioma.html#GeneraTextoPorIdioma_semantic"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextoPorIdioma_semantic" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <code class="xref py py-class docutils literal"><span class="pre">luigi.task.Task</span></code></p>
+<p>Genera un fichero de usuarios con sus tweets y solo en el idioma determinado
+semantic significa que no se pasan stopwords ni lematizacion para centrarnos como habla el usuario</p>
+<p>idioma : idioma de los usuarios que se insertaran en el fichero</p>
+<p>Fichero lineas pares identificador de usuario, lineas impares texto en el lenguaje definido</p>
+<dl class="attribute">
+<dt id="LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextoPorIdioma_semantic.idioma">
+<code class="descname">idioma</code><em class="property"> = &lt;luigi.parameter.Parameter object&gt;</em><a class="headerlink" href="#LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextoPorIdioma_semantic.idioma" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextoPorIdioma_semantic.output">
+<code class="descname">output</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/ClasificaUsuariosPorIdioma.html#GeneraTextoPorIdioma_semantic.output"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextoPorIdioma_semantic.output" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextoPorIdioma_semantic.requires">
+<code class="descname">requires</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/ClasificaUsuariosPorIdioma.html#GeneraTextoPorIdioma_semantic.requires"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextoPorIdioma_semantic.requires" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextoPorIdioma_semantic.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/ClasificaUsuariosPorIdioma.html#GeneraTextoPorIdioma_semantic.run"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextoPorIdioma_semantic.run" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextoPorIdioma_semantic.task_namespace">
+<code class="descname">task_namespace</code><em class="property"> = None</em><a class="headerlink" href="#LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextoPorIdioma_semantic.task_namespace" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextoPorIdioma_topics">
+<em class="property">class </em><code class="descclassname">LuigiTasks.ClasificaUsuariosPorIdioma.</code><code class="descname">GeneraTextoPorIdioma_topics</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/ClasificaUsuariosPorIdioma.html#GeneraTextoPorIdioma_topics"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextoPorIdioma_topics" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <code class="xref py py-class docutils literal"><span class="pre">luigi.task.Task</span></code></p>
+<p>Genera un fichero de usuarios con sus tweets y solo en el idioma determinado
+Topics significa que se pasan stopwords y lematizacion para centrarnos en lo que habla el usuario y no en como habla</p>
+<p>idioma : idioma de los usuarios que se insertaran en el fichero</p>
+<p>Fichero lineas pares identificador de usuario, lineas impares texto en el lenguaje definido</p>
+<dl class="attribute">
+<dt id="LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextoPorIdioma_topics.idioma">
+<code class="descname">idioma</code><em class="property"> = &lt;luigi.parameter.Parameter object&gt;</em><a class="headerlink" href="#LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextoPorIdioma_topics.idioma" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextoPorIdioma_topics.output">
+<code class="descname">output</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/ClasificaUsuariosPorIdioma.html#GeneraTextoPorIdioma_topics.output"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextoPorIdioma_topics.output" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextoPorIdioma_topics.requires">
+<code class="descname">requires</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/ClasificaUsuariosPorIdioma.html#GeneraTextoPorIdioma_topics.requires"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextoPorIdioma_topics.requires" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextoPorIdioma_topics.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/ClasificaUsuariosPorIdioma.html#GeneraTextoPorIdioma_topics.run"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextoPorIdioma_topics.run" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextoPorIdioma_topics.task_namespace">
+<code class="descname">task_namespace</code><em class="property"> = None</em><a class="headerlink" href="#LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextoPorIdioma_topics.task_namespace" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextosPorIdiomas">
+<em class="property">class </em><code class="descclassname">LuigiTasks.ClasificaUsuariosPorIdioma.</code><code class="descname">GeneraTextosPorIdiomas</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/ClasificaUsuariosPorIdioma.html#GeneraTextosPorIdiomas"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextosPorIdiomas" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <code class="xref py py-class docutils literal"><span class="pre">luigi.task.Task</span></code></p>
+<p>Genera las tareas de gestion generacion de ficheros de idiomas</p>
+<p>idiomas : string de idiomas en formato (ISO 639-1) separados por ;
+tipo : semantic o topics</p>
+<p>Fichero lineas pares identificador de usuario, lineas impares texto en el lenguaje definido</p>
+<dl class="attribute">
+<dt id="LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextosPorIdiomas.idiomas">
+<code class="descname">idiomas</code><em class="property"> = &lt;luigi.parameter.Parameter object&gt;</em><a class="headerlink" href="#LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextosPorIdiomas.idiomas" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextosPorIdiomas.output">
+<code class="descname">output</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/ClasificaUsuariosPorIdioma.html#GeneraTextosPorIdiomas.output"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextosPorIdiomas.output" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextosPorIdiomas.requires">
+<code class="descname">requires</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/ClasificaUsuariosPorIdioma.html#GeneraTextosPorIdiomas.requires"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextosPorIdiomas.requires" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextosPorIdiomas.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/ClasificaUsuariosPorIdioma.html#GeneraTextosPorIdiomas.run"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextosPorIdiomas.run" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextosPorIdiomas.task_namespace">
+<code class="descname">task_namespace</code><em class="property"> = None</em><a class="headerlink" href="#LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextosPorIdiomas.task_namespace" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextosPorIdiomas.tipo">
+<code class="descname">tipo</code><em class="property"> = &lt;luigi.parameter.Parameter object&gt;</em><a class="headerlink" href="#LuigiTasks.ClasificaUsuariosPorIdioma.GeneraTextosPorIdiomas.tipo" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-LuigiTasks.GenerateSim">
+<span id="luigitasks-generatesim-module"></span><h2>LuigiTasks.GenerateSim module<a class="headerlink" href="#module-LuigiTasks.GenerateSim" title="Enlazar permanentemente con este título">¶</a></h2>
+<dl class="class">
+<dt id="LuigiTasks.GenerateSim.GenerateSimAll_semantic">
+<em class="property">class </em><code class="descclassname">LuigiTasks.GenerateSim.</code><code class="descname">GenerateSimAll_semantic</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/GenerateSim.html#GenerateSimAll_semantic"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.GenerateSim.GenerateSimAll_semantic" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <code class="xref py py-class docutils literal"><span class="pre">luigi.task.Task</span></code></p>
+<dl class="attribute">
+<dt id="LuigiTasks.GenerateSim.GenerateSimAll_semantic.lang">
+<code class="descname">lang</code><em class="property"> = &lt;luigi.parameter.Parameter object&gt;</em><a class="headerlink" href="#LuigiTasks.GenerateSim.GenerateSimAll_semantic.lang" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.GenerateSim.GenerateSimAll_semantic.output">
+<code class="descname">output</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/GenerateSim.html#GenerateSimAll_semantic.output"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.GenerateSim.GenerateSimAll_semantic.output" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.GenerateSim.GenerateSimAll_semantic.requires">
+<code class="descname">requires</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/GenerateSim.html#GenerateSimAll_semantic.requires"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.GenerateSim.GenerateSimAll_semantic.requires" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.GenerateSim.GenerateSimAll_semantic.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/GenerateSim.html#GenerateSimAll_semantic.run"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.GenerateSim.GenerateSimAll_semantic.run" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="LuigiTasks.GenerateSim.GenerateSimAll_semantic.task_namespace">
+<code class="descname">task_namespace</code><em class="property"> = None</em><a class="headerlink" href="#LuigiTasks.GenerateSim.GenerateSimAll_semantic.task_namespace" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="LuigiTasks.GenerateSim.GenerateSimAll_semantic.usuario">
+<code class="descname">usuario</code><em class="property"> = &lt;luigi.parameter.Parameter object&gt;</em><a class="headerlink" href="#LuigiTasks.GenerateSim.GenerateSimAll_semantic.usuario" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="LuigiTasks.GenerateSim.GenerateSimAll_topics">
+<em class="property">class </em><code class="descclassname">LuigiTasks.GenerateSim.</code><code class="descname">GenerateSimAll_topics</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/GenerateSim.html#GenerateSimAll_topics"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.GenerateSim.GenerateSimAll_topics" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <code class="xref py py-class docutils literal"><span class="pre">luigi.task.Task</span></code></p>
+<dl class="attribute">
+<dt id="LuigiTasks.GenerateSim.GenerateSimAll_topics.lang">
+<code class="descname">lang</code><em class="property"> = &lt;luigi.parameter.Parameter object&gt;</em><a class="headerlink" href="#LuigiTasks.GenerateSim.GenerateSimAll_topics.lang" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.GenerateSim.GenerateSimAll_topics.output">
+<code class="descname">output</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/GenerateSim.html#GenerateSimAll_topics.output"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.GenerateSim.GenerateSimAll_topics.output" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.GenerateSim.GenerateSimAll_topics.requires">
+<code class="descname">requires</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/GenerateSim.html#GenerateSimAll_topics.requires"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.GenerateSim.GenerateSimAll_topics.requires" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.GenerateSim.GenerateSimAll_topics.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/GenerateSim.html#GenerateSimAll_topics.run"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.GenerateSim.GenerateSimAll_topics.run" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="LuigiTasks.GenerateSim.GenerateSimAll_topics.task_namespace">
+<code class="descname">task_namespace</code><em class="property"> = None</em><a class="headerlink" href="#LuigiTasks.GenerateSim.GenerateSimAll_topics.task_namespace" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="LuigiTasks.GenerateSim.GenerateSimAll_topics.usuario">
+<code class="descname">usuario</code><em class="property"> = &lt;luigi.parameter.Parameter object&gt;</em><a class="headerlink" href="#LuigiTasks.GenerateSim.GenerateSimAll_topics.usuario" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="LuigiTasks.GenerateSim.GenerateSimRelations_semantic">
+<em class="property">class </em><code class="descclassname">LuigiTasks.GenerateSim.</code><code class="descname">GenerateSimRelations_semantic</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/GenerateSim.html#GenerateSimRelations_semantic"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.GenerateSim.GenerateSimRelations_semantic" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <code class="xref py py-class docutils literal"><span class="pre">luigi.task.Task</span></code></p>
+<dl class="attribute">
+<dt id="LuigiTasks.GenerateSim.GenerateSimRelations_semantic.lang">
+<code class="descname">lang</code><em class="property"> = &lt;luigi.parameter.Parameter object&gt;</em><a class="headerlink" href="#LuigiTasks.GenerateSim.GenerateSimRelations_semantic.lang" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.GenerateSim.GenerateSimRelations_semantic.output">
+<code class="descname">output</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/GenerateSim.html#GenerateSimRelations_semantic.output"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.GenerateSim.GenerateSimRelations_semantic.output" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.GenerateSim.GenerateSimRelations_semantic.requires">
+<code class="descname">requires</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/GenerateSim.html#GenerateSimRelations_semantic.requires"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.GenerateSim.GenerateSimRelations_semantic.requires" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.GenerateSim.GenerateSimRelations_semantic.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/GenerateSim.html#GenerateSimRelations_semantic.run"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.GenerateSim.GenerateSimRelations_semantic.run" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="LuigiTasks.GenerateSim.GenerateSimRelations_semantic.task_namespace">
+<code class="descname">task_namespace</code><em class="property"> = None</em><a class="headerlink" href="#LuigiTasks.GenerateSim.GenerateSimRelations_semantic.task_namespace" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="LuigiTasks.GenerateSim.GenerateSimRelations_semantic.usuario">
+<code class="descname">usuario</code><em class="property"> = &lt;luigi.parameter.Parameter object&gt;</em><a class="headerlink" href="#LuigiTasks.GenerateSim.GenerateSimRelations_semantic.usuario" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="LuigiTasks.GenerateSim.GenerateSimRelations_topics">
+<em class="property">class </em><code class="descclassname">LuigiTasks.GenerateSim.</code><code class="descname">GenerateSimRelations_topics</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/GenerateSim.html#GenerateSimRelations_topics"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.GenerateSim.GenerateSimRelations_topics" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <code class="xref py py-class docutils literal"><span class="pre">luigi.task.Task</span></code></p>
+<dl class="attribute">
+<dt id="LuigiTasks.GenerateSim.GenerateSimRelations_topics.lang">
+<code class="descname">lang</code><em class="property"> = &lt;luigi.parameter.Parameter object&gt;</em><a class="headerlink" href="#LuigiTasks.GenerateSim.GenerateSimRelations_topics.lang" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.GenerateSim.GenerateSimRelations_topics.output">
+<code class="descname">output</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/GenerateSim.html#GenerateSimRelations_topics.output"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.GenerateSim.GenerateSimRelations_topics.output" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.GenerateSim.GenerateSimRelations_topics.requires">
+<code class="descname">requires</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/GenerateSim.html#GenerateSimRelations_topics.requires"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.GenerateSim.GenerateSimRelations_topics.requires" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.GenerateSim.GenerateSimRelations_topics.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/GenerateSim.html#GenerateSimRelations_topics.run"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.GenerateSim.GenerateSimRelations_topics.run" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="LuigiTasks.GenerateSim.GenerateSimRelations_topics.task_namespace">
+<code class="descname">task_namespace</code><em class="property"> = None</em><a class="headerlink" href="#LuigiTasks.GenerateSim.GenerateSimRelations_topics.task_namespace" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="LuigiTasks.GenerateSim.GenerateSimRelations_topics.usuario">
+<code class="descname">usuario</code><em class="property"> = &lt;luigi.parameter.Parameter object&gt;</em><a class="headerlink" href="#LuigiTasks.GenerateSim.GenerateSimRelations_topics.usuario" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-LuigiTasks.RecolectorTwitter">
+<span id="luigitasks-recolectortwitter-module"></span><h2>LuigiTasks.RecolectorTwitter module<a class="headerlink" href="#module-LuigiTasks.RecolectorTwitter" title="Enlazar permanentemente con este título">¶</a></h2>
+<dl class="class">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorCirculoUsuario">
+<em class="property">class </em><code class="descclassname">LuigiTasks.RecolectorTwitter.</code><code class="descname">RecolectorCirculoUsuario</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/RecolectorTwitter.html#RecolectorCirculoUsuario"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorCirculoUsuario" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <code class="xref py py-class docutils literal"><span class="pre">luigi.task.Task</span></code></p>
+<dl class="method">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorCirculoUsuario.output">
+<code class="descname">output</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/RecolectorTwitter.html#RecolectorCirculoUsuario.output"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorCirculoUsuario.output" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorCirculoUsuario.requires">
+<code class="descname">requires</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/RecolectorTwitter.html#RecolectorCirculoUsuario.requires"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorCirculoUsuario.requires" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorCirculoUsuario.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/RecolectorTwitter.html#RecolectorCirculoUsuario.run"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorCirculoUsuario.run" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorCirculoUsuario.task_namespace">
+<code class="descname">task_namespace</code><em class="property"> = None</em><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorCirculoUsuario.task_namespace" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorCirculoUsuario.usuario">
+<code class="descname">usuario</code><em class="property"> = &lt;luigi.parameter.Parameter object&gt;</em><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorCirculoUsuario.usuario" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorContenidoTweet">
+<em class="property">class </em><code class="descclassname">LuigiTasks.RecolectorTwitter.</code><code class="descname">RecolectorContenidoTweet</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/RecolectorTwitter.html#RecolectorContenidoTweet"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorContenidoTweet" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <code class="xref py py-class docutils literal"><span class="pre">luigi.task.Task</span></code></p>
+<p>Realiza una busqueda en TwitterAPI</p>
+<p>Recolecta los tweets que contienen la busqueda, pueden ser hastags, menciones o lo que sea
+default 1.000.000 tardara unas 6 horas si existen ese millon o twiter nos los da
+si el limite es -1 no habra limite (MUCHO CUIDADO)</p>
+<dl class="docutils">
+<dt>OTRO MUCHO CUIDADO</dt>
+<dd>LUIGI no admite # en la entrada de parametros, no pasa nada, borradlos</dd>
+</dl>
+<dl class="attribute">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorContenidoTweet.busqueda">
+<code class="descname">busqueda</code><em class="property"> = &lt;luigi.parameter.Parameter object&gt;</em><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorContenidoTweet.busqueda" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorContenidoTweet.limitedescarga">
+<code class="descname">limitedescarga</code><em class="property"> = &lt;luigi.parameter.Parameter object&gt;</em><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorContenidoTweet.limitedescarga" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorContenidoTweet.output">
+<code class="descname">output</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/RecolectorTwitter.html#RecolectorContenidoTweet.output"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorContenidoTweet.output" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorContenidoTweet.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/RecolectorTwitter.html#RecolectorContenidoTweet.run"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorContenidoTweet.run" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorContenidoTweet.task_namespace">
+<code class="descname">task_namespace</code><em class="property"> = None</em><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorContenidoTweet.task_namespace" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorFavoritosTwitter">
+<em class="property">class </em><code class="descclassname">LuigiTasks.RecolectorTwitter.</code><code class="descname">RecolectorFavoritosTwitter</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/RecolectorTwitter.html#RecolectorFavoritosTwitter"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorFavoritosTwitter" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <code class="xref py py-class docutils literal"><span class="pre">luigi.task.Task</span></code></p>
+<dl class="method">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorFavoritosTwitter.output">
+<code class="descname">output</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/RecolectorTwitter.html#RecolectorFavoritosTwitter.output"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorFavoritosTwitter.output" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorFavoritosTwitter.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/RecolectorTwitter.html#RecolectorFavoritosTwitter.run"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorFavoritosTwitter.run" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Realiza una busqueda en TwitterAPI</p>
+<p>Recolecta los favoritos de un usuario dado por nombre de usuario
+o identificador</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorFavoritosTwitter.task_namespace">
+<code class="descname">task_namespace</code><em class="property"> = None</em><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorFavoritosTwitter.task_namespace" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorFavoritosTwitter.usuario">
+<code class="descname">usuario</code><em class="property"> = &lt;luigi.parameter.Parameter object&gt;</em><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorFavoritosTwitter.usuario" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorSeguidoresTwitter">
+<em class="property">class </em><code class="descclassname">LuigiTasks.RecolectorTwitter.</code><code class="descname">RecolectorSeguidoresTwitter</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/RecolectorTwitter.html#RecolectorSeguidoresTwitter"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorSeguidoresTwitter" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <code class="xref py py-class docutils literal"><span class="pre">luigi.task.Task</span></code></p>
+<dl class="docutils">
+<dt>Uso:</dt>
+<dd>PYTHONPATH=&#8217;&#8217; luigi &#8211;module RecolectorTwitter RecolectorSeguidoresTwitter &#8211;usuario ...</dd>
+</dl>
+<dl class="attribute">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorSeguidoresTwitter.forcecomplete">
+<code class="descname">forcecomplete</code><em class="property"> = &lt;luigi.parameter.Parameter object&gt;</em><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorSeguidoresTwitter.forcecomplete" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorSeguidoresTwitter.output">
+<code class="descname">output</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/RecolectorTwitter.html#RecolectorSeguidoresTwitter.output"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorSeguidoresTwitter.output" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorSeguidoresTwitter.requires">
+<code class="descname">requires</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/RecolectorTwitter.html#RecolectorSeguidoresTwitter.requires"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorSeguidoresTwitter.requires" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorSeguidoresTwitter.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/RecolectorTwitter.html#RecolectorSeguidoresTwitter.run"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorSeguidoresTwitter.run" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Realiza una busqueda en TwitterAPI</p>
+<p>Recolecta los seguidores de un usuario dado por nombre de usuario
+o identificador</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorSeguidoresTwitter.task_namespace">
+<code class="descname">task_namespace</code><em class="property"> = None</em><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorSeguidoresTwitter.task_namespace" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorSeguidoresTwitter.usuario">
+<code class="descname">usuario</code><em class="property"> = &lt;luigi.parameter.Parameter object&gt;</em><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorSeguidoresTwitter.usuario" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorSiguiendoTwitter">
+<em class="property">class </em><code class="descclassname">LuigiTasks.RecolectorTwitter.</code><code class="descname">RecolectorSiguiendoTwitter</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/RecolectorTwitter.html#RecolectorSiguiendoTwitter"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorSiguiendoTwitter" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <code class="xref py py-class docutils literal"><span class="pre">luigi.task.Task</span></code></p>
+<dl class="method">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorSiguiendoTwitter.output">
+<code class="descname">output</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/RecolectorTwitter.html#RecolectorSiguiendoTwitter.output"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorSiguiendoTwitter.output" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorSiguiendoTwitter.requires">
+<code class="descname">requires</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/RecolectorTwitter.html#RecolectorSiguiendoTwitter.requires"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorSiguiendoTwitter.requires" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorSiguiendoTwitter.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/RecolectorTwitter.html#RecolectorSiguiendoTwitter.run"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorSiguiendoTwitter.run" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Realiza una busqueda en TwitterAPI</p>
+<p>Recolecta los siguiendos de un usuario dado por nombre de usuario
+o identificador</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorSiguiendoTwitter.task_namespace">
+<code class="descname">task_namespace</code><em class="property"> = None</em><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorSiguiendoTwitter.task_namespace" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorSiguiendoTwitter.usuario">
+<code class="descname">usuario</code><em class="property"> = &lt;luigi.parameter.Parameter object&gt;</em><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorSiguiendoTwitter.usuario" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorTweetsSeguidoresTwitter">
+<em class="property">class </em><code class="descclassname">LuigiTasks.RecolectorTwitter.</code><code class="descname">RecolectorTweetsSeguidoresTwitter</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/RecolectorTwitter.html#RecolectorTweetsSeguidoresTwitter"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorTweetsSeguidoresTwitter" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <code class="xref py py-class docutils literal"><span class="pre">luigi.task.Task</span></code></p>
+<p>Recolecta en un primer momento los siguiendo de un usuario
+a continuacion descarga todos los tweets de esos siguiendo</p>
+<dl class="method">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorTweetsSeguidoresTwitter.output">
+<code class="descname">output</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/RecolectorTwitter.html#RecolectorTweetsSeguidoresTwitter.output"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorTweetsSeguidoresTwitter.output" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorTweetsSeguidoresTwitter.requires">
+<code class="descname">requires</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/RecolectorTwitter.html#RecolectorTweetsSeguidoresTwitter.requires"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorTweetsSeguidoresTwitter.requires" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorTweetsSeguidoresTwitter.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/RecolectorTwitter.html#RecolectorTweetsSeguidoresTwitter.run"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorTweetsSeguidoresTwitter.run" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorTweetsSeguidoresTwitter.task_namespace">
+<code class="descname">task_namespace</code><em class="property"> = None</em><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorTweetsSeguidoresTwitter.task_namespace" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorTweetsSeguidoresTwitter.usuario">
+<code class="descname">usuario</code><em class="property"> = &lt;luigi.parameter.Parameter object&gt;</em><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorTweetsSeguidoresTwitter.usuario" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorTweetsSiguendoTwitter">
+<em class="property">class </em><code class="descclassname">LuigiTasks.RecolectorTwitter.</code><code class="descname">RecolectorTweetsSiguendoTwitter</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/RecolectorTwitter.html#RecolectorTweetsSiguendoTwitter"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorTweetsSiguendoTwitter" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <code class="xref py py-class docutils literal"><span class="pre">luigi.task.Task</span></code></p>
+<p>Recolecta en un primer momento los siguiendo de un usuario
+a continuacion descarga todos los tweets de esos siguiendo</p>
+<dl class="method">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorTweetsSiguendoTwitter.output">
+<code class="descname">output</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/RecolectorTwitter.html#RecolectorTweetsSiguendoTwitter.output"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorTweetsSiguendoTwitter.output" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorTweetsSiguendoTwitter.requires">
+<code class="descname">requires</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/RecolectorTwitter.html#RecolectorTweetsSiguendoTwitter.requires"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorTweetsSiguendoTwitter.requires" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorTweetsSiguendoTwitter.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/RecolectorTwitter.html#RecolectorTweetsSiguendoTwitter.run"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorTweetsSiguendoTwitter.run" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorTweetsSiguendoTwitter.task_namespace">
+<code class="descname">task_namespace</code><em class="property"> = None</em><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorTweetsSiguendoTwitter.task_namespace" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorTweetsSiguendoTwitter.usuario">
+<code class="descname">usuario</code><em class="property"> = &lt;luigi.parameter.Parameter object&gt;</em><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorTweetsSiguendoTwitter.usuario" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorUsuarioTwitter">
+<em class="property">class </em><code class="descclassname">LuigiTasks.RecolectorTwitter.</code><code class="descname">RecolectorUsuarioTwitter</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/RecolectorTwitter.html#RecolectorUsuarioTwitter"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorUsuarioTwitter" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <code class="xref py py-class docutils literal"><span class="pre">luigi.task.Task</span></code></p>
+<dl class="method">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorUsuarioTwitter.output">
+<code class="descname">output</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/RecolectorTwitter.html#RecolectorUsuarioTwitter.output"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorUsuarioTwitter.output" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorUsuarioTwitter.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/RecolectorTwitter.html#RecolectorUsuarioTwitter.run"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorUsuarioTwitter.run" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Realiza una busqueda en TwitterAPI</p>
+<p>Recolecta los tweets de un usuario dado por nombre de usuario
+o identificador</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorUsuarioTwitter.task_namespace">
+<code class="descname">task_namespace</code><em class="property"> = None</em><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorUsuarioTwitter.task_namespace" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="LuigiTasks.RecolectorTwitter.RecolectorUsuarioTwitter.usuario">
+<code class="descname">usuario</code><em class="property"> = &lt;luigi.parameter.Parameter object&gt;</em><a class="headerlink" href="#LuigiTasks.RecolectorTwitter.RecolectorUsuarioTwitter.usuario" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-LuigiTasks.TrainText">
+<span id="luigitasks-traintext-module"></span><h2>LuigiTasks.TrainText module<a class="headerlink" href="#module-LuigiTasks.TrainText" title="Enlazar permanentemente con este título">¶</a></h2>
+<dl class="class">
+<dt id="LuigiTasks.TrainText.GenerateVecsAnnoyLang_semantic">
+<em class="property">class </em><code class="descclassname">LuigiTasks.TrainText.</code><code class="descname">GenerateVecsAnnoyLang_semantic</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/TrainText.html#GenerateVecsAnnoyLang_semantic"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.TrainText.GenerateVecsAnnoyLang_semantic" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <code class="xref py py-class docutils literal"><span class="pre">luigi.task.Task</span></code></p>
+<dl class="docutils">
+<dt>Genera a partir del modelo semantico computado, vecinos proximos aproximados para que la busqueda</dt>
+<dd>de usuarios similares sea mucho mas rapida. <a class="reference external" href="https://github.com/spotify/annoy">https://github.com/spotify/annoy</a></dd>
+<dt>Cuidado: el identificador que devuelve annoy no es el mismo que el de twitter,</dt>
+<dd>por eso se genera un diccionario JSON que traduce</dd>
+</dl>
+<p>fichero .json Diccionario que traduce de indice de usuario twitter a indice annoy {&#8220;id_usuario&#8221;:id_annoy}
+fichero .annoy modelo en formato annoy</p>
+<dl class="attribute">
+<dt id="LuigiTasks.TrainText.GenerateVecsAnnoyLang_semantic.idioma">
+<code class="descname">idioma</code><em class="property"> = &lt;luigi.parameter.Parameter object&gt;</em><a class="headerlink" href="#LuigiTasks.TrainText.GenerateVecsAnnoyLang_semantic.idioma" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.TrainText.GenerateVecsAnnoyLang_semantic.output">
+<code class="descname">output</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/TrainText.html#GenerateVecsAnnoyLang_semantic.output"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.TrainText.GenerateVecsAnnoyLang_semantic.output" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.TrainText.GenerateVecsAnnoyLang_semantic.requires">
+<code class="descname">requires</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/TrainText.html#GenerateVecsAnnoyLang_semantic.requires"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.TrainText.GenerateVecsAnnoyLang_semantic.requires" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.TrainText.GenerateVecsAnnoyLang_semantic.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/TrainText.html#GenerateVecsAnnoyLang_semantic.run"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.TrainText.GenerateVecsAnnoyLang_semantic.run" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="LuigiTasks.TrainText.GenerateVecsAnnoyLang_semantic.task_namespace">
+<code class="descname">task_namespace</code><em class="property"> = None</em><a class="headerlink" href="#LuigiTasks.TrainText.GenerateVecsAnnoyLang_semantic.task_namespace" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="LuigiTasks.TrainText.GenerateVecsAnnoyLang_topics">
+<em class="property">class </em><code class="descclassname">LuigiTasks.TrainText.</code><code class="descname">GenerateVecsAnnoyLang_topics</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/TrainText.html#GenerateVecsAnnoyLang_topics"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.TrainText.GenerateVecsAnnoyLang_topics" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <code class="xref py py-class docutils literal"><span class="pre">luigi.task.Task</span></code></p>
+<dl class="docutils">
+<dt>Genera a partir del modelo de topics computado, vecinos proximos aproximados para que la busqueda</dt>
+<dd>de usuarios similares sea mucho mas rapida. <a class="reference external" href="https://github.com/spotify/annoy">https://github.com/spotify/annoy</a></dd>
+<dt>Cuidado: el identificador que devuelve annoy no es el mismo que el de twitter,</dt>
+<dd>por eso se genera un diccionario JSON que traduce</dd>
+</dl>
+<p>fichero .json Diccionario que traduce de indice de usuario twitter a indice annoy
+fichero .annoy modelo en formato annoy</p>
+<dl class="attribute">
+<dt id="LuigiTasks.TrainText.GenerateVecsAnnoyLang_topics.idioma">
+<code class="descname">idioma</code><em class="property"> = &lt;luigi.parameter.Parameter object&gt;</em><a class="headerlink" href="#LuigiTasks.TrainText.GenerateVecsAnnoyLang_topics.idioma" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.TrainText.GenerateVecsAnnoyLang_topics.output">
+<code class="descname">output</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/TrainText.html#GenerateVecsAnnoyLang_topics.output"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.TrainText.GenerateVecsAnnoyLang_topics.output" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.TrainText.GenerateVecsAnnoyLang_topics.requires">
+<code class="descname">requires</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/TrainText.html#GenerateVecsAnnoyLang_topics.requires"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.TrainText.GenerateVecsAnnoyLang_topics.requires" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.TrainText.GenerateVecsAnnoyLang_topics.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/TrainText.html#GenerateVecsAnnoyLang_topics.run"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.TrainText.GenerateVecsAnnoyLang_topics.run" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="LuigiTasks.TrainText.GenerateVecsAnnoyLang_topics.task_namespace">
+<code class="descname">task_namespace</code><em class="property"> = None</em><a class="headerlink" href="#LuigiTasks.TrainText.GenerateVecsAnnoyLang_topics.task_namespace" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="LuigiTasks.TrainText.TrainDoc2VecLang_semantic">
+<em class="property">class </em><code class="descclassname">LuigiTasks.TrainText.</code><code class="descname">TrainDoc2VecLang_semantic</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/TrainText.html#TrainDoc2VecLang_semantic"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.TrainText.TrainDoc2VecLang_semantic" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <code class="xref py py-class docutils literal"><span class="pre">luigi.task.Task</span></code></p>
+<p>Genera el modelo de paragraph vector para los textos dado el contenido y utilizando tambien la forma de hablar.
+Dimensiones 50
+Epocas 20
+Metodo DM</p>
+<p>fichero .check que solo se usa para comprobar que existe en el resto de tareas.
+fichero .model modelo paragraph vector de la libreria gensim</p>
+<dl class="attribute">
+<dt id="LuigiTasks.TrainText.TrainDoc2VecLang_semantic.idioma">
+<code class="descname">idioma</code><em class="property"> = &lt;luigi.parameter.Parameter object&gt;</em><a class="headerlink" href="#LuigiTasks.TrainText.TrainDoc2VecLang_semantic.idioma" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.TrainText.TrainDoc2VecLang_semantic.output">
+<code class="descname">output</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/TrainText.html#TrainDoc2VecLang_semantic.output"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.TrainText.TrainDoc2VecLang_semantic.output" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.TrainText.TrainDoc2VecLang_semantic.requires">
+<code class="descname">requires</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/TrainText.html#TrainDoc2VecLang_semantic.requires"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.TrainText.TrainDoc2VecLang_semantic.requires" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.TrainText.TrainDoc2VecLang_semantic.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/TrainText.html#TrainDoc2VecLang_semantic.run"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.TrainText.TrainDoc2VecLang_semantic.run" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="LuigiTasks.TrainText.TrainDoc2VecLang_semantic.task_namespace">
+<code class="descname">task_namespace</code><em class="property"> = None</em><a class="headerlink" href="#LuigiTasks.TrainText.TrainDoc2VecLang_semantic.task_namespace" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="LuigiTasks.TrainText.TrainDoc2VecLang_topics">
+<em class="property">class </em><code class="descclassname">LuigiTasks.TrainText.</code><code class="descname">TrainDoc2VecLang_topics</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/TrainText.html#TrainDoc2VecLang_topics"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.TrainText.TrainDoc2VecLang_topics" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <code class="xref py py-class docutils literal"><span class="pre">luigi.task.Task</span></code></p>
+<p>Genera el modelo de paragraph vector para los textos dado el contenido.
+Dimensiones 50
+Epocas 20
+Metodo DBOW</p>
+<p>fichero .check que solo se usa para comprobar que existe en el resto de tareas.
+fichero .model modelo paragraph vector de la libreria gensim</p>
+<dl class="attribute">
+<dt id="LuigiTasks.TrainText.TrainDoc2VecLang_topics.idioma">
+<code class="descname">idioma</code><em class="property"> = &lt;luigi.parameter.Parameter object&gt;</em><a class="headerlink" href="#LuigiTasks.TrainText.TrainDoc2VecLang_topics.idioma" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.TrainText.TrainDoc2VecLang_topics.output">
+<code class="descname">output</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/TrainText.html#TrainDoc2VecLang_topics.output"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.TrainText.TrainDoc2VecLang_topics.output" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.TrainText.TrainDoc2VecLang_topics.requires">
+<code class="descname">requires</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/TrainText.html#TrainDoc2VecLang_topics.requires"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.TrainText.TrainDoc2VecLang_topics.requires" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="LuigiTasks.TrainText.TrainDoc2VecLang_topics.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/LuigiTasks/TrainText.html#TrainDoc2VecLang_topics.run"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#LuigiTasks.TrainText.TrainDoc2VecLang_topics.run" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="LuigiTasks.TrainText.TrainDoc2VecLang_topics.task_namespace">
+<code class="descname">task_namespace</code><em class="property"> = None</em><a class="headerlink" href="#LuigiTasks.TrainText.TrainDoc2VecLang_topics.task_namespace" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-LuigiTasks">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-LuigiTasks" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Tabla de Contenidos</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">LuigiTasks package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-LuigiTasks.ClasificaUsuariosPorIdioma">LuigiTasks.ClasificaUsuariosPorIdioma module</a></li>
+<li><a class="reference internal" href="#module-LuigiTasks.GenerateSim">LuigiTasks.GenerateSim module</a></li>
+<li><a class="reference internal" href="#module-LuigiTasks.RecolectorTwitter">LuigiTasks.RecolectorTwitter module</a></li>
+<li><a class="reference internal" href="#module-LuigiTasks.TrainText">LuigiTasks.TrainText module</a></li>
+<li><a class="reference internal" href="#module-LuigiTasks">Module contents</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>Esta página</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/LuigiTasks.txt"
+            rel="nofollow">Mostrar el código</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Búsqueda rápida</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Ir a" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Introduzca los términos de búsqueda o un nombre de módulo, clase o función.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Daniel Garnacho, Diego Castaño.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/LuigiTasks.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

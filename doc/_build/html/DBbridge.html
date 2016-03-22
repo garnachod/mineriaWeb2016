@@ -1,0 +1,1253 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>DBbridge package &mdash; documentación de ConcursoPolicia - 1</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="top" title="documentación de ConcursoPolicia - 1" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="dbbridge-package">
+<h1>DBbridge package<a class="headerlink" href="#dbbridge-package" title="Enlazar permanentemente con este título">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Enlazar permanentemente con este título">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="DBbridge.Cassandra.html">DBbridge.Cassandra package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="DBbridge.Cassandra.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DBbridge.Cassandra.html#module-DBbridge.Cassandra.ConexionCassandra">DBbridge.Cassandra.ConexionCassandra module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DBbridge.Cassandra.html#module-DBbridge.Cassandra.CreaTablas">DBbridge.Cassandra.CreaTablas module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DBbridge.Cassandra.html#module-DBbridge.Cassandra.CreaTablasInstagram">DBbridge.Cassandra.CreaTablasInstagram module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DBbridge.Cassandra.html#module-DBbridge.Cassandra.copyTweetsToFile">DBbridge.Cassandra.copyTweetsToFile module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DBbridge.Cassandra.html#module-DBbridge.Cassandra.loadTweetsFromFile">DBbridge.Cassandra.loadTweetsFromFile module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DBbridge.Cassandra.html#module-DBbridge.Cassandra">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="DBbridge.Neo4j.html">DBbridge.Neo4j package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="DBbridge.Neo4j.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DBbridge.Neo4j.html#module-DBbridge.Neo4j.ConexionNeo4j">DBbridge.Neo4j.ConexionNeo4j module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DBbridge.Neo4j.html#module-DBbridge.Neo4j.CreaRelaciones">DBbridge.Neo4j.CreaRelaciones module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DBbridge.Neo4j.html#module-DBbridge.Neo4j">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="DBbridge.PostgreSQL.html">DBbridge.PostgreSQL package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="DBbridge.PostgreSQL.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DBbridge.PostgreSQL.html#module-DBbridge.PostgreSQL.ConexionSQL">DBbridge.PostgreSQL.ConexionSQL module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DBbridge.PostgreSQL.html#module-DBbridge.PostgreSQL.CreaTablas">DBbridge.PostgreSQL.CreaTablas module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DBbridge.PostgreSQL.html#module-DBbridge.PostgreSQL.CreaTablasInstagram">DBbridge.PostgreSQL.CreaTablasInstagram module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DBbridge.PostgreSQL.html#module-DBbridge.PostgreSQL">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+<div class="section" id="module-DBbridge.ConsultasCassandra">
+<span id="dbbridge-consultascassandra-module"></span><h2>DBbridge.ConsultasCassandra module<a class="headerlink" href="#module-DBbridge.ConsultasCassandra" title="Enlazar permanentemente con este título">¶</a></h2>
+<dl class="class">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra">
+<em class="property">class </em><code class="descclassname">DBbridge.ConsultasCassandra.</code><code class="descname">ConsultasCassandra</code><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(en Python versión 2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>docstring for ConsultasCassandra</p>
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getAllIDsTweets">
+<code class="descname">getAllIDsTweets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getAllIDsTweets"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getAllIDsTweets" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Retorna todos los identificadores de todos los tweets,
+Para hacer analisis internos de la base de datos</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getAllStatusAndIDUser">
+<code class="descname">getAllStatusAndIDUser</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getAllStatusAndIDUser"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getAllStatusAndIDUser" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Retorna status y el identificador de usuario de todos los tweets.</p>
+<p>Para hacer NLP dado un usuario</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getAllStatusAndIDUserFiltrateLang">
+<code class="descname">getAllStatusAndIDUserFiltrateLang</code><span class="sig-paren">(</span><em>lang</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getAllStatusAndIDUserFiltrateLang"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getAllStatusAndIDUserFiltrateLang" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Retorna status y el identificador de usuario de todos los tweets.</p>
+<p>Para hacer NLP dado un usuario</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getAllTweetsNoRtStatusCassandra">
+<code class="descname">getAllTweetsNoRtStatusCassandra</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getAllTweetsNoRtStatusCassandra"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getAllTweetsNoRtStatusCassandra" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>retorna todos los status de los tweets que no son RT
+Para hacer NLP</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getAllTweetsNoRtStatusFiltrLangCassandra">
+<code class="descname">getAllTweetsNoRtStatusFiltrLangCassandra</code><span class="sig-paren">(</span><em>lang</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getAllTweetsNoRtStatusFiltrLangCassandra"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getAllTweetsNoRtStatusFiltrLangCassandra" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getAllUsers">
+<code class="descname">getAllUsers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getAllUsers"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getAllUsers" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>lista de usuarios,cada fila tiene id_twitter, screen_name</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getAverageRTMediaByScreenNameCassandra">
+<code class="descname">getAverageRTMediaByScreenNameCassandra</code><span class="sig-paren">(</span><em>screen_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getAverageRTMediaByScreenNameCassandra"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getAverageRTMediaByScreenNameCassandra" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getAverageRTMediaCassandra">
+<code class="descname">getAverageRTMediaCassandra</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getAverageRTMediaCassandra"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getAverageRTMediaCassandra" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getFollowersByUserID">
+<code class="descname">getFollowersByUserID</code><span class="sig-paren">(</span><em>user_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getFollowersByUserID"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getFollowersByUserID" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getFollowingByUserID">
+<code class="descname">getFollowingByUserID</code><span class="sig-paren">(</span><em>user_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getFollowingByUserID"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getFollowingByUserID" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getIDsTweetsTrainCassandra">
+<code class="descname">getIDsTweetsTrainCassandra</code><span class="sig-paren">(</span><em>topics</em>, <em>limit</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getIDsTweetsTrainCassandra"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getIDsTweetsTrainCassandra" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Realiza una busqueda en Cassandra lucene de identificadores para hacer búsquedas por topics y entrenar en el tfg</p>
+<p>Por ahora solo se usa en el TFG</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getLastTweetCollectedIdentificadorCassandra">
+<code class="descname">getLastTweetCollectedIdentificadorCassandra</code><span class="sig-paren">(</span><em>twitterUser</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getLastTweetCollectedIdentificadorCassandra"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getLastTweetCollectedIdentificadorCassandra" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>last_tweet_collected es una variable que se guarda para optimizar y mucho la descarga de usuarios 
+simplemente hace un Get de la variable o 0 si nunca se ha descargado nada</p>
+<p>Get by id_twitter</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getLastTweetCollectedScreenNameCassandra">
+<code class="descname">getLastTweetCollectedScreenNameCassandra</code><span class="sig-paren">(</span><em>twitterUser</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getLastTweetCollectedScreenNameCassandra"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getLastTweetCollectedScreenNameCassandra" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>last_tweet_collected es una variable que se guarda para optimizar y mucho la descarga de usuarios 
+simplemente hace un Get de la variable o 0 si nunca se ha descargado nada</p>
+<p>Get by screen_name</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getNumTweetsCassandra">
+<code class="descname">getNumTweetsCassandra</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getNumTweetsCassandra"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getNumTweetsCassandra" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getNumTweetsMediaCassandra">
+<code class="descname">getNumTweetsMediaCassandra</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getNumTweetsMediaCassandra"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getNumTweetsMediaCassandra" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getNumTweetsRTCassandra">
+<code class="descname">getNumTweetsRTCassandra</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getNumTweetsRTCassandra"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getNumTweetsRTCassandra" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getNumUsersCassandra">
+<code class="descname">getNumUsersCassandra</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getNumUsersCassandra"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getNumUsersCassandra" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getOrigTweetAndCreatedAtFromTweetsByListIDSTweets">
+<code class="descname">getOrigTweetAndCreatedAtFromTweetsByListIDSTweets</code><span class="sig-paren">(</span><em>lista_tweets</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getOrigTweetAndCreatedAtFromTweetsByListIDSTweets"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getOrigTweetAndCreatedAtFromTweetsByListIDSTweets" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>retorna un Array de objetos, estos objetos solo contienen el orig_tweet y created_at
+lista_tweets debe ser un array de identificadores de tweets
+Recordemos:</p>
+<blockquote>
+<div>created_at es un objeto dateTime
+orig_tweet es 0 si es un tweet del usuario, otro identificador si es un RT</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getOrigTweetAndCreatedAtFromTweetsByUser">
+<code class="descname">getOrigTweetAndCreatedAtFromTweetsByUser</code><span class="sig-paren">(</span><em>twitterUser</em>, <em>limit=10000</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getOrigTweetAndCreatedAtFromTweetsByUser"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getOrigTweetAndCreatedAtFromTweetsByUser" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>retorna un Array de objetos, estos objetos solo contienen el orig_tweet y created_at
+permite que twitterUser sea del estilo &#8220;&#64;usuario&#8221; o 123435345
+Recordemos:</p>
+<blockquote>
+<div>created_at es un objeto dateTime
+orig_tweet es 0 si es un tweet del usuario, otro identificador si es un RT</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getScreenNameByUserIDCassandra">
+<code class="descname">getScreenNameByUserIDCassandra</code><span class="sig-paren">(</span><em>user_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getScreenNameByUserIDCassandra"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getScreenNameByUserIDCassandra" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>dado un identificador, retona el screen_name de twitter,
+Retona False si no se ha encontrado</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getStatusTopicsCassandra">
+<code class="descname">getStatusTopicsCassandra</code><span class="sig-paren">(</span><em>topics</em>, <em>limit=100</em>, <em>rts=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getStatusTopicsCassandra"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getStatusTopicsCassandra" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Realiza una consulta por topic en Cassandra lucene</p>
+<dl class="docutils">
+<dt>El formato de tweet es solo el status y el idioma:</dt>
+<dd>status, lang</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getTweetByIDLargeCassandra">
+<code class="descname">getTweetByIDLargeCassandra</code><span class="sig-paren">(</span><em>identificador</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getTweetByIDLargeCassandra"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getTweetByIDLargeCassandra" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><dl class="docutils">
+<dt>Retorna la informacion de un tweet completo junto con la informacion del usuario, </dt>
+<dd>dado un identificador de tweet</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getTweetStatusCassandra">
+<code class="descname">getTweetStatusCassandra</code><span class="sig-paren">(</span><em>identificador</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getTweetStatusCassandra"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getTweetStatusCassandra" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>retorna el status del tweet (el texto) dado el identificador del tweet</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getTweetUserByTweetIDCassandra">
+<code class="descname">getTweetUserByTweetIDCassandra</code><span class="sig-paren">(</span><em>identificador</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getTweetUserByTweetIDCassandra"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getTweetUserByTweetIDCassandra" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Retorna el identificador de usuario dado un identificador de tweet</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getTweetsEntrenamientoListarCassandra">
+<code class="descname">getTweetsEntrenamientoListarCassandra</code><span class="sig-paren">(</span><em>identificadores</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getTweetsEntrenamientoListarCassandra"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getTweetsEntrenamientoListarCassandra" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Por ahora solo se usa en el tfg</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getTweetsTextAndLang">
+<code class="descname">getTweetsTextAndLang</code><span class="sig-paren">(</span><em>lang</em>, <em>limit=5000000</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getTweetsTextAndLang"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getTweetsTextAndLang" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getTweetsTopicsCassandra">
+<code class="descname">getTweetsTopicsCassandra</code><span class="sig-paren">(</span><em>topics</em>, <em>use_max_id=False</em>, <em>max_id=0</em>, <em>limit=100</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getTweetsTopicsCassandra"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getTweetsTopicsCassandra" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Realiza una consulta por topic en Cassandra lucene</p>
+<dl class="docutils">
+<dt>El formato de tweet es el común:</dt>
+<dd>status, favorite_count, retweet_count, orig_tweet, media_urls, screen_name, profile_img, id_twitter</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getTweetsUserAndPrintFile">
+<code class="descname">getTweetsUserAndPrintFile</code><span class="sig-paren">(</span><em>filename</em>, <em>twitterUser</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getTweetsUserAndPrintFile"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getTweetsUserAndPrintFile" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>obtiene los tweets y los imprime en un fichero para que se puedan hacer pruebas con los textos</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getTweetsUsuarioCassandra">
+<code class="descname">getTweetsUsuarioCassandra</code><span class="sig-paren">(</span><em>twitterUser</em>, <em>use_max_id=False</em>, <em>max_id=0</em>, <em>limit=1000</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getTweetsUsuarioCassandra"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getTweetsUsuarioCassandra" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Tweets de un usuario, informacion completa para la interfaz web y demas
+status, favorite_count, retweet_count, orig_tweet, media_urls, screen_name, profile_img, id_twitter, created_at, lang</p>
+<p>twitterUser : puede ser un identificador o un string del estilo &#8220;&#64;usuario&#8221; con o sin &#64;
+use_max_id : es por si se quiere hacer un filtro de tweets con id menor que el dado, si no se usa Cassandra tarda menos
+max_id : solo se usara si use_max_id es True
+limit : por defecto 1000 tweets, límite de tweets a retornar</p>
+<p>iterator de Row(status, favorite_count, retweet_count, orig_tweet, media_urls, screen_name, profile_img, id_twitter, created_at, lang)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getTweetsUsuarioCassandra_lang">
+<code class="descname">getTweetsUsuarioCassandra_lang</code><span class="sig-paren">(</span><em>twitterUser</em>, <em>limit=200</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getTweetsUsuarioCassandra_lang"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getTweetsUsuarioCassandra_lang" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Tweets de un usuario, solo la informacion del lenguaje</p>
+<p>twitterUser : usuario de twitter identificador o nombre
+limit : limite de tweets a devolver</p>
+<p>iterator de Row(lang)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getTweetsUsuarioCassandra_statusAndLang">
+<code class="descname">getTweetsUsuarioCassandra_statusAndLang</code><span class="sig-paren">(</span><em>twitterUser</em>, <em>limit=3200</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getTweetsUsuarioCassandra_statusAndLang"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getTweetsUsuarioCassandra_statusAndLang" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Tweets de un usuario, solo la informacion del texto y el lenguaje</p>
+<p>twitterUser : usuario de twitter identificador o nombre
+limit : limite de tweets a devolver</p>
+<p>iterator de Row(status, lang)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getTweetsUsuarioCassandra_statusAndLang_noRT">
+<code class="descname">getTweetsUsuarioCassandra_statusAndLang_noRT</code><span class="sig-paren">(</span><em>twitterUser</em>, <em>limit=3200</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getTweetsUsuarioCassandra_statusAndLang_noRT"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getTweetsUsuarioCassandra_statusAndLang_noRT" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Tweets de un usuario, solo la informacion del texto y el lenguaje</p>
+<p>twitterUser : usuario de twitter identificador o nombre
+limit : limite de tweets a devolver</p>
+<p>iterator de Row(status, lang)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getUserByIDLargeCassandra">
+<code class="descname">getUserByIDLargeCassandra</code><span class="sig-paren">(</span><em>identificador</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getUserByIDLargeCassandra"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getUserByIDLargeCassandra" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Retorna la informacion de un usuario dado un identificador, sobre todo para la interfaz web</p>
+<dl class="docutils">
+<dt>Esta informacion se compone de:</dt>
+<dd>name
+screen_name
+followers
+location
+created_at</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getUserByIDLargeCassandra_police">
+<code class="descname">getUserByIDLargeCassandra_police</code><span class="sig-paren">(</span><em>identificador</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getUserByIDLargeCassandra_police"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getUserByIDLargeCassandra_police" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Retorna la informacion de un usuario dado un identificador, sobre todo para la interfaz web de la policia</p>
+<dl class="docutils">
+<dt>Esta informacion se compone de:</dt>
+<dd>name
+screen_name
+followers
+location
+created_at</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getUserByIDShortCassandra">
+<code class="descname">getUserByIDShortCassandra</code><span class="sig-paren">(</span><em>identificador</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getUserByIDShortCassandra"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getUserByIDShortCassandra" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Retorna la informacion de un usuario dado un identificador, sobre todo para la interfaz web</p>
+<dl class="docutils">
+<dt>Esta informacion se compone de:</dt>
+<dd>screen_name
+profile_img</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getUserIDByScreenNameCassandra">
+<code class="descname">getUserIDByScreenNameCassandra</code><span class="sig-paren">(</span><em>twitterUser</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getUserIDByScreenNameCassandra"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getUserIDByScreenNameCassandra" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Retorna el user_id asociado a un &#8220;usuario&#8221;
+si no existe el usuario, retorna False</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.getUsersHasRetweetedByOrigTweetCassandra">
+<code class="descname">getUsersHasRetweetedByOrigTweetCassandra</code><span class="sig-paren">(</span><em>identificador</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.getUsersHasRetweetedByOrigTweetCassandra"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.getUsersHasRetweetedByOrigTweetCassandra" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.setLastTweetCollectedIdentificadorCassandra">
+<code class="descname">setLastTweetCollectedIdentificadorCassandra</code><span class="sig-paren">(</span><em>twitterUser</em>, <em>maximo</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.setLastTweetCollectedIdentificadorCassandra"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.setLastTweetCollectedIdentificadorCassandra" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>last_tweet_collected es una variable que se guarda para optimizar y mucho la descarga de usuarios,
+simplemente hace un set de la variable</p>
+<p>SET desde un identificador de usuario</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandra.ConsultasCassandra.setLastTweetCollectedScreenNameCassandra">
+<code class="descname">setLastTweetCollectedScreenNameCassandra</code><span class="sig-paren">(</span><em>twitterUser</em>, <em>maximo</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandra.html#ConsultasCassandra.setLastTweetCollectedScreenNameCassandra"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandra.ConsultasCassandra.setLastTweetCollectedScreenNameCassandra" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>last_tweet_collected es una variable que se guarda para optimizar y mucho la descarga de usuarios,
+simplemente hace un set de la variable</p>
+<p>SET desde un screen_name</p>
+<p>La logica final de este metodo depende de setLastTweetCollectedIdentificadorCassandra</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-DBbridge.ConsultasCassandraInstagram">
+<span id="dbbridge-consultascassandrainstagram-module"></span><h2>DBbridge.ConsultasCassandraInstagram module<a class="headerlink" href="#module-DBbridge.ConsultasCassandraInstagram" title="Enlazar permanentemente con este título">¶</a></h2>
+<dl class="class">
+<dt id="DBbridge.ConsultasCassandraInstagram.ConsultasCassandraInstagram">
+<em class="property">class </em><code class="descclassname">DBbridge.ConsultasCassandraInstagram.</code><code class="descname">ConsultasCassandraInstagram</code><a class="reference internal" href="_modules/DBbridge/ConsultasCassandraInstagram.html#ConsultasCassandraInstagram"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandraInstagram.ConsultasCassandraInstagram" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(en Python versión 2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>docstring for ConsultasCassandraInstagram</p>
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandraInstagram.ConsultasCassandraInstagram.getIDByUsername">
+<code class="descname">getIDByUsername</code><span class="sig-paren">(</span><em>username</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandraInstagram.html#ConsultasCassandraInstagram.getIDByUsername"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandraInstagram.ConsultasCassandraInstagram.getIDByUsername" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>retorna el id del usuario dado un nombre de usuario</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandraInstagram.ConsultasCassandraInstagram.getUserLongByID">
+<code class="descname">getUserLongByID</code><span class="sig-paren">(</span><em>identificador</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandraInstagram.html#ConsultasCassandraInstagram.getUserLongByID"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandraInstagram.ConsultasCassandraInstagram.getUserLongByID" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>retorna toda la informacion del usuario dado un identificador</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandraInstagram.ConsultasCassandraInstagram.getUserLongByUserName">
+<code class="descname">getUserLongByUserName</code><span class="sig-paren">(</span><em>username</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandraInstagram.html#ConsultasCassandraInstagram.getUserLongByUserName"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandraInstagram.ConsultasCassandraInstagram.getUserLongByUserName" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>retorna la informacion relevante al exterior de la app del usuario dado un nombre de usuario</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-DBbridge.ConsultasCassandraSpark">
+<span id="dbbridge-consultascassandraspark-module"></span><h2>DBbridge.ConsultasCassandraSpark module<a class="headerlink" href="#module-DBbridge.ConsultasCassandraSpark" title="Enlazar permanentemente con este título">¶</a></h2>
+<dl class="class">
+<dt id="DBbridge.ConsultasCassandraSpark.ConsultasCassandraSpark">
+<em class="property">class </em><code class="descclassname">DBbridge.ConsultasCassandraSpark.</code><code class="descname">ConsultasCassandraSpark</code><a class="reference internal" href="_modules/DBbridge/ConsultasCassandraSpark.html#ConsultasCassandraSpark"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandraSpark.ConsultasCassandraSpark" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(en Python versión 2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>docstring for ConsultasCassandraSpark</p>
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandraSpark.ConsultasCassandraSpark.getAllTweetsNoRtStatusFiltrLangCS">
+<code class="descname">getAllTweetsNoRtStatusFiltrLangCS</code><span class="sig-paren">(</span><em>lang</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandraSpark.html#ConsultasCassandraSpark.getAllTweetsNoRtStatusFiltrLangCS"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandraSpark.ConsultasCassandraSpark.getAllTweetsNoRtStatusFiltrLangCS" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandraSpark.ConsultasCassandraSpark.getAverageRTMediaByIDUserCS">
+<code class="descname">getAverageRTMediaByIDUserCS</code><span class="sig-paren">(</span><em>user_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandraSpark.html#ConsultasCassandraSpark.getAverageRTMediaByIDUserCS"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandraSpark.ConsultasCassandraSpark.getAverageRTMediaByIDUserCS" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandraSpark.ConsultasCassandraSpark.getAverageRTMediaCS">
+<code class="descname">getAverageRTMediaCS</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandraSpark.html#ConsultasCassandraSpark.getAverageRTMediaCS"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandraSpark.ConsultasCassandraSpark.getAverageRTMediaCS" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandraSpark.ConsultasCassandraSpark.getNumTweetsMediaCS">
+<code class="descname">getNumTweetsMediaCS</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandraSpark.html#ConsultasCassandraSpark.getNumTweetsMediaCS"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandraSpark.ConsultasCassandraSpark.getNumTweetsMediaCS" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandraSpark.ConsultasCassandraSpark.getNumTweetsRTCS">
+<code class="descname">getNumTweetsRTCS</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandraSpark.html#ConsultasCassandraSpark.getNumTweetsRTCS"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandraSpark.ConsultasCassandraSpark.getNumTweetsRTCS" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandraSpark.ConsultasCassandraSpark.getNumTweetsRTCSDistrib">
+<code class="descname">getNumTweetsRTCSDistrib</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandraSpark.html#ConsultasCassandraSpark.getNumTweetsRTCSDistrib"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandraSpark.ConsultasCassandraSpark.getNumTweetsRTCSDistrib" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandraSpark.ConsultasCassandraSpark.getTweetContainsTextAndLangCS">
+<code class="descname">getTweetContainsTextAndLangCS</code><span class="sig-paren">(</span><em>text</em>, <em>lang</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandraSpark.html#ConsultasCassandraSpark.getTweetContainsTextAndLangCS"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandraSpark.ConsultasCassandraSpark.getTweetContainsTextAndLangCS" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasCassandraSpark.ConsultasCassandraSpark.getTweetContainsTextCS">
+<code class="descname">getTweetContainsTextCS</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasCassandraSpark.html#ConsultasCassandraSpark.getTweetContainsTextCS"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasCassandraSpark.ConsultasCassandraSpark.getTweetContainsTextCS" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-DBbridge.ConsultasGeneral">
+<span id="dbbridge-consultasgeneral-module"></span><h2>DBbridge.ConsultasGeneral module<a class="headerlink" href="#module-DBbridge.ConsultasGeneral" title="Enlazar permanentemente con este título">¶</a></h2>
+<dl class="class">
+<dt id="DBbridge.ConsultasGeneral.ConsultasGeneral">
+<em class="property">class </em><code class="descclassname">DBbridge.ConsultasGeneral.</code><code class="descname">ConsultasGeneral</code><a class="reference internal" href="_modules/DBbridge/ConsultasGeneral.html#ConsultasGeneral"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasGeneral.ConsultasGeneral" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <a class="reference internal" href="#DBbridge.ConsultasSQL.ConsultasSQL" title="DBbridge.ConsultasSQL.ConsultasSQL"><code class="xref py py-class docutils literal"><span class="pre">DBbridge.ConsultasSQL.ConsultasSQL</span></code></a>, <a class="reference internal" href="#DBbridge.ConsultasCassandra.ConsultasCassandra" title="DBbridge.ConsultasCassandra.ConsultasCassandra"><code class="xref py py-class docutils literal"><span class="pre">DBbridge.ConsultasCassandra.ConsultasCassandra</span></code></a></p>
+<p>docstring for ConsultasGeneral</p>
+<dl class="method">
+<dt id="DBbridge.ConsultasGeneral.ConsultasGeneral.changeClaseTweet">
+<code class="descname">changeClaseTweet</code><span class="sig-paren">(</span><em>identificador</em>, <em>clase</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasGeneral.html#ConsultasGeneral.changeClaseTweet"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasGeneral.ConsultasGeneral.changeClaseTweet" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasGeneral.ConsultasGeneral.creaEntrenamientoRetID">
+<code class="descname">creaEntrenamientoRetID</code><span class="sig-paren">(</span><em>tipo</em>, <em>id_lista_entrenamiento</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasGeneral.html#ConsultasGeneral.creaEntrenamientoRetID"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasGeneral.ConsultasGeneral.creaEntrenamientoRetID" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasGeneral.ConsultasGeneral.creaListaEntrenamiento">
+<code class="descname">creaListaEntrenamiento</code><span class="sig-paren">(</span><em>nombre</em>, <em>id_usuario</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasGeneral.html#ConsultasGeneral.creaListaEntrenamiento"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasGeneral.ConsultasGeneral.creaListaEntrenamiento" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasGeneral.ConsultasGeneral.deleteListaEntrenamiento">
+<code class="descname">deleteListaEntrenamiento</code><span class="sig-paren">(</span><em>identificador</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasGeneral.html#ConsultasGeneral.deleteListaEntrenamiento"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasGeneral.ConsultasGeneral.deleteListaEntrenamiento" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasGeneral.ConsultasGeneral.editEntrenamiento">
+<code class="descname">editEntrenamiento</code><span class="sig-paren">(</span><em>identificador</em>, <em>ficheroARFF</em>, <em>ficheroJSON</em>, <em>error</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasGeneral.html#ConsultasGeneral.editEntrenamiento"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasGeneral.ConsultasGeneral.editEntrenamiento" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasGeneral.ConsultasGeneral.editTweetAnalizado">
+<code class="descname">editTweetAnalizado</code><span class="sig-paren">(</span><em>id_tweet</em>, <em>clase</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasGeneral.html#ConsultasGeneral.editTweetAnalizado"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasGeneral.ConsultasGeneral.editTweetAnalizado" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasGeneral.ConsultasGeneral.getBusquedaFromIdBusqueda">
+<code class="descname">getBusquedaFromIdBusqueda</code><span class="sig-paren">(</span><em>idbusqueda</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasGeneral.html#ConsultasGeneral.getBusquedaFromIdBusqueda"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasGeneral.ConsultasGeneral.getBusquedaFromIdBusqueda" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasGeneral.ConsultasGeneral.getClaseTrainID">
+<code class="descname">getClaseTrainID</code><span class="sig-paren">(</span><em>identificador</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasGeneral.html#ConsultasGeneral.getClaseTrainID"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasGeneral.ConsultasGeneral.getClaseTrainID" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasGeneral.ConsultasGeneral.getFilesLastTrainTweet">
+<code class="descname">getFilesLastTrainTweet</code><span class="sig-paren">(</span><em>id_lista</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasGeneral.html#ConsultasGeneral.getFilesLastTrainTweet"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasGeneral.ConsultasGeneral.getFilesLastTrainTweet" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasGeneral.ConsultasGeneral.getIDTweetsTrainList">
+<code class="descname">getIDTweetsTrainList</code><span class="sig-paren">(</span><em>id_lista_entrenamiento</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasGeneral.html#ConsultasGeneral.getIDTweetsTrainList"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasGeneral.ConsultasGeneral.getIDTweetsTrainList" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasGeneral.ConsultasGeneral.getIDsANDClassEntrenamiento">
+<code class="descname">getIDsANDClassEntrenamiento</code><span class="sig-paren">(</span><em>identificador_lista</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasGeneral.html#ConsultasGeneral.getIDsANDClassEntrenamiento"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasGeneral.ConsultasGeneral.getIDsANDClassEntrenamiento" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasGeneral.ConsultasGeneral.getIDsTweetsEnTrain">
+<code class="descname">getIDsTweetsEnTrain</code><span class="sig-paren">(</span><em>lista_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasGeneral.html#ConsultasGeneral.getIDsTweetsEnTrain"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasGeneral.ConsultasGeneral.getIDsTweetsEnTrain" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Retorna un diccionario {} de IDs para que sea sencillo hacer un filtrado</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasGeneral.ConsultasGeneral.getIDsTweetsTrain">
+<code class="descname">getIDsTweetsTrain</code><span class="sig-paren">(</span><em>topics</em>, <em>limit</em>, <em>lista_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasGeneral.html#ConsultasGeneral.getIDsTweetsTrain"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasGeneral.ConsultasGeneral.getIDsTweetsTrain" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasGeneral.ConsultasGeneral.getIdListaEntrenamientoByIDSearch">
+<code class="descname">getIdListaEntrenamientoByIDSearch</code><span class="sig-paren">(</span><em>id_search</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasGeneral.html#ConsultasGeneral.getIdListaEntrenamientoByIDSearch"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasGeneral.ConsultasGeneral.getIdListaEntrenamientoByIDSearch" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasGeneral.ConsultasGeneral.getLastTweetCollectedIdentificador">
+<code class="descname">getLastTweetCollectedIdentificador</code><span class="sig-paren">(</span><em>identificador</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasGeneral.html#ConsultasGeneral.getLastTweetCollectedIdentificador"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasGeneral.ConsultasGeneral.getLastTweetCollectedIdentificador" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasGeneral.ConsultasGeneral.getLastTweetCollectedScreenName">
+<code class="descname">getLastTweetCollectedScreenName</code><span class="sig-paren">(</span><em>screen_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasGeneral.html#ConsultasGeneral.getLastTweetCollectedScreenName"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasGeneral.ConsultasGeneral.getLastTweetCollectedScreenName" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasGeneral.ConsultasGeneral.getListasEntrenamiento">
+<code class="descname">getListasEntrenamiento</code><span class="sig-paren">(</span><em>id_usuario</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasGeneral.html#ConsultasGeneral.getListasEntrenamiento"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasGeneral.ConsultasGeneral.getListasEntrenamiento" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasGeneral.ConsultasGeneral.getQueryFromSearchID">
+<code class="descname">getQueryFromSearchID</code><span class="sig-paren">(</span><em>searchID</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasGeneral.html#ConsultasGeneral.getQueryFromSearchID"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasGeneral.ConsultasGeneral.getQueryFromSearchID" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasGeneral.ConsultasGeneral.getScreenNameByUserID">
+<code class="descname">getScreenNameByUserID</code><span class="sig-paren">(</span><em>identificador</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasGeneral.html#ConsultasGeneral.getScreenNameByUserID"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasGeneral.ConsultasGeneral.getScreenNameByUserID" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasGeneral.ConsultasGeneral.getSearchIDFromIDTarea">
+<code class="descname">getSearchIDFromIDTarea</code><span class="sig-paren">(</span><em>idTarea</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasGeneral.html#ConsultasGeneral.getSearchIDFromIDTarea"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasGeneral.ConsultasGeneral.getSearchIDFromIDTarea" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasGeneral.ConsultasGeneral.getTareasPendientesTotal">
+<code class="descname">getTareasPendientesTotal</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasGeneral.html#ConsultasGeneral.getTareasPendientesTotal"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasGeneral.ConsultasGeneral.getTareasPendientesTotal" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasGeneral.ConsultasGeneral.getTareasTerminadasTotal">
+<code class="descname">getTareasTerminadasTotal</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasGeneral.html#ConsultasGeneral.getTareasTerminadasTotal"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasGeneral.ConsultasGeneral.getTareasTerminadasTotal" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasGeneral.ConsultasGeneral.getTweetByIDLarge">
+<code class="descname">getTweetByIDLarge</code><span class="sig-paren">(</span><em>identificador</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasGeneral.html#ConsultasGeneral.getTweetByIDLarge"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasGeneral.ConsultasGeneral.getTweetByIDLarge" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasGeneral.ConsultasGeneral.getTweetStatus">
+<code class="descname">getTweetStatus</code><span class="sig-paren">(</span><em>identificador</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasGeneral.html#ConsultasGeneral.getTweetStatus"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasGeneral.ConsultasGeneral.getTweetStatus" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasGeneral.ConsultasGeneral.getTweetsAndClassTrain">
+<code class="descname">getTweetsAndClassTrain</code><span class="sig-paren">(</span><em>id_lista</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasGeneral.html#ConsultasGeneral.getTweetsAndClassTrain"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasGeneral.ConsultasGeneral.getTweetsAndClassTrain" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasGeneral.ConsultasGeneral.getTweetsIdBusquedaNoAnalizada">
+<code class="descname">getTweetsIdBusquedaNoAnalizada</code><span class="sig-paren">(</span><em>searchID</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasGeneral.html#ConsultasGeneral.getTweetsIdBusquedaNoAnalizada"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasGeneral.ConsultasGeneral.getTweetsIdBusquedaNoAnalizada" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasGeneral.ConsultasGeneral.getTweetsIdBusquedaTodos">
+<code class="descname">getTweetsIdBusquedaTodos</code><span class="sig-paren">(</span><em>searchID</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasGeneral.html#ConsultasGeneral.getTweetsIdBusquedaTodos"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasGeneral.ConsultasGeneral.getTweetsIdBusquedaTodos" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasGeneral.ConsultasGeneral.getUserIDByScreenName">
+<code class="descname">getUserIDByScreenName</code><span class="sig-paren">(</span><em>twitterUser</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasGeneral.html#ConsultasGeneral.getUserIDByScreenName"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasGeneral.ConsultasGeneral.getUserIDByScreenName" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasGeneral.ConsultasGeneral.insertTweetAnalizado">
+<code class="descname">insertTweetAnalizado</code><span class="sig-paren">(</span><em>id_tweet</em>, <em>clase</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasGeneral.html#ConsultasGeneral.insertTweetAnalizado"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasGeneral.ConsultasGeneral.insertTweetAnalizado" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasGeneral.ConsultasGeneral.isListasEntrenamientoFromUser">
+<code class="descname">isListasEntrenamientoFromUser</code><span class="sig-paren">(</span><em>id_user</em>, <em>id_lista</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasGeneral.html#ConsultasGeneral.isListasEntrenamientoFromUser"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasGeneral.ConsultasGeneral.isListasEntrenamientoFromUser" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasGeneral.ConsultasGeneral.setAppSearchTime">
+<code class="descname">setAppSearchTime</code><span class="sig-paren">(</span><em>searchID</em>, <em>time</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasGeneral.html#ConsultasGeneral.setAppSearchTime"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasGeneral.ConsultasGeneral.setAppSearchTime" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasGeneral.ConsultasGeneral.setLastTweetCollectedIdentificador">
+<code class="descname">setLastTweetCollectedIdentificador</code><span class="sig-paren">(</span><em>identificador</em>, <em>maximo</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasGeneral.html#ConsultasGeneral.setLastTweetCollectedIdentificador"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasGeneral.ConsultasGeneral.setLastTweetCollectedIdentificador" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasGeneral.ConsultasGeneral.setLastTweetCollectedScreenName">
+<code class="descname">setLastTweetCollectedScreenName</code><span class="sig-paren">(</span><em>screen_name</em>, <em>maximo</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasGeneral.html#ConsultasGeneral.setLastTweetCollectedScreenName"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasGeneral.ConsultasGeneral.setLastTweetCollectedScreenName" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasGeneral.ConsultasGeneral.setTweetTrainID">
+<code class="descname">setTweetTrainID</code><span class="sig-paren">(</span><em>identificador</em>, <em>clase</em>, <em>id_lista</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasGeneral.html#ConsultasGeneral.setTweetTrainID"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasGeneral.ConsultasGeneral.setTweetTrainID" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-DBbridge.ConsultasInstagram">
+<span id="dbbridge-consultasinstagram-module"></span><h2>DBbridge.ConsultasInstagram module<a class="headerlink" href="#module-DBbridge.ConsultasInstagram" title="Enlazar permanentemente con este título">¶</a></h2>
+<dl class="class">
+<dt id="DBbridge.ConsultasInstagram.ConsultasInstagram">
+<em class="property">class </em><code class="descclassname">DBbridge.ConsultasInstagram.</code><code class="descname">ConsultasInstagram</code><a class="reference internal" href="_modules/DBbridge/ConsultasInstagram.html#ConsultasInstagram"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasInstagram.ConsultasInstagram" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <a class="reference internal" href="#DBbridge.ConsultasCassandraInstagram.ConsultasCassandraInstagram" title="DBbridge.ConsultasCassandraInstagram.ConsultasCassandraInstagram"><code class="xref py py-class docutils literal"><span class="pre">DBbridge.ConsultasCassandraInstagram.ConsultasCassandraInstagram</span></code></a></p>
+<p>docstring for ConsultasInstagram</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-DBbridge.ConsultasNeo4j">
+<span id="dbbridge-consultasneo4j-module"></span><h2>DBbridge.ConsultasNeo4j module<a class="headerlink" href="#module-DBbridge.ConsultasNeo4j" title="Enlazar permanentemente con este título">¶</a></h2>
+<dl class="class">
+<dt id="DBbridge.ConsultasNeo4j.ConsultasNeo4j">
+<em class="property">class </em><code class="descclassname">DBbridge.ConsultasNeo4j.</code><code class="descname">ConsultasNeo4j</code><a class="reference internal" href="_modules/DBbridge/ConsultasNeo4j.html#ConsultasNeo4j"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasNeo4j.ConsultasNeo4j" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(en Python versión 2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>docstring for ConsultasNeo4j</p>
+<dl class="method">
+<dt id="DBbridge.ConsultasNeo4j.ConsultasNeo4j.getListaIDsFavsByUserID">
+<code class="descname">getListaIDsFavsByUserID</code><span class="sig-paren">(</span><em>user_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasNeo4j.html#ConsultasNeo4j.getListaIDsFavsByUserID"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasNeo4j.ConsultasNeo4j.getListaIDsFavsByUserID" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasNeo4j.ConsultasNeo4j.getListaIDsSeguidoresByUserID">
+<code class="descname">getListaIDsSeguidoresByUserID</code><span class="sig-paren">(</span><em>user_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasNeo4j.html#ConsultasNeo4j.getListaIDsSeguidoresByUserID"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasNeo4j.ConsultasNeo4j.getListaIDsSeguidoresByUserID" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasNeo4j.ConsultasNeo4j.getListaIDsSiguiendoByUserID">
+<code class="descname">getListaIDsSiguiendoByUserID</code><span class="sig-paren">(</span><em>user_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasNeo4j.html#ConsultasNeo4j.getListaIDsSiguiendoByUserID"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasNeo4j.ConsultasNeo4j.getListaIDsSiguiendoByUserID" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasNeo4j.ConsultasNeo4j.getNumberOfUsers">
+<code class="descname">getNumberOfUsers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasNeo4j.html#ConsultasNeo4j.getNumberOfUsers"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasNeo4j.ConsultasNeo4j.getNumberOfUsers" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasNeo4j.ConsultasNeo4j.getSiguiendoOrSeguidosByUserID">
+<code class="descname">getSiguiendoOrSeguidosByUserID</code><span class="sig-paren">(</span><em>user_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasNeo4j.html#ConsultasNeo4j.getSiguiendoOrSeguidosByUserID"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasNeo4j.ConsultasNeo4j.getSiguiendoOrSeguidosByUserID" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasNeo4j.ConsultasNeo4j.getUsersFavTweetByID">
+<code class="descname">getUsersFavTweetByID</code><span class="sig-paren">(</span><em>tweet_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasNeo4j.html#ConsultasNeo4j.getUsersFavTweetByID"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasNeo4j.ConsultasNeo4j.getUsersFavTweetByID" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-DBbridge.ConsultasSQL">
+<span id="dbbridge-consultassql-module"></span><h2>DBbridge.ConsultasSQL module<a class="headerlink" href="#module-DBbridge.ConsultasSQL" title="Enlazar permanentemente con este título">¶</a></h2>
+<dl class="class">
+<dt id="DBbridge.ConsultasSQL.ConsultasSQL">
+<em class="property">class </em><code class="descclassname">DBbridge.ConsultasSQL.</code><code class="descname">ConsultasSQL</code><a class="reference internal" href="_modules/DBbridge/ConsultasSQL.html#ConsultasSQL"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasSQL.ConsultasSQL" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(en Python versión 2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>docstring for ConsultasSQL</p>
+<dl class="method">
+<dt id="DBbridge.ConsultasSQL.ConsultasSQL.getIDsTweetsTrainSQL">
+<code class="descname">getIDsTweetsTrainSQL</code><span class="sig-paren">(</span><em>topics</em>, <em>limit</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasSQL.html#ConsultasSQL.getIDsTweetsTrainSQL"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasSQL.ConsultasSQL.getIDsTweetsTrainSQL" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasSQL.ConsultasSQL.getLastTweetCollectedScreenNameSQL">
+<code class="descname">getLastTweetCollectedScreenNameSQL</code><span class="sig-paren">(</span><em>screen_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasSQL.html#ConsultasSQL.getLastTweetCollectedScreenNameSQL"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasSQL.ConsultasSQL.getLastTweetCollectedScreenNameSQL" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasSQL.ConsultasSQL.getNumTweetsNoMediaSQL">
+<code class="descname">getNumTweetsNoMediaSQL</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasSQL.html#ConsultasSQL.getNumTweetsNoMediaSQL"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasSQL.ConsultasSQL.getNumTweetsNoMediaSQL" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasSQL.ConsultasSQL.getNumTweetsNoRTSQL">
+<code class="descname">getNumTweetsNoRTSQL</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasSQL.html#ConsultasSQL.getNumTweetsNoRTSQL"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasSQL.ConsultasSQL.getNumTweetsNoRTSQL" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasSQL.ConsultasSQL.getNumTweetsSiMediaSQL">
+<code class="descname">getNumTweetsSiMediaSQL</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasSQL.html#ConsultasSQL.getNumTweetsSiMediaSQL"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasSQL.ConsultasSQL.getNumTweetsSiMediaSQL" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasSQL.ConsultasSQL.getNumTweetsSiRT">
+<code class="descname">getNumTweetsSiRT</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasSQL.html#ConsultasSQL.getNumTweetsSiRT"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasSQL.ConsultasSQL.getNumTweetsSiRT" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasSQL.ConsultasSQL.getTweetByIDLargeSQL">
+<code class="descname">getTweetByIDLargeSQL</code><span class="sig-paren">(</span><em>identificador</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasSQL.html#ConsultasSQL.getTweetByIDLargeSQL"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasSQL.ConsultasSQL.getTweetByIDLargeSQL" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasSQL.ConsultasSQL.getTweetStatusSQL">
+<code class="descname">getTweetStatusSQL</code><span class="sig-paren">(</span><em>identificador</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasSQL.html#ConsultasSQL.getTweetStatusSQL"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasSQL.ConsultasSQL.getTweetStatusSQL" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasSQL.ConsultasSQL.getTweetsAndClassTrainSQL">
+<code class="descname">getTweetsAndClassTrainSQL</code><span class="sig-paren">(</span><em>id_lista</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasSQL.html#ConsultasSQL.getTweetsAndClassTrainSQL"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasSQL.ConsultasSQL.getTweetsAndClassTrainSQL" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasSQL.ConsultasSQL.getTweetsEntrenamientoListarSQL">
+<code class="descname">getTweetsEntrenamientoListarSQL</code><span class="sig-paren">(</span><em>identificador</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasSQL.html#ConsultasSQL.getTweetsEntrenamientoListarSQL"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasSQL.ConsultasSQL.getTweetsEntrenamientoListarSQL" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasSQL.ConsultasSQL.getTweetsTopicsSQL">
+<code class="descname">getTweetsTopicsSQL</code><span class="sig-paren">(</span><em>topics</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasSQL.html#ConsultasSQL.getTweetsTopicsSQL"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasSQL.ConsultasSQL.getTweetsTopicsSQL" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasSQL.ConsultasSQL.getTweetsUsuarioSQL">
+<code class="descname">getTweetsUsuarioSQL</code><span class="sig-paren">(</span><em>twitterUser</em>, <em>use_max_id=False</em>, <em>max_id=0</em>, <em>limit=1000</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasSQL.html#ConsultasSQL.getTweetsUsuarioSQL"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasSQL.ConsultasSQL.getTweetsUsuarioSQL" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasSQL.ConsultasSQL.getUserIDByScreenNameSQL">
+<code class="descname">getUserIDByScreenNameSQL</code><span class="sig-paren">(</span><em>twitterUser</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasSQL.html#ConsultasSQL.getUserIDByScreenNameSQL"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasSQL.ConsultasSQL.getUserIDByScreenNameSQL" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasSQL.ConsultasSQL.setLastTweetCollectedScreenNameSQL">
+<code class="descname">setLastTweetCollectedScreenNameSQL</code><span class="sig-paren">(</span><em>screen_name</em>, <em>maximo</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasSQL.html#ConsultasSQL.setLastTweetCollectedScreenNameSQL"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasSQL.ConsultasSQL.setLastTweetCollectedScreenNameSQL" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-DBbridge.ConsultasSQL_police">
+<span id="dbbridge-consultassql-police-module"></span><h2>DBbridge.ConsultasSQL_police module<a class="headerlink" href="#module-DBbridge.ConsultasSQL_police" title="Enlazar permanentemente con este título">¶</a></h2>
+<dl class="class">
+<dt id="DBbridge.ConsultasSQL_police.ConsultasSQL_police">
+<em class="property">class </em><code class="descclassname">DBbridge.ConsultasSQL_police.</code><code class="descname">ConsultasSQL_police</code><a class="reference internal" href="_modules/DBbridge/ConsultasSQL_police.html#ConsultasSQL_police"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasSQL_police.ConsultasSQL_police" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(en Python versión 2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>docstring for ConsultasSQL</p>
+<dl class="method">
+<dt id="DBbridge.ConsultasSQL_police.ConsultasSQL_police.getEmailFromUser">
+<code class="descname">getEmailFromUser</code><span class="sig-paren">(</span><em>id_user</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasSQL_police.html#ConsultasSQL_police.getEmailFromUser"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasSQL_police.ConsultasSQL_police.getEmailFromUser" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasSQL_police.ConsultasSQL_police.getIdUserFromTask">
+<code class="descname">getIdUserFromTask</code><span class="sig-paren">(</span><em>id_task</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasSQL_police.html#ConsultasSQL_police.getIdUserFromTask"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasSQL_police.ConsultasSQL_police.getIdUserFromTask" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasSQL_police.ConsultasSQL_police.getSendEmailFromTask">
+<code class="descname">getSendEmailFromTask</code><span class="sig-paren">(</span><em>id_task</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasSQL_police.html#ConsultasSQL_police.getSendEmailFromTask"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasSQL_police.ConsultasSQL_police.getSendEmailFromTask" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasSQL_police.ConsultasSQL_police.getTipoTarea">
+<code class="descname">getTipoTarea</code><span class="sig-paren">(</span><em>id_task</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasSQL_police.html#ConsultasSQL_police.getTipoTarea"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasSQL_police.ConsultasSQL_police.getTipoTarea" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasSQL_police.ConsultasSQL_police.setFinishedTask">
+<code class="descname">setFinishedTask</code><span class="sig-paren">(</span><em>id_task</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasSQL_police.html#ConsultasSQL_police.setFinishedTask"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasSQL_police.ConsultasSQL_police.setFinishedTask" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-DBbridge.ConsultasWeb">
+<span id="dbbridge-consultasweb-module"></span><h2>DBbridge.ConsultasWeb module<a class="headerlink" href="#module-DBbridge.ConsultasWeb" title="Enlazar permanentemente con este título">¶</a></h2>
+<dl class="class">
+<dt id="DBbridge.ConsultasWeb.ConsultasWeb">
+<em class="property">class </em><code class="descclassname">DBbridge.ConsultasWeb.</code><code class="descname">ConsultasWeb</code><a class="reference internal" href="_modules/DBbridge/ConsultasWeb.html#ConsultasWeb"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasWeb.ConsultasWeb" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <a class="reference internal" href="#DBbridge.ConsultasGeneral.ConsultasGeneral" title="DBbridge.ConsultasGeneral.ConsultasGeneral"><code class="xref py py-class docutils literal"><span class="pre">DBbridge.ConsultasGeneral.ConsultasGeneral</span></code></a></p>
+<p>docstring for ConsultasWeb</p>
+<dl class="method">
+<dt id="DBbridge.ConsultasWeb.ConsultasWeb.altaTarea">
+<code class="descname">altaTarea</code><span class="sig-paren">(</span><em>tipo</em>, <em>id_search</em>, <em>tiempo</em>, <em>id_lista</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasWeb.html#ConsultasWeb.altaTarea"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasWeb.ConsultasWeb.altaTarea" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasWeb.ConsultasWeb.countTweetsRecuperadosTarea">
+<code class="descname">countTweetsRecuperadosTarea</code><span class="sig-paren">(</span><em>identificador</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasWeb.html#ConsultasWeb.countTweetsRecuperadosTarea"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasWeb.ConsultasWeb.countTweetsRecuperadosTarea" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasWeb.ConsultasWeb.getEstadisticaUsoAplicacionConsultas">
+<code class="descname">getEstadisticaUsoAplicacionConsultas</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasWeb.html#ConsultasWeb.getEstadisticaUsoAplicacionConsultas"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasWeb.ConsultasWeb.getEstadisticaUsoAplicacionConsultas" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasWeb.ConsultasWeb.getNumTweetsMedia">
+<code class="descname">getNumTweetsMedia</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasWeb.html#ConsultasWeb.getNumTweetsMedia"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasWeb.ConsultasWeb.getNumTweetsMedia" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasWeb.ConsultasWeb.getNumTweetsRT">
+<code class="descname">getNumTweetsRT</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasWeb.html#ConsultasWeb.getNumTweetsRT"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasWeb.ConsultasWeb.getNumTweetsRT" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasWeb.ConsultasWeb.getPorcentajeFalloTrainTweets">
+<code class="descname">getPorcentajeFalloTrainTweets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasWeb.html#ConsultasWeb.getPorcentajeFalloTrainTweets"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasWeb.ConsultasWeb.getPorcentajeFalloTrainTweets" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasWeb.ConsultasWeb.getTareasPendientesListado">
+<code class="descname">getTareasPendientesListado</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasWeb.html#ConsultasWeb.getTareasPendientesListado"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasWeb.ConsultasWeb.getTareasPendientesListado" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasWeb.ConsultasWeb.getTareasTerminadasListado">
+<code class="descname">getTareasTerminadasListado</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasWeb.html#ConsultasWeb.getTareasTerminadasListado"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasWeb.ConsultasWeb.getTareasTerminadasListado" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasWeb.ConsultasWeb.getTipoTarea">
+<code class="descname">getTipoTarea</code><span class="sig-paren">(</span><em>identificador</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasWeb.html#ConsultasWeb.getTipoTarea"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasWeb.ConsultasWeb.getTipoTarea" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasWeb.ConsultasWeb.getTweetByID">
+<code class="descname">getTweetByID</code><span class="sig-paren">(</span><em>identificador</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasWeb.html#ConsultasWeb.getTweetByID"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasWeb.ConsultasWeb.getTweetByID" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasWeb.ConsultasWeb.getTweetsAlDiaTarea">
+<code class="descname">getTweetsAlDiaTarea</code><span class="sig-paren">(</span><em>identificador</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasWeb.html#ConsultasWeb.getTweetsAlDiaTarea"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasWeb.ConsultasWeb.getTweetsAlDiaTarea" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasWeb.ConsultasWeb.getTweetsAlDiaTareaAnalisis">
+<code class="descname">getTweetsAlDiaTareaAnalisis</code><span class="sig-paren">(</span><em>identificador</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasWeb.html#ConsultasWeb.getTweetsAlDiaTareaAnalisis"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasWeb.ConsultasWeb.getTweetsAlDiaTareaAnalisis" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasWeb.ConsultasWeb.getTweetsAsincSearc">
+<code class="descname">getTweetsAsincSearc</code><span class="sig-paren">(</span><em>searchID</em>, <em>last_id</em>, <em>limit</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasWeb.html#ConsultasWeb.getTweetsAsincSearc"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasWeb.ConsultasWeb.getTweetsAsincSearc" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasWeb.ConsultasWeb.getTweetsEntrenamientoListar">
+<code class="descname">getTweetsEntrenamientoListar</code><span class="sig-paren">(</span><em>identificador</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasWeb.html#ConsultasWeb.getTweetsEntrenamientoListar"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasWeb.ConsultasWeb.getTweetsEntrenamientoListar" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasWeb.ConsultasWeb.getTweetsRecuperadosTareaAnalisisID">
+<code class="descname">getTweetsRecuperadosTareaAnalisisID</code><span class="sig-paren">(</span><em>identificador</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasWeb.html#ConsultasWeb.getTweetsRecuperadosTareaAnalisisID"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasWeb.ConsultasWeb.getTweetsRecuperadosTareaAnalisisID" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasWeb.ConsultasWeb.getTweetsRecuperadosTareaID">
+<code class="descname">getTweetsRecuperadosTareaID</code><span class="sig-paren">(</span><em>identificador</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasWeb.html#ConsultasWeb.getTweetsRecuperadosTareaID"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasWeb.ConsultasWeb.getTweetsRecuperadosTareaID" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasWeb.ConsultasWeb.getTweetsTopics">
+<code class="descname">getTweetsTopics</code><span class="sig-paren">(</span><em>topics</em>, <em>use_max_id=False</em>, <em>max_id=0</em>, <em>limit=100</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasWeb.html#ConsultasWeb.getTweetsTopics"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasWeb.ConsultasWeb.getTweetsTopics" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasWeb.ConsultasWeb.getTweetsUsuario">
+<code class="descname">getTweetsUsuario</code><span class="sig-paren">(</span><em>twitterUser</em>, <em>use_max_id=False</em>, <em>max_id=0</em>, <em>limit=1000</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasWeb.html#ConsultasWeb.getTweetsUsuario"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasWeb.ConsultasWeb.getTweetsUsuario" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasWeb.ConsultasWeb.getUserConexionData">
+<code class="descname">getUserConexionData</code><span class="sig-paren">(</span><em>username</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasWeb.html#ConsultasWeb.getUserConexionData"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasWeb.ConsultasWeb.getUserConexionData" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasWeb.ConsultasWeb.insertNewApiKey">
+<code class="descname">insertNewApiKey</code><span class="sig-paren">(</span><em>apik</em>, <em>apiks</em>, <em>acstoken</em>, <em>acstokens</em>, <em>oauth</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasWeb.html#ConsultasWeb.insertNewApiKey"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasWeb.ConsultasWeb.insertNewApiKey" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasWeb.ConsultasWeb.insertNewUser">
+<code class="descname">insertNewUser</code><span class="sig-paren">(</span><em>name</em>, <em>mail</em>, <em>inst</em>, <em>role</em>, <em>username</em>, <em>pasw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasWeb.html#ConsultasWeb.insertNewUser"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasWeb.ConsultasWeb.insertNewUser" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasWeb.ConsultasWeb.isAdministrator">
+<code class="descname">isAdministrator</code><span class="sig-paren">(</span><em>user_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasWeb.html#ConsultasWeb.isAdministrator"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasWeb.ConsultasWeb.isAdministrator" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasWeb.ConsultasWeb.isFinishedAsincSearch">
+<code class="descname">isFinishedAsincSearch</code><span class="sig-paren">(</span><em>searchID</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasWeb.html#ConsultasWeb.isFinishedAsincSearch"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasWeb.ConsultasWeb.isFinishedAsincSearch" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.ConsultasWeb.ConsultasWeb.setAppSearchAndGetId">
+<code class="descname">setAppSearchAndGetId</code><span class="sig-paren">(</span><em>search_string</em>, <em>user_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/ConsultasWeb.html#ConsultasWeb.setAppSearchAndGetId"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.ConsultasWeb.ConsultasWeb.setAppSearchAndGetId" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-DBbridge.Escritor">
+<span id="dbbridge-escritor-module"></span><h2>DBbridge.Escritor module<a class="headerlink" href="#module-DBbridge.Escritor" title="Enlazar permanentemente con este título">¶</a></h2>
+<dl class="class">
+<dt id="DBbridge.Escritor.Escritor">
+<em class="property">class </em><code class="descclassname">DBbridge.Escritor.</code><code class="descname">Escritor</code><span class="sig-paren">(</span><em>searchID</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/Escritor.html#Escritor"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.Escritor.Escritor" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(en Python versión 2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>docstring for Escritor</p>
+<dl class="method">
+<dt id="DBbridge.Escritor.Escritor.escribe">
+<code class="descname">escribe</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/Escritor.html#Escritor.escribe"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.Escritor.Escritor.escribe" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-DBbridge.EscritorBusquedaTweets">
+<span id="dbbridge-escritorbusquedatweets-module"></span><h2>DBbridge.EscritorBusquedaTweets module<a class="headerlink" href="#module-DBbridge.EscritorBusquedaTweets" title="Enlazar permanentemente con este título">¶</a></h2>
+<dl class="class">
+<dt id="DBbridge.EscritorBusquedaTweets.EscritorBusquedaTweets">
+<em class="property">class </em><code class="descclassname">DBbridge.EscritorBusquedaTweets.</code><code class="descname">EscritorBusquedaTweets</code><span class="sig-paren">(</span><em>searchID</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/EscritorBusquedaTweets.html#EscritorBusquedaTweets"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.EscritorBusquedaTweets.EscritorBusquedaTweets" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <a class="reference internal" href="#DBbridge.Escritor.Escritor" title="DBbridge.Escritor.Escritor"><code class="xref py py-class docutils literal"><span class="pre">DBbridge.Escritor.Escritor</span></code></a></p>
+<p>docstring for EscritorTweets</p>
+<dl class="method">
+<dt id="DBbridge.EscritorBusquedaTweets.EscritorBusquedaTweets.escribe">
+<code class="descname">escribe</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/EscritorBusquedaTweets.html#EscritorBusquedaTweets.escribe"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.EscritorBusquedaTweets.EscritorBusquedaTweets.escribe" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.EscritorBusquedaTweets.EscritorBusquedaTweets.insertaJoinTable">
+<code class="descname">insertaJoinTable</code><span class="sig-paren">(</span><em>id_search</em>, <em>id_tweet</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/EscritorBusquedaTweets.html#EscritorBusquedaTweets.insertaJoinTable"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.EscritorBusquedaTweets.EscritorBusquedaTweets.insertaJoinTable" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-DBbridge.EscritorFavoritosNeo4j">
+<span id="dbbridge-escritorfavoritosneo4j-module"></span><h2>DBbridge.EscritorFavoritosNeo4j module<a class="headerlink" href="#module-DBbridge.EscritorFavoritosNeo4j" title="Enlazar permanentemente con este título">¶</a></h2>
+<dl class="class">
+<dt id="DBbridge.EscritorFavoritosNeo4j.EscritorFavoritosNeo4j">
+<em class="property">class </em><code class="descclassname">DBbridge.EscritorFavoritosNeo4j.</code><code class="descname">EscritorFavoritosNeo4j</code><span class="sig-paren">(</span><em>searchID</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/EscritorFavoritosNeo4j.html#EscritorFavoritosNeo4j"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.EscritorFavoritosNeo4j.EscritorFavoritosNeo4j" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <a class="reference internal" href="#DBbridge.Escritor.Escritor" title="DBbridge.Escritor.Escritor"><code class="xref py py-class docutils literal"><span class="pre">DBbridge.Escritor.Escritor</span></code></a></p>
+<p>docstring for EscritorFavoritosNeo4j</p>
+<dl class="method">
+<dt id="DBbridge.EscritorFavoritosNeo4j.EscritorFavoritosNeo4j.escribe">
+<code class="descname">escribe</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/EscritorFavoritosNeo4j.html#EscritorFavoritosNeo4j.escribe"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.EscritorFavoritosNeo4j.EscritorFavoritosNeo4j.escribe" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.EscritorFavoritosNeo4j.EscritorFavoritosNeo4j.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>nodos_crear</em>, <em>tweets_crear</em>, <em>relaciones</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/EscritorFavoritosNeo4j.html#EscritorFavoritosNeo4j.write"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.EscritorFavoritosNeo4j.EscritorFavoritosNeo4j.write" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-DBbridge.EscritorSeguidoresNeo4j">
+<span id="dbbridge-escritorseguidoresneo4j-module"></span><h2>DBbridge.EscritorSeguidoresNeo4j module<a class="headerlink" href="#module-DBbridge.EscritorSeguidoresNeo4j" title="Enlazar permanentemente con este título">¶</a></h2>
+<dl class="class">
+<dt id="DBbridge.EscritorSeguidoresNeo4j.EscritorSeguidoresNeo4j">
+<em class="property">class </em><code class="descclassname">DBbridge.EscritorSeguidoresNeo4j.</code><code class="descname">EscritorSeguidoresNeo4j</code><span class="sig-paren">(</span><em>searchID</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/EscritorSeguidoresNeo4j.html#EscritorSeguidoresNeo4j"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.EscritorSeguidoresNeo4j.EscritorSeguidoresNeo4j" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <a class="reference internal" href="#DBbridge.Escritor.Escritor" title="DBbridge.Escritor.Escritor"><code class="xref py py-class docutils literal"><span class="pre">DBbridge.Escritor.Escritor</span></code></a></p>
+<p>docstring for EscritorSeguidoresNeo4j</p>
+<dl class="method">
+<dt id="DBbridge.EscritorSeguidoresNeo4j.EscritorSeguidoresNeo4j.escribe">
+<code class="descname">escribe</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/EscritorSeguidoresNeo4j.html#EscritorSeguidoresNeo4j.escribe"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.EscritorSeguidoresNeo4j.EscritorSeguidoresNeo4j.escribe" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.EscritorSeguidoresNeo4j.EscritorSeguidoresNeo4j.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>nodos_crear</em>, <em>relaciones</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/EscritorSeguidoresNeo4j.html#EscritorSeguidoresNeo4j.write"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.EscritorSeguidoresNeo4j.EscritorSeguidoresNeo4j.write" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-DBbridge.EscritorSeguidoresSQL">
+<span id="dbbridge-escritorseguidoressql-module"></span><h2>DBbridge.EscritorSeguidoresSQL module<a class="headerlink" href="#module-DBbridge.EscritorSeguidoresSQL" title="Enlazar permanentemente con este título">¶</a></h2>
+<dl class="class">
+<dt id="DBbridge.EscritorSeguidoresSQL.EscritorSeguidoresSQL">
+<em class="property">class </em><code class="descclassname">DBbridge.EscritorSeguidoresSQL.</code><code class="descname">EscritorSeguidoresSQL</code><span class="sig-paren">(</span><em>searchID</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/EscritorSeguidoresSQL.html#EscritorSeguidoresSQL"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.EscritorSeguidoresSQL.EscritorSeguidoresSQL" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <a class="reference internal" href="#DBbridge.Escritor.Escritor" title="DBbridge.Escritor.Escritor"><code class="xref py py-class docutils literal"><span class="pre">DBbridge.Escritor.Escritor</span></code></a></p>
+<p>docstring for EscritorSeguidores</p>
+<dl class="method">
+<dt id="DBbridge.EscritorSeguidoresSQL.EscritorSeguidoresSQL.actualizaUsuario">
+<code class="descname">actualizaUsuario</code><span class="sig-paren">(</span><em>usuario</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/EscritorSeguidoresSQL.html#EscritorSeguidoresSQL.actualizaUsuario"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.EscritorSeguidoresSQL.EscritorSeguidoresSQL.actualizaUsuario" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.EscritorSeguidoresSQL.EscritorSeguidoresSQL.escribe">
+<code class="descname">escribe</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/EscritorSeguidoresSQL.html#EscritorSeguidoresSQL.escribe"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.EscritorSeguidoresSQL.EscritorSeguidoresSQL.escribe" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.EscritorSeguidoresSQL.EscritorSeguidoresSQL.getQueryFromSearchID">
+<code class="descname">getQueryFromSearchID</code><span class="sig-paren">(</span><em>searchID</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/EscritorSeguidoresSQL.html#EscritorSeguidoresSQL.getQueryFromSearchID"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.EscritorSeguidoresSQL.EscritorSeguidoresSQL.getQueryFromSearchID" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.EscritorSeguidoresSQL.EscritorSeguidoresSQL.getUserByAPIUserID">
+<code class="descname">getUserByAPIUserID</code><span class="sig-paren">(</span><em>apiUserID</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/EscritorSeguidoresSQL.html#EscritorSeguidoresSQL.getUserByAPIUserID"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.EscritorSeguidoresSQL.EscritorSeguidoresSQL.getUserByAPIUserID" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.EscritorSeguidoresSQL.EscritorSeguidoresSQL.getUserByScreenNameUserID">
+<code class="descname">getUserByScreenNameUserID</code><span class="sig-paren">(</span><em>screen_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/EscritorSeguidoresSQL.html#EscritorSeguidoresSQL.getUserByScreenNameUserID"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.EscritorSeguidoresSQL.EscritorSeguidoresSQL.getUserByScreenNameUserID" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.EscritorSeguidoresSQL.EscritorSeguidoresSQL.insertaJoinTable">
+<code class="descname">insertaJoinTable</code><span class="sig-paren">(</span><em>id_user</em>, <em>id_follower</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/EscritorSeguidoresSQL.html#EscritorSeguidoresSQL.insertaJoinTable"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.EscritorSeguidoresSQL.EscritorSeguidoresSQL.insertaJoinTable" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.EscritorSeguidoresSQL.EscritorSeguidoresSQL.insertaUsuario">
+<code class="descname">insertaUsuario</code><span class="sig-paren">(</span><em>usuario</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/EscritorSeguidoresSQL.html#EscritorSeguidoresSQL.insertaUsuario"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.EscritorSeguidoresSQL.EscritorSeguidoresSQL.insertaUsuario" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-DBbridge.EscritorTweets">
+<span id="dbbridge-escritortweets-module"></span><h2>DBbridge.EscritorTweets module<a class="headerlink" href="#module-DBbridge.EscritorTweets" title="Enlazar permanentemente con este título">¶</a></h2>
+<dl class="class">
+<dt id="DBbridge.EscritorTweets.EscritorTweets">
+<em class="property">class </em><code class="descclassname">DBbridge.EscritorTweets.</code><code class="descname">EscritorTweets</code><span class="sig-paren">(</span><em>searchID</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/EscritorTweets.html#EscritorTweets"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.EscritorTweets.EscritorTweets" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <a class="reference internal" href="#DBbridge.Escritor.Escritor" title="DBbridge.Escritor.Escritor"><code class="xref py py-class docutils literal"><span class="pre">DBbridge.Escritor.Escritor</span></code></a></p>
+<p>docstring for EscritorTweets</p>
+<dl class="method">
+<dt id="DBbridge.EscritorTweets.EscritorTweets.actualizaTweet">
+<code class="descname">actualizaTweet</code><span class="sig-paren">(</span><em>tweet</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/EscritorTweets.html#EscritorTweets.actualizaTweet"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.EscritorTweets.EscritorTweets.actualizaTweet" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.EscritorTweets.EscritorTweets.actualizaUsuario">
+<code class="descname">actualizaUsuario</code><span class="sig-paren">(</span><em>usuario</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/EscritorTweets.html#EscritorTweets.actualizaUsuario"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.EscritorTweets.EscritorTweets.actualizaUsuario" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.EscritorTweets.EscritorTweets.escribe">
+<code class="descname">escribe</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/EscritorTweets.html#EscritorTweets.escribe"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.EscritorTweets.EscritorTweets.escribe" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.EscritorTweets.EscritorTweets.escribeTweet">
+<code class="descname">escribeTweet</code><span class="sig-paren">(</span><em>tweet</em>, <em>userid</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/EscritorTweets.html#EscritorTweets.escribeTweet"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.EscritorTweets.EscritorTweets.escribeTweet" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.EscritorTweets.EscritorTweets.getTweetSiExisteAPIID">
+<code class="descname">getTweetSiExisteAPIID</code><span class="sig-paren">(</span><em>apiID</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/EscritorTweets.html#EscritorTweets.getTweetSiExisteAPIID"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.EscritorTweets.EscritorTweets.getTweetSiExisteAPIID" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.EscritorTweets.EscritorTweets.getUserByAPIUserID">
+<code class="descname">getUserByAPIUserID</code><span class="sig-paren">(</span><em>apiUserID</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/EscritorTweets.html#EscritorTweets.getUserByAPIUserID"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.EscritorTweets.EscritorTweets.getUserByAPIUserID" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.EscritorTweets.EscritorTweets.getUserByAPIUserIDHash">
+<code class="descname">getUserByAPIUserIDHash</code><span class="sig-paren">(</span><em>apiUserID</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/EscritorTweets.html#EscritorTweets.getUserByAPIUserIDHash"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.EscritorTweets.EscritorTweets.getUserByAPIUserIDHash" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.EscritorTweets.EscritorTweets.insertaTweet">
+<code class="descname">insertaTweet</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/EscritorTweets.html#EscritorTweets.insertaTweet"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.EscritorTweets.EscritorTweets.insertaTweet" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.EscritorTweets.EscritorTweets.insertaUsuario">
+<code class="descname">insertaUsuario</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/EscritorTweets.html#EscritorTweets.insertaUsuario"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.EscritorTweets.EscritorTweets.insertaUsuario" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.EscritorTweets.EscritorTweets.putUserByAPIUserIDHash">
+<code class="descname">putUserByAPIUserIDHash</code><span class="sig-paren">(</span><em>apiUserID</em>, <em>identificador</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/EscritorTweets.html#EscritorTweets.putUserByAPIUserIDHash"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.EscritorTweets.EscritorTweets.putUserByAPIUserIDHash" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-DBbridge.EscritorTweetsCassandra">
+<span id="dbbridge-escritortweetscassandra-module"></span><h2>DBbridge.EscritorTweetsCassandra module<a class="headerlink" href="#module-DBbridge.EscritorTweetsCassandra" title="Enlazar permanentemente con este título">¶</a></h2>
+<dl class="class">
+<dt id="DBbridge.EscritorTweetsCassandra.EscritorTweetsCassandra">
+<em class="property">class </em><code class="descclassname">DBbridge.EscritorTweetsCassandra.</code><code class="descname">EscritorTweetsCassandra</code><span class="sig-paren">(</span><em>searchID</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/EscritorTweetsCassandra.html#EscritorTweetsCassandra"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.EscritorTweetsCassandra.EscritorTweetsCassandra" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <a class="reference internal" href="#DBbridge.Escritor.Escritor" title="DBbridge.Escritor.Escritor"><code class="xref py py-class docutils literal"><span class="pre">DBbridge.Escritor.Escritor</span></code></a></p>
+<p>docstring for EscritorTweetsCassandra</p>
+<dl class="method">
+<dt id="DBbridge.EscritorTweetsCassandra.EscritorTweetsCassandra.escribe">
+<code class="descname">escribe</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/EscritorTweetsCassandra.html#EscritorTweetsCassandra.escribe"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.EscritorTweetsCassandra.EscritorTweetsCassandra.escribe" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.EscritorTweetsCassandra.EscritorTweetsCassandra.escribeTweet">
+<code class="descname">escribeTweet</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/EscritorTweetsCassandra.html#EscritorTweetsCassandra.escribeTweet"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.EscritorTweetsCassandra.EscritorTweetsCassandra.escribeTweet" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="DBbridge.EscritorTweetsCassandra.EscritorTweetsCassandra.escribeUser">
+<code class="descname">escribeUser</code><span class="sig-paren">(</span><em>user</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/EscritorTweetsCassandra.html#EscritorTweetsCassandra.escribeUser"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.EscritorTweetsCassandra.EscritorTweetsCassandra.escribeUser" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="DBbridge.EscritorTweetsCassandra.EscritorTweetsUsersCassandra">
+<em class="property">class </em><code class="descclassname">DBbridge.EscritorTweetsCassandra.</code><code class="descname">EscritorTweetsUsersCassandra</code><span class="sig-paren">(</span><em>searchID</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/EscritorTweetsCassandra.html#EscritorTweetsUsersCassandra"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.EscritorTweetsCassandra.EscritorTweetsUsersCassandra" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <a class="reference internal" href="#DBbridge.Escritor.Escritor" title="DBbridge.Escritor.Escritor"><code class="xref py py-class docutils literal"><span class="pre">DBbridge.Escritor.Escritor</span></code></a></p>
+<p>docstring for EscritorTweetsCassandra</p>
+<dl class="method">
+<dt id="DBbridge.EscritorTweetsCassandra.EscritorTweetsUsersCassandra.escribe">
+<code class="descname">escribe</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/EscritorTweetsCassandra.html#EscritorTweetsUsersCassandra.escribe"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.EscritorTweetsCassandra.EscritorTweetsUsersCassandra.escribe" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>admite un solo usuario por escritura</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-DBbridge.StaticFuncSpark">
+<span id="dbbridge-staticfuncspark-module"></span><h2>DBbridge.StaticFuncSpark module<a class="headerlink" href="#module-DBbridge.StaticFuncSpark" title="Enlazar permanentemente con este título">¶</a></h2>
+<dl class="class">
+<dt id="DBbridge.StaticFuncSpark.StaticFuncSpark">
+<em class="property">class </em><code class="descclassname">DBbridge.StaticFuncSpark.</code><code class="descname">StaticFuncSpark</code><a class="reference internal" href="_modules/DBbridge/StaticFuncSpark.html#StaticFuncSpark"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.StaticFuncSpark.StaticFuncSpark" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(en Python versión 2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<dl class="staticmethod">
+<dt id="DBbridge.StaticFuncSpark.StaticFuncSpark.getTweetsAndCount">
+<em class="property">static </em><code class="descname">getTweetsAndCount</code><span class="sig-paren">(</span><em>tupla</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/DBbridge/StaticFuncSpark.html#StaticFuncSpark.getTweetsAndCount"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#DBbridge.StaticFuncSpark.StaticFuncSpark.getTweetsAndCount" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-DBbridge">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-DBbridge" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Tabla de Contenidos</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">DBbridge package</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-DBbridge.ConsultasCassandra">DBbridge.ConsultasCassandra module</a></li>
+<li><a class="reference internal" href="#module-DBbridge.ConsultasCassandraInstagram">DBbridge.ConsultasCassandraInstagram module</a></li>
+<li><a class="reference internal" href="#module-DBbridge.ConsultasCassandraSpark">DBbridge.ConsultasCassandraSpark module</a></li>
+<li><a class="reference internal" href="#module-DBbridge.ConsultasGeneral">DBbridge.ConsultasGeneral module</a></li>
+<li><a class="reference internal" href="#module-DBbridge.ConsultasInstagram">DBbridge.ConsultasInstagram module</a></li>
+<li><a class="reference internal" href="#module-DBbridge.ConsultasNeo4j">DBbridge.ConsultasNeo4j module</a></li>
+<li><a class="reference internal" href="#module-DBbridge.ConsultasSQL">DBbridge.ConsultasSQL module</a></li>
+<li><a class="reference internal" href="#module-DBbridge.ConsultasSQL_police">DBbridge.ConsultasSQL_police module</a></li>
+<li><a class="reference internal" href="#module-DBbridge.ConsultasWeb">DBbridge.ConsultasWeb module</a></li>
+<li><a class="reference internal" href="#module-DBbridge.Escritor">DBbridge.Escritor module</a></li>
+<li><a class="reference internal" href="#module-DBbridge.EscritorBusquedaTweets">DBbridge.EscritorBusquedaTweets module</a></li>
+<li><a class="reference internal" href="#module-DBbridge.EscritorFavoritosNeo4j">DBbridge.EscritorFavoritosNeo4j module</a></li>
+<li><a class="reference internal" href="#module-DBbridge.EscritorSeguidoresNeo4j">DBbridge.EscritorSeguidoresNeo4j module</a></li>
+<li><a class="reference internal" href="#module-DBbridge.EscritorSeguidoresSQL">DBbridge.EscritorSeguidoresSQL module</a></li>
+<li><a class="reference internal" href="#module-DBbridge.EscritorTweets">DBbridge.EscritorTweets module</a></li>
+<li><a class="reference internal" href="#module-DBbridge.EscritorTweetsCassandra">DBbridge.EscritorTweetsCassandra module</a></li>
+<li><a class="reference internal" href="#module-DBbridge.StaticFuncSpark">DBbridge.StaticFuncSpark module</a></li>
+<li><a class="reference internal" href="#module-DBbridge">Module contents</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>Esta página</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/DBbridge.txt"
+            rel="nofollow">Mostrar el código</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Búsqueda rápida</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Ir a" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Introduzca los términos de búsqueda o un nombre de módulo, clase o función.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Daniel Garnacho, Diego Castaño.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/DBbridge.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

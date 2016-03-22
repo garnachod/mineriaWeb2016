@@ -1,0 +1,886 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>DBbridge.ConsultasCassandra &mdash; documentación de ConcursoPolicia - 1</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/translations.js"></script>
+    <link rel="top" title="documentación de ConcursoPolicia - 1" href="../../index.html" />
+    <link rel="up" title="Código de módulo" href="../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Código fuente para DBbridge.ConsultasCassandra</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1">#Para prueba unitarias</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">lib_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">&#39;/home/dani/tfg/sources&#39;</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lib_path</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">Cassandra.ConexionCassandra</span> <span class="kn">import</span> <span class="n">ConexionCassandra</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
+<span class="kn">from</span> <span class="nn">blist</span> <span class="kn">import</span> <span class="n">blist</span>
+<span class="kn">from</span> <span class="nn">ConsultasCassandraSpark</span> <span class="kn">import</span> <span class="n">ConsultasCassandraSpark</span>
+<span class="kn">import</span> <span class="nn">codecs</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<div class="viewcode-block" id="ConsultasCassandra"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra">[documentos]</a><span class="k">class</span> <span class="nc">ConsultasCassandra</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;docstring for ConsultasCassandra&quot;&quot;&quot;</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="nb">super</span><span class="p">(</span><span class="n">ConsultasCassandra</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span> <span class="o">=</span> <span class="n">ConexionCassandra</span><span class="p">()</span><span class="o">.</span><span class="n">getSession</span><span class="p">()</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">cassandra_spark</span> <span class="o">=</span> <span class="n">ConsultasCassandraSpark</span><span class="p">()</span>
+		<span class="c1">#contiene identificador y valor</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">memoria_temporal</span> <span class="o">=</span> <span class="p">{}</span>
+		
+<div class="viewcode-block" id="ConsultasCassandra.getTweetsUsuarioCassandra"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getTweetsUsuarioCassandra">[documentos]</a>	<span class="k">def</span> <span class="nf">getTweetsUsuarioCassandra</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">twitterUser</span><span class="p">,</span> <span class="n">use_max_id</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">max_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Tweets de un usuario, informacion completa para la interfaz web y demas</span>
+<span class="sd">		status, favorite_count, retweet_count, orig_tweet, media_urls, screen_name, profile_img, id_twitter, created_at, lang</span>
+
+<span class="sd">		Parameters</span>
+<span class="sd">		----------</span>
+<span class="sd">		twitterUser : puede ser un identificador o un string del estilo &quot;@usuario&quot; con o sin @</span>
+<span class="sd">		use_max_id : es por si se quiere hacer un filtro de tweets con id menor que el dado, si no se usa Cassandra tarda menos</span>
+<span class="sd">		max_id : solo se usara si use_max_id es True</span>
+<span class="sd">		limit : por defecto 1000 tweets, límite de tweets a retornar</span>
+
+<span class="sd">		Returns</span>
+<span class="sd">		-------</span>
+<span class="sd">		iterator de Row(status, favorite_count, retweet_count, orig_tweet, media_urls, screen_name, profile_img, id_twitter, created_at, lang)</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+
+		<span class="n">user_id</span> <span class="o">=</span> <span class="bp">None</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">user_id</span> <span class="o">=</span> <span class="nb">long</span><span class="p">(</span><span class="n">twitterUser</span><span class="p">)</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">if</span> <span class="n">twitterUser</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;@&quot;</span><span class="p">:</span>
+				<span class="n">twitterUser</span> <span class="o">=</span> <span class="n">twitterUser</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+			<span class="n">user_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getUserIDByScreenNameCassandra</span><span class="p">(</span><span class="n">twitterUser</span><span class="p">)</span>
+
+		<span class="k">if</span> <span class="n">user_id</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+			<span class="k">return</span> <span class="p">[]</span>
+
+		<span class="n">user</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getUserByIDShortCassandra</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+		<span class="k">if</span> <span class="n">user</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+			<span class="k">return</span> <span class="p">[]</span>
+
+		<span class="n">Row</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;Row&#39;</span><span class="p">,</span> <span class="s1">&#39;status, favorite_count, retweet_count, orig_tweet, media_urls, screen_name, profile_img, id_twitter, created_at, lang&#39;</span><span class="p">)</span>
+		<span class="k">if</span> <span class="n">use_max_id</span><span class="p">:</span>
+			<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT status, favorite_count, retweet_count, orig_tweet, media_urls, id_twitter, created_at, lang  FROM tweets WHERE tuser = </span><span class="si">%s</span><span class="s2"> AND id_twitter &lt; </span><span class="si">%s</span><span class="s2"> ORDER BY id_twitter DESC LIMIT </span><span class="si">%s</span><span class="s2">;&quot;&quot;&quot;</span>
+
+			<span class="k">try</span><span class="p">:</span>
+				<span class="n">retorno</span> <span class="o">=</span> <span class="n">blist</span><span class="p">([])</span>
+				<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">user_id</span><span class="p">,</span> <span class="n">max_id</span><span class="p">,</span> <span class="n">limit</span><span class="p">])</span>
+				<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
+					<span class="n">nuevaFila</span> <span class="o">=</span> <span class="n">Row</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">favorite_count</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">retweet_count</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">orig_tweet</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">media_urls</span><span class="p">,</span> <span class="n">user</span><span class="o">.</span><span class="n">screen_name</span><span class="p">,</span> <span class="n">user</span><span class="o">.</span><span class="n">profile_img</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">id_twitter</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">created_at</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">lang</span><span class="p">)</span>
+					<span class="n">retorno</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nuevaFila</span><span class="p">)</span>
+				<span class="k">return</span> <span class="n">retorno</span>
+			<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+				<span class="k">print</span> <span class="s2">&quot;getTweetsUsuarioCassandra TRUE use_max_id&quot;</span>
+				<span class="k">print</span> <span class="n">e</span>
+				<span class="k">return</span> <span class="p">[]</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT status, favorite_count, retweet_count, orig_tweet, media_urls, id_twitter, created_at, lang FROM tweets WHERE tuser = </span><span class="si">%s</span><span class="s2"> ORDER BY id_twitter DESC LIMIT </span><span class="si">%s</span><span class="s2">;&quot;&quot;&quot;</span>
+
+			<span class="k">try</span><span class="p">:</span>
+				<span class="n">retorno</span> <span class="o">=</span> <span class="n">blist</span><span class="p">([])</span>
+				<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">user_id</span><span class="p">,</span> <span class="n">limit</span><span class="p">])</span>
+				<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
+					<span class="n">nuevaFila</span> <span class="o">=</span> <span class="n">Row</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">favorite_count</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">retweet_count</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">orig_tweet</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">media_urls</span><span class="p">,</span> <span class="n">user</span><span class="o">.</span><span class="n">screen_name</span><span class="p">,</span> <span class="n">user</span><span class="o">.</span><span class="n">profile_img</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">id_twitter</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">created_at</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">lang</span><span class="p">)</span>
+					<span class="n">retorno</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nuevaFila</span><span class="p">)</span>
+				<span class="k">return</span> <span class="n">retorno</span>
+			<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+				<span class="k">print</span> <span class="s2">&quot;getTweetsUsuarioCassandra FALSE use_max_id&quot;</span>
+				<span class="k">print</span> <span class="n">e</span>
+				<span class="k">return</span> <span class="p">[]</span></div>
+
+<div class="viewcode-block" id="ConsultasCassandra.getTweetsUsuarioCassandra_lang"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getTweetsUsuarioCassandra_lang">[documentos]</a>	<span class="k">def</span> <span class="nf">getTweetsUsuarioCassandra_lang</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">twitterUser</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">200</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Tweets de un usuario, solo la informacion del lenguaje</span>
+
+<span class="sd">		Parameters</span>
+<span class="sd">		----------</span>
+<span class="sd">		twitterUser : usuario de twitter identificador o nombre</span>
+<span class="sd">		limit : limite de tweets a devolver</span>
+<span class="sd">		</span>
+<span class="sd">		Returns</span>
+<span class="sd">		-------</span>
+<span class="sd">		iterator de Row(lang)</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">user_id</span> <span class="o">=</span> <span class="bp">None</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">user_id</span> <span class="o">=</span> <span class="nb">long</span><span class="p">(</span><span class="n">twitterUser</span><span class="p">)</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">if</span> <span class="n">twitterUser</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;@&quot;</span><span class="p">:</span>
+				<span class="n">twitterUser</span> <span class="o">=</span> <span class="n">twitterUser</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+			<span class="n">user_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getUserIDByScreenNameCassandra</span><span class="p">(</span><span class="n">twitterUser</span><span class="p">)</span>
+
+		<span class="k">if</span> <span class="n">user_id</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+			<span class="k">return</span> <span class="p">[]</span>
+
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT lang FROM tweets WHERE tuser = </span><span class="si">%s</span><span class="s2"> ORDER BY id_twitter DESC LIMIT </span><span class="si">%s</span><span class="s2">;&quot;&quot;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">user_id</span><span class="p">,</span> <span class="n">limit</span><span class="p">])</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;getTweetsUsuarioCassandra_lang&quot;</span>
+			<span class="k">print</span> <span class="n">e</span>
+			<span class="k">return</span> <span class="p">[]</span></div>
+
+<div class="viewcode-block" id="ConsultasCassandra.getTweetsUsuarioCassandra_statusAndLang"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getTweetsUsuarioCassandra_statusAndLang">[documentos]</a>	<span class="k">def</span> <span class="nf">getTweetsUsuarioCassandra_statusAndLang</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">twitterUser</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">3200</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Tweets de un usuario, solo la informacion del texto y el lenguaje</span>
+
+<span class="sd">		Parameters</span>
+<span class="sd">		----------</span>
+<span class="sd">		twitterUser : usuario de twitter identificador o nombre</span>
+<span class="sd">		limit : limite de tweets a devolver</span>
+<span class="sd">		</span>
+<span class="sd">		Returns</span>
+<span class="sd">		-------</span>
+<span class="sd">		iterator de Row(status, lang)</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">user_id</span> <span class="o">=</span> <span class="bp">None</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">user_id</span> <span class="o">=</span> <span class="nb">long</span><span class="p">(</span><span class="n">twitterUser</span><span class="p">)</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">if</span> <span class="n">twitterUser</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;@&quot;</span><span class="p">:</span>
+				<span class="n">twitterUser</span> <span class="o">=</span> <span class="n">twitterUser</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+			<span class="n">user_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getUserIDByScreenNameCassandra</span><span class="p">(</span><span class="n">twitterUser</span><span class="p">)</span>
+
+		<span class="k">if</span> <span class="n">user_id</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+			<span class="k">return</span> <span class="p">[]</span>
+
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT status, lang FROM tweets WHERE tuser = </span><span class="si">%s</span><span class="s2"> ORDER BY id_twitter DESC LIMIT </span><span class="si">%s</span><span class="s2">;&quot;&quot;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">user_id</span><span class="p">,</span> <span class="n">limit</span><span class="p">])</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;getTweetsUsuarioCassandra_lang&quot;</span>
+			<span class="k">print</span> <span class="n">e</span>
+			<span class="k">return</span> <span class="p">[]</span></div>
+		
+<div class="viewcode-block" id="ConsultasCassandra.getTweetsUsuarioCassandra_statusAndLang_noRT"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getTweetsUsuarioCassandra_statusAndLang_noRT">[documentos]</a>	<span class="k">def</span> <span class="nf">getTweetsUsuarioCassandra_statusAndLang_noRT</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">twitterUser</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">3200</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Tweets de un usuario, solo la informacion del texto y el lenguaje</span>
+
+<span class="sd">		Parameters</span>
+<span class="sd">		----------</span>
+<span class="sd">		twitterUser : usuario de twitter identificador o nombre</span>
+<span class="sd">		limit : limite de tweets a devolver</span>
+<span class="sd">		</span>
+<span class="sd">		Returns</span>
+<span class="sd">		-------</span>
+<span class="sd">		iterator de Row(status, lang)</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">user_id</span> <span class="o">=</span> <span class="bp">None</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">user_id</span> <span class="o">=</span> <span class="nb">long</span><span class="p">(</span><span class="n">twitterUser</span><span class="p">)</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">if</span> <span class="n">twitterUser</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;@&quot;</span><span class="p">:</span>
+				<span class="n">twitterUser</span> <span class="o">=</span> <span class="n">twitterUser</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+			<span class="n">user_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getUserIDByScreenNameCassandra</span><span class="p">(</span><span class="n">twitterUser</span><span class="p">)</span>
+
+		<span class="k">if</span> <span class="n">user_id</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+			<span class="k">return</span> <span class="p">[]</span>
+
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT status, lang, id_twitter FROM tweets WHERE tuser = </span><span class="si">%s</span><span class="s2"> AND orig_tweet = 0 LIMIT </span><span class="si">%s</span><span class="s2">;&quot;&quot;&quot;</span>
+
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">tweets</span> <span class="o">=</span> <span class="p">[]</span>
+			<span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">user_id</span><span class="p">,</span> <span class="n">limit</span><span class="p">]):</span>
+				<span class="n">tweets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span>
+			<span class="n">sortedTweets</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">tweets</span><span class="p">,</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">tweet</span><span class="p">:</span> <span class="n">tweet</span><span class="o">.</span><span class="n">id_twitter</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+			<span class="k">return</span> <span class="n">sortedTweets</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;getTweetsUsuarioCassandra_lang&quot;</span>
+			<span class="k">print</span> <span class="n">e</span>
+			<span class="k">return</span> <span class="p">[]</span></div>
+
+<div class="viewcode-block" id="ConsultasCassandra.getUserIDByScreenNameCassandra"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getUserIDByScreenNameCassandra">[documentos]</a>	<span class="k">def</span> <span class="nf">getUserIDByScreenNameCassandra</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">twitterUser</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Retorna el user_id asociado a un &quot;usuario&quot;</span>
+<span class="sd">			si no existe el usuario, retorna False</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT id_twitter FROM users WHERE screen_name = </span><span class="si">%s</span><span class="s2"> LIMIT 1;&quot;&quot;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">twitterUser</span><span class="p">])</span>
+			<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+				<span class="k">return</span> <span class="bp">None</span>
+
+			<span class="k">return</span> <span class="nb">long</span><span class="p">(</span><span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id_twitter</span><span class="p">)</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;getUserIDByScreenNameCassandra&quot;</span>
+			<span class="k">print</span> <span class="n">e</span>
+			<span class="k">return</span> <span class="bp">None</span></div>
+
+<div class="viewcode-block" id="ConsultasCassandra.getScreenNameByUserIDCassandra"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getScreenNameByUserIDCassandra">[documentos]</a>	<span class="k">def</span> <span class="nf">getScreenNameByUserIDCassandra</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			dado un identificador, retona el screen_name de twitter,</span>
+<span class="sd">			Retona False si no se ha encontrado</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT screen_name FROM users WHERE id_twitter = </span><span class="si">%s</span><span class="s2"> LIMIT 1;&quot;&quot;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">user_id</span><span class="p">])</span>
+			<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+				<span class="k">return</span> <span class="bp">None</span>
+
+			<span class="k">return</span> <span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">screen_name</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;getUserIDByScreenNameCassandra&quot;</span>
+			<span class="k">print</span> <span class="n">e</span>
+			<span class="k">return</span> <span class="bp">None</span></div>
+
+<div class="viewcode-block" id="ConsultasCassandra.getLastTweetCollectedScreenNameCassandra"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getLastTweetCollectedScreenNameCassandra">[documentos]</a>	<span class="k">def</span> <span class="nf">getLastTweetCollectedScreenNameCassandra</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">twitterUser</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			last_tweet_collected es una variable que se guarda para optimizar y mucho la descarga de usuarios </span>
+<span class="sd">			simplemente hace un Get de la variable o 0 si nunca se ha descargado nada</span>
+
+<span class="sd">			Get by screen_name</span>
+
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT last_tweet_collected FROM users WHERE screen_name = </span><span class="si">%s</span><span class="s2"> LIMIT 1;&quot;&quot;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">twitterUser</span><span class="p">])</span>
+			<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+				<span class="k">return</span> <span class="mi">0</span>
+
+			<span class="n">ltc</span> <span class="o">=</span> <span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">last_tweet_collected</span>
+			<span class="k">if</span> <span class="n">ltc</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+				<span class="k">return</span> <span class="mi">0</span>
+
+			<span class="k">return</span> <span class="nb">long</span><span class="p">(</span><span class="n">ltc</span><span class="p">)</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;getLastTweetCollectedScreenNameCassandra&quot;</span>
+			<span class="k">print</span> <span class="n">e</span>
+			<span class="k">return</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="ConsultasCassandra.getLastTweetCollectedIdentificadorCassandra"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getLastTweetCollectedIdentificadorCassandra">[documentos]</a>	<span class="k">def</span> <span class="nf">getLastTweetCollectedIdentificadorCassandra</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">twitterUser</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			last_tweet_collected es una variable que se guarda para optimizar y mucho la descarga de usuarios </span>
+<span class="sd">			simplemente hace un Get de la variable o 0 si nunca se ha descargado nada</span>
+
+<span class="sd">			Get by id_twitter</span>
+
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT last_tweet_collected FROM users WHERE id_twitter = </span><span class="si">%s</span><span class="s2"> LIMIT 1;&quot;&quot;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">twitterUser</span><span class="p">])</span>
+			<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+				<span class="k">return</span> <span class="mi">0</span>
+
+			<span class="n">ltc</span> <span class="o">=</span> <span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">last_tweet_collected</span>
+			<span class="k">if</span> <span class="n">ltc</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+				<span class="k">return</span> <span class="mi">0</span>
+
+			<span class="k">return</span> <span class="nb">long</span><span class="p">(</span><span class="n">ltc</span><span class="p">)</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;getLastTweetCollectedScreenNameCassandra&quot;</span>
+			<span class="k">print</span> <span class="n">e</span>
+			<span class="k">return</span> <span class="mi">0</span></div>
+	
+<div class="viewcode-block" id="ConsultasCassandra.setLastTweetCollectedScreenNameCassandra"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.setLastTweetCollectedScreenNameCassandra">[documentos]</a>	<span class="k">def</span> <span class="nf">setLastTweetCollectedScreenNameCassandra</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">twitterUser</span><span class="p">,</span> <span class="n">maximo</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			last_tweet_collected es una variable que se guarda para optimizar y mucho la descarga de usuarios,</span>
+<span class="sd">			simplemente hace un set de la variable</span>
+
+<span class="sd">			SET desde un screen_name</span>
+
+<span class="sd">			La logica final de este metodo depende de setLastTweetCollectedIdentificadorCassandra</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">user_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getUserIDByScreenNameCassandra</span><span class="p">(</span><span class="n">twitterUser</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">setLastTweetCollectedIdentificadorCassandra</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">maximo</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ConsultasCassandra.setLastTweetCollectedIdentificadorCassandra"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.setLastTweetCollectedIdentificadorCassandra">[documentos]</a>	<span class="k">def</span> <span class="nf">setLastTweetCollectedIdentificadorCassandra</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">twitterUser</span><span class="p">,</span> <span class="n">maximo</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			last_tweet_collected es una variable que se guarda para optimizar y mucho la descarga de usuarios,</span>
+<span class="sd">			simplemente hace un set de la variable</span>
+
+<span class="sd">			SET desde un identificador de usuario</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;UPDATE users SET last_tweet_collected = </span><span class="si">%s</span><span class="s2"> WHERE id_twitter = </span><span class="si">%s</span><span class="s2">;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">(</span><span class="n">maximo</span><span class="p">,</span> <span class="n">twitterUser</span><span class="p">))</span>
+			<span class="k">return</span> <span class="bp">True</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;setLastTweetCollectedScreenNameCassandra&quot;</span>
+			<span class="k">print</span> <span class="n">e</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasCassandra.getOrigTweetAndCreatedAtFromTweetsByUser"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getOrigTweetAndCreatedAtFromTweetsByUser">[documentos]</a>	<span class="k">def</span> <span class="nf">getOrigTweetAndCreatedAtFromTweetsByUser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">twitterUser</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">10000</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			retorna un Array de objetos, estos objetos solo contienen el orig_tweet y created_at</span>
+<span class="sd">			permite que twitterUser sea del estilo &quot;@usuario&quot; o 123435345</span>
+<span class="sd">			Recordemos: </span>
+<span class="sd">				created_at es un objeto dateTime</span>
+<span class="sd">				orig_tweet es 0 si es un tweet del usuario, otro identificador si es un RT</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="c1">#Traduce el usuario a user_id</span>
+		<span class="n">user_id</span> <span class="o">=</span> <span class="bp">None</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">user_id</span> <span class="o">=</span> <span class="nb">long</span><span class="p">(</span><span class="n">twitterUser</span><span class="p">)</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">if</span> <span class="n">twitterUser</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;@&quot;</span><span class="p">:</span>
+				<span class="n">twitterUser</span> <span class="o">=</span> <span class="n">twitterUser</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+			<span class="n">user_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getUserIDByScreenNameCassandra</span><span class="p">(</span><span class="n">twitterUser</span><span class="p">)</span>
+
+		<span class="k">if</span> <span class="n">user_id</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+			<span class="k">return</span> <span class="p">[]</span>
+
+		<span class="c1">#fin de la traduccion</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT orig_tweet, created_at  FROM tweets WHERE tuser = </span><span class="si">%s</span><span class="s2"> ORDER BY id_twitter DESC LIMIT </span><span class="si">%s</span><span class="s2">;&quot;&quot;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">user_id</span><span class="p">,</span> <span class="n">limit</span><span class="p">])</span>
+			<span class="k">if</span> <span class="n">rows</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+				<span class="k">return</span> <span class="n">rows</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="k">return</span> <span class="p">[]</span>
+
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;getOrigTweetAndCreatedAtFromTweetsByUser&quot;</span>
+			<span class="k">print</span> <span class="n">e</span>
+			<span class="k">return</span> <span class="p">[]</span></div>
+
+<div class="viewcode-block" id="ConsultasCassandra.getOrigTweetAndCreatedAtFromTweetsByListIDSTweets"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getOrigTweetAndCreatedAtFromTweetsByListIDSTweets">[documentos]</a>	<span class="k">def</span> <span class="nf">getOrigTweetAndCreatedAtFromTweetsByListIDSTweets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lista_tweets</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			retorna un Array de objetos, estos objetos solo contienen el orig_tweet y created_at</span>
+<span class="sd">			lista_tweets debe ser un array de identificadores de tweets</span>
+<span class="sd">			Recordemos: </span>
+<span class="sd">				created_at es un objeto dateTime</span>
+<span class="sd">				orig_tweet es 0 si es un tweet del usuario, otro identificador si es un RT</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT orig_tweet, created_at  FROM tweets WHERE id_twitter = </span><span class="si">%s</span><span class="s2"> LIMIT 1;&quot;&quot;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
+			<span class="k">for</span> <span class="n">idtwitter</span> <span class="ow">in</span> <span class="n">lista_tweets</span><span class="p">:</span>
+				<span class="n">row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">idtwitter</span><span class="p">])</span>
+				<span class="k">if</span> <span class="n">row</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+					<span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+			<span class="k">return</span> <span class="n">rows</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;getOrigTweetAndCreatedAtFromTweetsByUser&quot;</span>
+			<span class="k">print</span> <span class="n">e</span>
+			<span class="k">return</span> <span class="p">[]</span></div>
+
+<div class="viewcode-block" id="ConsultasCassandra.getTweetStatusCassandra"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getTweetStatusCassandra">[documentos]</a>	<span class="k">def</span> <span class="nf">getTweetStatusCassandra</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identificador</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			retorna el status del tweet (el texto) dado el identificador del tweet</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT status FROM tweets WHERE id_twitter = </span><span class="si">%s</span><span class="s2"> LIMIT 1;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">identificador</span><span class="p">])</span>
+			<span class="n">row</span> <span class="o">=</span> <span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+			<span class="k">return</span> <span class="n">row</span><span class="o">.</span><span class="n">status</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;getTweetStatusCassandra&quot;</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasCassandra.getUserByIDLargeCassandra"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getUserByIDLargeCassandra">[documentos]</a>	<span class="k">def</span> <span class="nf">getUserByIDLargeCassandra</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identificador</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Retorna la informacion de un usuario dado un identificador, sobre todo para la interfaz web</span>
+
+<span class="sd">			Esta informacion se compone de:</span>
+<span class="sd">				name</span>
+<span class="sd">				screen_name</span>
+<span class="sd">				followers</span>
+<span class="sd">				location</span>
+<span class="sd">				created_at</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT name, screen_name, followers, location, created_at FROM users WHERE id_twitter = </span><span class="si">%s</span><span class="s2"> LIMIT 1;&quot;&quot;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">identificador</span><span class="p">])</span>
+			<span class="k">if</span> <span class="n">rows</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+				<span class="n">row</span> <span class="o">=</span> <span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+				<span class="k">return</span> <span class="n">row</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="k">return</span> <span class="bp">False</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;getUserByIDLargeCassandra&quot;</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasCassandra.getUserByIDLargeCassandra_police"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getUserByIDLargeCassandra_police">[documentos]</a>	<span class="k">def</span> <span class="nf">getUserByIDLargeCassandra_police</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identificador</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Retorna la informacion de un usuario dado un identificador, sobre todo para la interfaz web de la policia</span>
+
+<span class="sd">			Esta informacion se compone de:</span>
+<span class="sd">				name</span>
+<span class="sd">				screen_name</span>
+<span class="sd">				followers</span>
+<span class="sd">				location</span>
+<span class="sd">				created_at</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT name, screen_name, followers, following, location, created_at FROM users WHERE id_twitter = </span><span class="si">%s</span><span class="s2"> LIMIT 1;&quot;&quot;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">identificador</span><span class="p">])</span>
+			<span class="k">if</span> <span class="n">rows</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+				<span class="n">row</span> <span class="o">=</span> <span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+				<span class="k">if</span> <span class="n">row</span><span class="o">.</span><span class="n">following</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+					<span class="n">row</span><span class="o">.</span><span class="n">following</span> <span class="o">=</span> <span class="mi">0</span>
+				<span class="k">if</span> <span class="n">row</span><span class="o">.</span><span class="n">followers</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+					<span class="n">row</span><span class="o">.</span><span class="n">followers</span> <span class="o">=</span> <span class="mi">0</span>
+				<span class="k">return</span> <span class="n">row</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="k">return</span> <span class="bp">False</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;getUserByIDLargeCassandra&quot;</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasCassandra.getUserByIDShortCassandra"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getUserByIDShortCassandra">[documentos]</a>	<span class="k">def</span> <span class="nf">getUserByIDShortCassandra</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identificador</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Retorna la informacion de un usuario dado un identificador, sobre todo para la interfaz web</span>
+
+<span class="sd">			Esta informacion se compone de:</span>
+<span class="sd">				screen_name</span>
+<span class="sd">				profile_img</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT screen_name, profile_img FROM users WHERE id_twitter = </span><span class="si">%s</span><span class="s2"> LIMIT 1;&quot;&quot;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">identificador</span><span class="p">])</span>
+			<span class="k">if</span> <span class="n">rows</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+				<span class="n">row</span> <span class="o">=</span> <span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+				<span class="k">return</span> <span class="n">row</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="k">return</span> <span class="bp">False</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;getUserByIDShortCassandra&quot;</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasCassandra.getTweetUserByTweetIDCassandra"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getTweetUserByTweetIDCassandra">[documentos]</a>	<span class="k">def</span> <span class="nf">getTweetUserByTweetIDCassandra</span><span class="p">(</span><span class="bp">self</span> <span class="p">,</span> <span class="n">identificador</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Retorna el identificador de usuario dado un identificador de tweet</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT tuser FROM tweets WHERE id_twitter = </span><span class="si">%s</span><span class="s2"> LIMIT 1;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">identificador</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tuser</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;getTweetUserByTweetIDCassandra&quot;</span>
+			<span class="k">print</span> <span class="n">e</span></div>
+
+<div class="viewcode-block" id="ConsultasCassandra.getTweetByIDLargeCassandra"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getTweetByIDLargeCassandra">[documentos]</a>	<span class="k">def</span> <span class="nf">getTweetByIDLargeCassandra</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identificador</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Retorna la informacion de un tweet completo junto con la informacion del usuario, </span>
+<span class="sd">				dado un identificador de tweet</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;SELECT status, favorite_count, retweet_count, orig_tweet, media_urls, tuser, id_twitter FROM tweets WHERE id_twitter = </span><span class="si">%s</span><span class="s2"> LIMIT 1;&quot;&quot;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">identificador</span><span class="p">])</span>
+			<span class="n">row</span> <span class="o">=</span> <span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+			<span class="n">user</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getUserByIDShortCassandra</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">tuser</span><span class="p">)</span>
+
+			<span class="n">Row</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;Row&#39;</span><span class="p">,</span> <span class="s1">&#39;status, favorite_count, retweet_count, orig_tweet, media_urls, screen_name, profile_img, id_twitter&#39;</span><span class="p">)</span>
+			<span class="n">retorno</span> <span class="o">=</span> <span class="n">Row</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">favorite_count</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">retweet_count</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">orig_tweet</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">media_urls</span><span class="p">,</span> <span class="n">user</span><span class="o">.</span><span class="n">screen_name</span><span class="p">,</span> <span class="n">user</span><span class="o">.</span><span class="n">profile_img</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">id_twitter</span><span class="p">)</span>
+			<span class="k">return</span> <span class="n">retorno</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;getTweetByIDLargeCassandra&quot;</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+	<span class="c1">#TODO Problemas de seguridad?</span>
+<div class="viewcode-block" id="ConsultasCassandra.getTweetsTopicsCassandra"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getTweetsTopicsCassandra">[documentos]</a>	<span class="k">def</span> <span class="nf">getTweetsTopicsCassandra</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">topics</span><span class="p">,</span> <span class="n">use_max_id</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">max_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Realiza una consulta por topic en Cassandra lucene</span>
+
+<span class="sd">			El formato de tweet es el común:</span>
+<span class="sd">				status, favorite_count, retweet_count, orig_tweet, media_urls, screen_name, profile_img, id_twitter</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT status, favorite_count, retweet_count, orig_tweet, media_urls, tuser, id_twitter, created_at FROM tweets WHERE lucene =</span><span class="se">\&#39;</span><span class="s2">{&quot;</span>
+		<span class="k">if</span> <span class="n">use_max_id</span><span class="p">:</span>
+			<span class="n">query</span> <span class="o">+=</span> <span class="s2">&quot;filter : {type:</span><span class="se">\&quot;</span><span class="s2">boolean</span><span class="se">\&quot;</span><span class="s2">, must:[&quot;</span>
+			<span class="n">query</span> <span class="o">+=</span> <span class="s2">&quot;{type:</span><span class="se">\&quot;</span><span class="s2">match</span><span class="se">\&quot;</span><span class="s2">, field:</span><span class="se">\&quot;</span><span class="s2">orig_tweet</span><span class="se">\&quot;</span><span class="s2">, value:0}, &quot;</span>
+			<span class="n">query</span> <span class="o">+=</span> <span class="s2">&quot;{type:</span><span class="se">\&quot;</span><span class="s2">range</span><span class="se">\&quot;</span><span class="s2">, field:</span><span class="se">\&quot;</span><span class="s2">id_twitter</span><span class="se">\&quot;</span><span class="s2">, upper: &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">max_id</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;, include_upper:false} ] },&quot;</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">query</span> <span class="o">+=</span> <span class="s2">&quot;&quot;&quot;filter : {type:</span><span class="se">\&quot;</span><span class="s2">boolean</span><span class="se">\&quot;</span><span class="s2">, must:[</span>
+<span class="s2">				   {type:&quot;match&quot;, field:&quot;orig_tweet&quot;, value:0} ] },&quot;&quot;&quot;</span>
+		<span class="n">query</span> <span class="o">+=</span> <span class="s2">&quot;query : {type:</span><span class="se">\&quot;</span><span class="s2">phrase</span><span class="se">\&quot;</span><span class="s2">, field:</span><span class="se">\&quot;</span><span class="s2">status</span><span class="se">\&quot;</span><span class="s2">, value:</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">+</span><span class="n">topics</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">, slop:1}, &quot;</span>
+		<span class="n">query</span> <span class="o">+=</span> <span class="s2">&quot;sort : {fields: [ {field:</span><span class="se">\&quot;</span><span class="s2">created_at</span><span class="se">\&quot;</span><span class="s2">, reverse:true} ] }&quot;</span>
+		<span class="n">query</span> <span class="o">+=</span> <span class="s2">&quot;}</span><span class="se">\&#39;</span><span class="s2"> limit </span><span class="si">%s</span><span class="s2">;&quot;</span>
+		
+
+		<span class="n">Row</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;Row&#39;</span><span class="p">,</span> <span class="s1">&#39;status, favorite_count, retweet_count, orig_tweet, media_urls, screen_name, profile_img, id_twitter, created_at&#39;</span><span class="p">)</span>
+
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">limit</span><span class="p">])</span>
+			<span class="n">retorno</span> <span class="o">=</span> <span class="n">blist</span><span class="p">([])</span>
+			<span class="c1">#JOIN</span>
+			<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
+				<span class="n">user</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getUserByIDShortCassandra</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">tuser</span><span class="p">)</span>
+				<span class="n">fila</span> <span class="o">=</span> <span class="n">Row</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">favorite_count</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">retweet_count</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">orig_tweet</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">media_urls</span><span class="p">,</span> <span class="n">user</span><span class="o">.</span><span class="n">screen_name</span><span class="p">,</span> <span class="n">user</span><span class="o">.</span><span class="n">profile_img</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">id_twitter</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">created_at</span><span class="p">)</span>
+				<span class="n">retorno</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fila</span><span class="p">)</span>
+			<span class="k">return</span> <span class="n">retorno</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;getTweetsTopicsCassandra&quot;</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasCassandra.getStatusTopicsCassandra"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getStatusTopicsCassandra">[documentos]</a>	<span class="k">def</span> <span class="nf">getStatusTopicsCassandra</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">topics</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">rts</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Realiza una consulta por topic en Cassandra lucene</span>
+
+<span class="sd">			El formato de tweet es solo el status y el idioma:</span>
+<span class="sd">				status, lang</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT status, lang, created_at FROM tweets WHERE lucene =</span><span class="se">\&#39;</span><span class="s2">{&quot;</span>
+		<span class="k">if</span> <span class="n">rts</span> <span class="o">==</span> <span class="bp">False</span><span class="p">:</span>
+			<span class="n">query</span> <span class="o">+=</span> <span class="s2">&quot;&quot;&quot;filter : {type:</span><span class="se">\&quot;</span><span class="s2">boolean</span><span class="se">\&quot;</span><span class="s2">, must:[</span>
+<span class="s2">					   {type:&quot;match&quot;, field:&quot;orig_tweet&quot;, value:0} ] },&quot;&quot;&quot;</span>
+		<span class="n">query</span> <span class="o">+=</span> <span class="s2">&quot;query : {type:</span><span class="se">\&quot;</span><span class="s2">phrase</span><span class="se">\&quot;</span><span class="s2">, field:</span><span class="se">\&quot;</span><span class="s2">status</span><span class="se">\&quot;</span><span class="s2">, value:</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">+</span><span class="n">topics</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">, slop:1}, &quot;</span>
+		<span class="n">query</span> <span class="o">+=</span> <span class="s2">&quot;sort : {fields: [ {field:</span><span class="se">\&quot;</span><span class="s2">created_at</span><span class="se">\&quot;</span><span class="s2">, reverse:true} ] }&quot;</span>
+		<span class="n">query</span> <span class="o">+=</span> <span class="s2">&quot;}</span><span class="se">\&#39;</span><span class="s2"> limit </span><span class="si">%s</span><span class="s2">;&quot;</span>
+		
+
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">limit</span><span class="p">])</span>
+			<span class="k">return</span> <span class="n">rows</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;getTweetsTopicsCassandra&quot;</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasCassandra.getUsersHasRetweetedByOrigTweetCassandra"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getUsersHasRetweetedByOrigTweetCassandra">[documentos]</a>	<span class="k">def</span> <span class="nf">getUsersHasRetweetedByOrigTweetCassandra</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identificador</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT tuser, created_at FROM tweets WHERE orig_tweet = </span><span class="si">%s</span><span class="s2">;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">retorno</span> <span class="o">=</span> <span class="n">blist</span><span class="p">([])</span>
+			<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">identificador</span><span class="p">])</span>
+			<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
+				<span class="n">retorno</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">row</span><span class="o">.</span><span class="n">tuser</span><span class="p">,</span><span class="n">row</span><span class="o">.</span><span class="n">created_at</span><span class="p">])</span>
+
+			<span class="k">return</span> <span class="n">retorno</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;getUsersHasRetweetedByOrigTweetCassandra&quot;</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+
+	<span class="c1">#TODO Problemas de seguridad?</span>
+<div class="viewcode-block" id="ConsultasCassandra.getIDsTweetsTrainCassandra"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getIDsTweetsTrainCassandra">[documentos]</a>	<span class="k">def</span> <span class="nf">getIDsTweetsTrainCassandra</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">topics</span><span class="p">,</span> <span class="n">limit</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Realiza una busqueda en Cassandra lucene de identificadores para hacer búsquedas por topics y entrenar en el tfg</span>
+
+<span class="sd">			Por ahora solo se usa en el TFG</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT id_twitter FROM tweets WHERE lucene =</span><span class="se">\&#39;</span><span class="s2">{&quot;</span>
+		<span class="n">query</span> <span class="o">+=</span> <span class="s2">&quot;&quot;&quot;filter : {type:</span><span class="se">\&quot;</span><span class="s2">boolean</span><span class="se">\&quot;</span><span class="s2">, must:[</span>
+<span class="s2">				   {type:&quot;match&quot;, field:&quot;orig_tweet&quot;, value:0} ] },&quot;&quot;&quot;</span>
+		<span class="n">query</span> <span class="o">+=</span> <span class="s2">&quot;query : {type:</span><span class="se">\&quot;</span><span class="s2">phrase</span><span class="se">\&quot;</span><span class="s2">, field:</span><span class="se">\&quot;</span><span class="s2">status</span><span class="se">\&quot;</span><span class="s2">, value:</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">+</span><span class="n">topics</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">, slop:1} &quot;</span>
+		<span class="n">query</span> <span class="o">+=</span> <span class="s2">&quot;}</span><span class="se">\&#39;</span><span class="s2"> limit </span><span class="si">%s</span><span class="s2">;&quot;</span>
+
+		<span class="k">try</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">limit</span><span class="p">])</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;getTweetsTopicsCassandra&quot;</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+
+<div class="viewcode-block" id="ConsultasCassandra.getTweetsEntrenamientoListarCassandra"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getTweetsEntrenamientoListarCassandra">[documentos]</a>	<span class="k">def</span> <span class="nf">getTweetsEntrenamientoListarCassandra</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identificadores</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Por ahora solo se usa en el tfg</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="c1"># entrada [[id_tweet, clase], ...]</span>
+		<span class="n">Row</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;Row&#39;</span><span class="p">,</span> <span class="s1">&#39;status, favorite_count, retweet_count, orig_tweet, media_urls, screen_name, profile_img, id_twitter, clase&#39;</span><span class="p">)</span>
+
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">retorno</span> <span class="o">=</span> <span class="p">[]</span>
+
+			<span class="k">for</span> <span class="n">tweet_entrenamiento</span> <span class="ow">in</span> <span class="n">identificadores</span><span class="p">:</span>
+				<span class="n">tw</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getTweetByIDLargeCassandra</span><span class="p">(</span><span class="n">tweet_entrenamiento</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+				<span class="n">row</span> <span class="o">=</span> <span class="n">Row</span><span class="p">(</span><span class="n">tw</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="n">tw</span><span class="o">.</span><span class="n">favorite_count</span><span class="p">,</span> <span class="n">tw</span><span class="o">.</span><span class="n">retweet_count</span><span class="p">,</span> <span class="n">tw</span><span class="o">.</span><span class="n">orig_tweet</span><span class="p">,</span> 
+					<span class="n">tw</span><span class="o">.</span><span class="n">media_urls</span><span class="p">,</span> <span class="n">tw</span><span class="o">.</span><span class="n">screen_name</span><span class="p">,</span> <span class="n">tw</span><span class="o">.</span><span class="n">profile_img</span><span class="p">,</span> <span class="n">tw</span><span class="o">.</span><span class="n">id_twitter</span><span class="p">,</span><span class="n">tweet_entrenamiento</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+				<span class="n">retorno</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+
+			<span class="k">print</span> <span class="n">retorno</span>
+			<span class="k">return</span> <span class="n">retorno</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="ConsultasCassandra.getAllTweetsNoRtStatusCassandra"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getAllTweetsNoRtStatusCassandra">[documentos]</a>	<span class="k">def</span> <span class="nf">getAllTweetsNoRtStatusCassandra</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			retorna todos los status de los tweets que no son RT</span>
+<span class="sd">			Para hacer NLP</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT status FROM tweets WHERE orig_tweet = 0;&quot;</span>
+
+		<span class="k">try</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;getAllTweetsStatusCassandra&quot;</span>
+			<span class="k">print</span> <span class="n">e</span></div>
+
+<div class="viewcode-block" id="ConsultasCassandra.getAllIDsTweets"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getAllIDsTweets">[documentos]</a>	<span class="k">def</span> <span class="nf">getAllIDsTweets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Retorna todos los identificadores de todos los tweets,</span>
+<span class="sd">			Para hacer analisis internos de la base de datos</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT id_twitter FROM tweets;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+			<span class="n">retorno</span> <span class="o">=</span> <span class="n">blist</span><span class="p">([])</span>
+			<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
+				<span class="n">retorno</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+			<span class="k">return</span> <span class="n">retorno</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;getAllIDsTweets&quot;</span>
+			<span class="k">print</span> <span class="n">e</span></div>
+
+<div class="viewcode-block" id="ConsultasCassandra.getAllStatusAndIDUser"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getAllStatusAndIDUser">[documentos]</a>	<span class="k">def</span> <span class="nf">getAllStatusAndIDUser</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Retorna status y el identificador de usuario de todos los tweets.</span>
+
+<span class="sd">			Para hacer NLP dado un usuario</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT status, tuser FROM tweets;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;getAllStatusAndIDUser&quot;</span>
+			<span class="k">print</span></div>
+
+<div class="viewcode-block" id="ConsultasCassandra.getAllStatusAndIDUserFiltrateLang"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getAllStatusAndIDUserFiltrateLang">[documentos]</a>	<span class="k">def</span> <span class="nf">getAllStatusAndIDUserFiltrateLang</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lang</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">			Retorna status y el identificador de usuario de todos los tweets.</span>
+
+<span class="sd">			Para hacer NLP dado un usuario</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT status, tuser, lang FROM tweets WHERE lang = </span><span class="si">%s</span><span class="s2">;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">lang</span><span class="p">])</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;getAllStatusAndIDUser&quot;</span>
+			<span class="k">print</span> </div>
+
+
+
+<div class="viewcode-block" id="ConsultasCassandra.getAllTweetsNoRtStatusFiltrLangCassandra"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getAllTweetsNoRtStatusFiltrLangCassandra">[documentos]</a>	<span class="k">def</span> <span class="nf">getAllTweetsNoRtStatusFiltrLangCassandra</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lang</span><span class="p">):</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cassandra_spark</span><span class="o">.</span><span class="n">getAllTweetsNoRtStatusFiltrLangCS</span><span class="p">(</span><span class="n">lang</span><span class="p">)</span></div>
+
+	
+<div class="viewcode-block" id="ConsultasCassandra.getFollowersByUserID"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getFollowersByUserID">[documentos]</a>	<span class="k">def</span> <span class="nf">getFollowersByUserID</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT followers FROM users WHERE id_twitter = </span><span class="si">%s</span><span class="s2">;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">user_id</span><span class="p">])</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;getFollowersByUserID&quot;</span>
+			<span class="k">print</span> <span class="n">e</span></div>
+
+<div class="viewcode-block" id="ConsultasCassandra.getFollowingByUserID"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getFollowingByUserID">[documentos]</a>	<span class="k">def</span> <span class="nf">getFollowingByUserID</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT following FROM users WHERE id_twitter = </span><span class="si">%s</span><span class="s2">;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">user_id</span><span class="p">])</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;getFollowingByUserID&quot;</span>
+			<span class="k">print</span> <span class="n">e</span></div>
+
+	<span class="sd">&quot;&quot;&quot;Sentimientos&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ConsultasCassandra.getTweetsTextAndLang"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getTweetsTextAndLang">[documentos]</a>	<span class="k">def</span> <span class="nf">getTweetsTextAndLang</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lang</span><span class="p">,</span> <span class="n">limit</span> <span class="o">=</span> <span class="mi">5000000</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT status, lang FROM tweets WHERE lang = </span><span class="si">%s</span><span class="s2"> AND orig_tweet = 0 Limit </span><span class="si">%s</span><span class="s2"> ALLOW FILTERING;&quot;</span>
+
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="p">[</span><span class="n">lang</span><span class="p">,</span> <span class="n">limit</span><span class="p">])</span>
+			<span class="k">return</span> <span class="n">rows</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+			<span class="k">return</span> <span class="bp">False</span></div>
+
+	<span class="sd">&quot;&quot;&quot;fin de Sentimientos&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ConsultasCassandra.getAllUsers"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getAllUsers">[documentos]</a>	<span class="k">def</span> <span class="nf">getAllUsers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Returns</span>
+<span class="sd">		-------</span>
+<span class="sd">		lista de usuarios,cada fila tiene id_twitter, screen_name</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT id_twitter, screen_name FROM users;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+
+			<span class="k">return</span> <span class="n">rows</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;getAllUsers&quot;</span>
+			<span class="k">print</span> <span class="n">e</span></div>
+
+
+	<span class="sd">&quot;&quot;&quot;estadisticas&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ConsultasCassandra.getNumTweetsRTCassandra"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getNumTweetsRTCassandra">[documentos]</a>	<span class="k">def</span> <span class="nf">getNumTweetsRTCassandra</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cassandra_spark</span><span class="o">.</span><span class="n">getNumTweetsRTCS</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ConsultasCassandra.getNumTweetsMediaCassandra"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getNumTweetsMediaCassandra">[documentos]</a>	<span class="k">def</span> <span class="nf">getNumTweetsMediaCassandra</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cassandra_spark</span><span class="o">.</span><span class="n">getNumTweetsMediaCS</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ConsultasCassandra.getAverageRTMediaCassandra"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getAverageRTMediaCassandra">[documentos]</a>	<span class="k">def</span> <span class="nf">getAverageRTMediaCassandra</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cassandra_spark</span><span class="o">.</span><span class="n">getAverageRTMediaCS</span><span class="p">()</span></div>
+
+	<span class="c1">#no_media, si_media</span>
+<div class="viewcode-block" id="ConsultasCassandra.getAverageRTMediaByScreenNameCassandra"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getAverageRTMediaByScreenNameCassandra">[documentos]</a>	<span class="k">def</span> <span class="nf">getAverageRTMediaByScreenNameCassandra</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screen_name</span><span class="p">):</span>
+		<span class="n">user_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getUserIDByScreenNameCassandra</span><span class="p">(</span><span class="n">screen_name</span><span class="p">)</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cassandra_spark</span><span class="o">.</span><span class="n">getAverageRTMediaByIDUserCS</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ConsultasCassandra.getNumTweetsCassandra"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getNumTweetsCassandra">[documentos]</a>	<span class="k">def</span> <span class="nf">getNumTweetsCassandra</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT id_twitter FROM tweets;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+			<span class="n">contador</span> <span class="o">=</span> <span class="mi">0</span>
+			<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
+				<span class="n">contador</span> <span class="o">+=</span> <span class="mi">1</span>
+
+			<span class="k">return</span> <span class="n">contador</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;getNumTweetsCassandra&quot;</span>
+			<span class="k">print</span> <span class="n">e</span></div>
+
+<div class="viewcode-block" id="ConsultasCassandra.getNumUsersCassandra"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getNumUsersCassandra">[documentos]</a>	<span class="k">def</span> <span class="nf">getNumUsersCassandra</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT id_twitter FROM users;&quot;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_cassandra</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+			<span class="n">contador</span> <span class="o">=</span> <span class="mi">0</span>
+			<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">:</span>
+				<span class="n">contador</span> <span class="o">+=</span> <span class="mi">1</span>
+
+			<span class="k">return</span> <span class="n">contador</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="s2">&quot;getNumUsersCassandra&quot;</span>
+			<span class="k">print</span> <span class="n">e</span></div>
+
+
+
+	<span class="sd">&quot;&quot;&quot;Fin estadisticas&quot;&quot;&quot;</span>
+	<span class="sd">&quot;&quot;&quot;PRUEBAS&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ConsultasCassandra.getTweetsUserAndPrintFile"><a class="viewcode-back" href="../../DBbridge.html#DBbridge.ConsultasCassandra.ConsultasCassandra.getTweetsUserAndPrintFile">[documentos]</a>	<span class="k">def</span> <span class="nf">getTweetsUserAndPrintFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">twitterUser</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;obtiene los tweets y los imprime en un fichero para que se puedan hacer pruebas con los textos&quot;&quot;&quot;</span>
+		<span class="n">fOut</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+		<span class="n">tweets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getTweetsUsuarioCassandra</span><span class="p">(</span><span class="n">twitterUser</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+		<span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="n">tweets</span><span class="p">:</span>
+			<span class="n">texto</span> <span class="o">=</span> <span class="n">tweet</span><span class="o">.</span><span class="n">status</span>
+			<span class="n">texto</span> <span class="o">=</span> <span class="n">texto</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+			<span class="n">fOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">texto</span><span class="p">)</span>
+			<span class="n">fOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+		<span class="n">fOut</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div></div>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+	<span class="n">consultas</span> <span class="o">=</span> <span class="n">ConsultasCassandra</span><span class="p">()</span>
+	<span class="k">print</span> <span class="n">consultas</span><span class="o">.</span><span class="n">getNumTweetsCassandra</span><span class="p">()</span>
+	<span class="k">print</span> <span class="n">consultas</span><span class="o">.</span><span class="n">getNumUsersCassandra</span><span class="p">()</span>
+	<span class="nb">exit</span><span class="p">()</span>
+	<span class="k">print</span> <span class="s2">&quot;test de getUserIDByScreenNameCassandra&quot;</span>
+	<span class="k">print</span> <span class="n">consultas</span><span class="o">.</span><span class="n">getUserIDByScreenNameCassandra</span><span class="p">(</span><span class="s2">&quot;p_molins&quot;</span><span class="p">)</span>
+	<span class="k">print</span> <span class="s2">&quot;test de getTweetsUsuarioCassandra&quot;</span>
+	<span class="k">print</span> <span class="n">consultas</span><span class="o">.</span><span class="n">getTweetsUsuarioCassandra</span><span class="p">(</span><span class="s2">&quot;WillyrexYT&quot;</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">10000</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+	<span class="k">print</span> <span class="n">consultas</span><span class="o">.</span><span class="n">getTweetsUsuarioCassandra</span><span class="p">(</span><span class="s2">&quot;WillyrexYT&quot;</span><span class="p">,</span> <span class="n">use_max_id</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">max_id</span><span class="o">=</span><span class="mi">611207358266544128</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">10000</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+	<span class="k">print</span> <span class="s2">&quot;test de setLastTweetCollectedScreenNameCassandra&quot;</span>
+	<span class="k">print</span> <span class="n">consultas</span><span class="o">.</span><span class="n">setLastTweetCollectedScreenNameCassandra</span><span class="p">(</span><span class="s2">&quot;WillyrexYT&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+	<span class="k">print</span> <span class="s2">&quot;test de getLastTweetCollectedScreenNameCassandra&quot;</span>
+	<span class="k">print</span> <span class="n">consultas</span><span class="o">.</span><span class="n">getLastTweetCollectedScreenNameCassandra</span><span class="p">(</span><span class="s2">&quot;WillyrexYT&quot;</span><span class="p">)</span>
+	<span class="k">print</span> <span class="s2">&quot;test de getUserByIDLargeCassandra&quot;</span>
+	<span class="k">print</span> <span class="n">consultas</span><span class="o">.</span><span class="n">getUserByIDLargeCassandra</span><span class="p">(</span><span class="mi">230377004</span><span class="p">)</span>
+	<span class="k">print</span> <span class="n">consultas</span><span class="o">.</span><span class="n">getUserByIDLargeCassandra</span><span class="p">(</span><span class="mi">230377004</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span>
+	<span class="k">print</span> <span class="s2">&quot;inspecion de los metodos de row&quot;</span>
+	<span class="k">print</span> <span class="s2">&quot;Es un namedtuple, por lo que haremos un join a mano&quot;</span>
+	<span class="k">print</span> <span class="s2">&quot;test de getTweetByIDLargeCassandra&quot;</span>
+	<span class="k">print</span> <span class="n">consultas</span><span class="o">.</span><span class="n">getTweetByIDLargeCassandra</span><span class="p">(</span><span class="mi">631260309026553856</span><span class="p">)</span>
+	<span class="k">print</span> <span class="s2">&quot;test de getTweetsTopicsCassandra&quot;</span>
+	<span class="k">print</span> <span class="n">consultas</span><span class="o">.</span><span class="n">getTweetsTopicsCassandra</span><span class="p">(</span><span class="s2">&quot;galletas&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+	<span class="k">print</span> <span class="n">consultas</span><span class="o">.</span><span class="n">getTweetsTopicsCassandra</span><span class="p">(</span><span class="s2">&quot;@WillyrexYT Esto es mi día a día&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+	<span class="k">print</span> <span class="n">consultas</span><span class="o">.</span><span class="n">getTweetsTopicsCassandra</span><span class="p">(</span><span class="s2">&quot;galletas&quot;</span><span class="p">,</span> <span class="n">use_max_id</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">max_id</span><span class="o">=</span><span class="mi">631260309026553856</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">100</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+	<span class="k">print</span> <span class="s2">&quot;test de getIDsTweetsTrainCassandra&quot;</span>
+	<span class="k">print</span> <span class="n">consultas</span><span class="o">.</span><span class="n">getIDsTweetsTrainCassandra</span><span class="p">(</span><span class="s2">&quot;galletas&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+	<span class="n">tiempo_inicio</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+	<span class="k">print</span> <span class="s2">&quot;test de getNumTweetsRTCassandra&quot;</span>
+	<span class="k">print</span> <span class="n">consultas</span><span class="o">.</span><span class="n">getNumTweetsRTCassandra</span><span class="p">()</span>
+	<span class="n">tiempo_fin</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+	<span class="k">print</span> <span class="n">tiempo_fin</span> <span class="o">-</span> <span class="n">tiempo_inicio</span>
+	<span class="k">print</span> <span class="s2">&quot;test de getAverageRTMediaByScreenNameCassandra&quot;</span>
+	<span class="k">print</span> <span class="n">consultas</span><span class="o">.</span><span class="n">getAverageRTMediaByScreenNameCassandra</span><span class="p">(</span><span class="s2">&quot;WillyrexYT&quot;</span><span class="p">)</span>
+
+	<span class="k">print</span> <span class="s2">&quot;Test de seguidores y siguiendo&quot;</span>
+	<span class="k">print</span> <span class="n">consultas</span><span class="o">.</span><span class="n">getFollowersByUserID</span><span class="p">(</span><span class="mi">2383366169</span><span class="p">)</span>
+	<span class="k">print</span> <span class="n">consultas</span><span class="o">.</span><span class="n">getFollowingByUserID</span><span class="p">(</span><span class="mi">2383366169</span><span class="p">)</span>
+
+
+	<span class="n">testCompleto</span> <span class="o">=</span> <span class="bp">False</span>
+	<span class="k">if</span> <span class="n">testCompleto</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
+		<span class="n">arrayUsuarios</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;WillyrexYT&quot;</span><span class="p">,</span> <span class="s2">&quot;Alvaro845&quot;</span><span class="p">,</span> <span class="s2">&quot;Thetoretegg&quot;</span><span class="p">,</span> <span class="s2">&quot;Fernanfloo&quot;</span><span class="p">,</span> <span class="s2">&quot;Nestle_es&quot;</span><span class="p">,</span> <span class="s2">&quot;yuyacst&quot;</span><span class="p">,</span> <span class="s2">&quot;AlexMonthy&quot;</span><span class="p">,</span> <span class="s2">&quot;Wigetta&quot;</span><span class="p">,</span> <span class="s2">&quot;Xodaaaa&quot;</span><span class="p">,</span> <span class="s2">&quot;Gameloft_Spain&quot;</span><span class="p">,</span> <span class="s2">&quot;NexxuzHD&quot;</span><span class="p">,</span> <span class="s2">&quot;AudazCarlos&quot;</span><span class="p">,</span> <span class="s2">&quot;xPekeLoL&quot;</span><span class="p">,</span> <span class="s2">&quot;steam_games&quot;</span><span class="p">,</span> <span class="s2">&quot;vegetta777&quot;</span><span class="p">,</span> <span class="s2">&quot;bysTaXx&quot;</span><span class="p">,</span> <span class="s2">&quot;bysTaXx&quot;</span><span class="p">,</span> <span class="s2">&quot;PlayStationES&quot;</span><span class="p">,</span> <span class="s2">&quot;mangelrogel&quot;</span><span class="p">,</span> <span class="s2">&quot;Outconsumer&quot;</span><span class="p">]</span>
+		<span class="k">for</span> <span class="n">usuario</span> <span class="ow">in</span> <span class="n">arrayUsuarios</span><span class="p">:</span>
+			<span class="n">consultas</span><span class="o">.</span><span class="n">getTweetsUserAndPrintFile</span><span class="p">(</span><span class="s2">&quot;/home/dani/ficherosPrueba_plsa/&quot;</span><span class="o">+</span><span class="n">usuario</span><span class="o">+</span><span class="s2">&quot;.txt&quot;</span><span class="p">,</span><span class="n">usuario</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Código de módulo</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Búsqueda rápida</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Ir a" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Introduzca los términos de búsqueda o un nombre de módulo, clase o función.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Daniel Garnacho, Diego Castaño.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

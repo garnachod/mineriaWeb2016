@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ProcesadoresTexto package &mdash; documentación de ConcursoPolicia - 1</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="top" title="documentación de ConcursoPolicia - 1" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="procesadorestexto-package">
+<h1>ProcesadoresTexto package<a class="headerlink" href="#procesadorestexto-package" title="Enlazar permanentemente con este título">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+<div class="section" id="module-ProcesadoresTexto.Doc2Vec">
+<span id="procesadorestexto-doc2vec-module"></span><h2>ProcesadoresTexto.Doc2Vec module<a class="headerlink" href="#module-ProcesadoresTexto.Doc2Vec" title="Enlazar permanentemente con este título">¶</a></h2>
+<dl class="class">
+<dt id="ProcesadoresTexto.Doc2Vec.Doc2Vec">
+<em class="property">class </em><code class="descclassname">ProcesadoresTexto.Doc2Vec.</code><code class="descname">Doc2Vec</code><a class="reference internal" href="_modules/ProcesadoresTexto/Doc2Vec.html#Doc2Vec"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#ProcesadoresTexto.Doc2Vec.Doc2Vec" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(en Python versión 2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>docstring for Doc2Vec</p>
+<dl class="method">
+<dt id="ProcesadoresTexto.Doc2Vec.Doc2Vec.simulateVectorsFromUsersFile">
+<code class="descname">simulateVectorsFromUsersFile</code><span class="sig-paren">(</span><em>input_path</em>, <em>modelLocation</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ProcesadoresTexto/Doc2Vec.html#Doc2Vec.simulateVectorsFromUsersFile"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#ProcesadoresTexto.Doc2Vec.Doc2Vec.simulateVectorsFromUsersFile" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ProcesadoresTexto.Doc2Vec.Doc2Vec.simulateVectorsFromVectorText">
+<code class="descname">simulateVectorsFromVectorText</code><span class="sig-paren">(</span><em>vectorText</em>, <em>modelLocation</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ProcesadoresTexto/Doc2Vec.html#Doc2Vec.simulateVectorsFromVectorText"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#ProcesadoresTexto.Doc2Vec.Doc2Vec.simulateVectorsFromVectorText" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ProcesadoresTexto.Doc2Vec.Doc2Vec.train">
+<code class="descname">train</code><span class="sig-paren">(</span><em>input_path</em>, <em>save_location</em>, <em>dimension=50</em>, <em>epochs=20</em>, <em>method='DBOW'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ProcesadoresTexto/Doc2Vec.html#Doc2Vec.train"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#ProcesadoresTexto.Doc2Vec.Doc2Vec.train" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="ProcesadoresTexto.Doc2Vec.LabeledLineSentence">
+<em class="property">class </em><code class="descclassname">ProcesadoresTexto.Doc2Vec.</code><code class="descname">LabeledLineSentence</code><span class="sig-paren">(</span><em>source</em>, <em>ides='Number'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ProcesadoresTexto/Doc2Vec.html#LabeledLineSentence"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#ProcesadoresTexto.Doc2Vec.LabeledLineSentence" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(en Python versión 2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<dl class="docutils">
+<dt>ides:</dt>
+<dd>Number  
+String</dd>
+</dl>
+<dl class="method">
+<dt id="ProcesadoresTexto.Doc2Vec.LabeledLineSentence.sentences_perm">
+<code class="descname">sentences_perm</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ProcesadoresTexto/Doc2Vec.html#LabeledLineSentence.sentences_perm"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#ProcesadoresTexto.Doc2Vec.LabeledLineSentence.sentences_perm" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="ProcesadoresTexto.Doc2Vec.LabeledLineSentence.to_array">
+<code class="descname">to_array</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ProcesadoresTexto/Doc2Vec.html#LabeledLineSentence.to_array"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#ProcesadoresTexto.Doc2Vec.LabeledLineSentence.to_array" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-ProcesadoresTexto.GenerateVectorsFromTweets">
+<span id="procesadorestexto-generatevectorsfromtweets-module"></span><h2>ProcesadoresTexto.GenerateVectorsFromTweets module<a class="headerlink" href="#module-ProcesadoresTexto.GenerateVectorsFromTweets" title="Enlazar permanentemente con este título">¶</a></h2>
+<dl class="class">
+<dt id="ProcesadoresTexto.GenerateVectorsFromTweets.GenerateVectorsFromTweets">
+<em class="property">class </em><code class="descclassname">ProcesadoresTexto.GenerateVectorsFromTweets.</code><code class="descname">GenerateVectorsFromTweets</code><a class="reference internal" href="_modules/ProcesadoresTexto/GenerateVectorsFromTweets.html#GenerateVectorsFromTweets"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#ProcesadoresTexto.GenerateVectorsFromTweets.GenerateVectorsFromTweets" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>docstring for GenerateVectorsFromText</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-ProcesadoresTexto.LimpiadorTweets">
+<span id="procesadorestexto-limpiadortweets-module"></span><h2>ProcesadoresTexto.LimpiadorTweets module<a class="headerlink" href="#module-ProcesadoresTexto.LimpiadorTweets" title="Enlazar permanentemente con este título">¶</a></h2>
+<dl class="class">
+<dt id="ProcesadoresTexto.LimpiadorTweets.LimpiadorTweets">
+<em class="property">class </em><code class="descclassname">ProcesadoresTexto.LimpiadorTweets.</code><code class="descname">LimpiadorTweets</code><a class="reference internal" href="_modules/ProcesadoresTexto/LimpiadorTweets.html#LimpiadorTweets"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#ProcesadoresTexto.LimpiadorTweets.LimpiadorTweets" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Clases base: <a class="reference external" href="https://docs.python.org/library/functions.html#object" title="(en Python versión 2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<dl class="staticmethod">
+<dt id="ProcesadoresTexto.LimpiadorTweets.LimpiadorTweets.clean">
+<em class="property">static </em><code class="descname">clean</code><span class="sig-paren">(</span><em>line</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ProcesadoresTexto/LimpiadorTweets.html#LimpiadorTweets.clean"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#ProcesadoresTexto.LimpiadorTweets.LimpiadorTweets.clean" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="ProcesadoresTexto.LimpiadorTweets.LimpiadorTweets.stemmingByLanguage">
+<em class="property">static </em><code class="descname">stemmingByLanguage</code><span class="sig-paren">(</span><em>line</em>, <em>lang</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ProcesadoresTexto/LimpiadorTweets.html#LimpiadorTweets.stemmingByLanguage"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#ProcesadoresTexto.LimpiadorTweets.LimpiadorTweets.stemmingByLanguage" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="ProcesadoresTexto.LimpiadorTweets.LimpiadorTweets.stopWordsByLanguagefilter">
+<em class="property">static </em><code class="descname">stopWordsByLanguagefilter</code><span class="sig-paren">(</span><em>line</em>, <em>lang</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ProcesadoresTexto/LimpiadorTweets.html#LimpiadorTweets.stopWordsByLanguagefilter"><span class="viewcode-link">[fuente]</span></a><a class="headerlink" href="#ProcesadoresTexto.LimpiadorTweets.LimpiadorTweets.stopWordsByLanguagefilter" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="data">
+<dt id="ProcesadoresTexto.LimpiadorTweets.stopwords">
+<code class="descclassname">ProcesadoresTexto.LimpiadorTweets.</code><code class="descname">stopwords</code><em class="property"> = {'fr': {'soyez': True, 'peut': True, 'essai': True, '\xc3\xa9t\xc3\xa9': True, 'quelles': True, 'font': True, 'le': True, 'quelle': True, 'la': True, 'tu': True, 'quel': True, 'd\xc3\xa9but': True, 'aucuns': True, 'sien': True, 'ta': True, 'mot': True, 'ces': True, 'mon': True, 'tandis': True, 'du': True, 'comme': True, 'sans': True, 'm\xc3\xaame': True, 'leur': True, 'fait': True, 'en': True, 'ses': True, 'faites': True, 'autre': True, 'hors': True, 'eu': True, 'et': True, 'tes': True, 'ici': True, 'est': True, '\xc3\xa9taient': True, 'peu': True, 'depuis': True, 'vont': True, 'chaque': True, 'sur': True, 'avoir': True, 'cela': True, 'dehors': True, 'quels': True, 'o\xc3\xb9': True, 'les': True, 'que': True, 'mes': True, 'qui': True, 'je': True, 'mais': True, 'juste': True, 'tous': True, 'tout': True, 'ils': True, 'bon': True, 'ou': True, 'comment': True, 'ci': True, 'devrait': True, '\xc3\xa9tat': True, 'ce': True, 'son': True, 'donc': True, 'seulement': True, 'moins': True, 'tels': True, 'avec': True, '\xc3\xa9tions': True, 'tr\xc3\xa8s': True, 'ton': True, 'plupart': True, 'vous': True, 'ceux': True, 'sont': True, 'ma': True, '\xc3\xa7a': True, 'car': True, 'des': True, 'dans': True, 'pour': True, 'sous': True, 'pourquoi': True, 'voient': True, 'encore': True, 'vu': True, 'votre': True, 'aussi': True, 'mine': True, 'au': True, 'il': True, 'dedans': True, 'parce': True, 'ni': True, 'par': True, 'pas': True, 'quand': True, 'elles': True, 'alors': True, 'nomm\xc3\xa9s': True, 'tellement': True, 'notre': True, 'fois': True, 'elle': True, '\xc3\xaatre': True, 'doit': True, 'maintenant': True, 'dos': True, 'trop': True, 'avant': True, 'si': True, 'l\xc3\xa0': True, 'nous': True, 'sa': True, 'sujet': True}, 'en': {'all': True, &quot;when's&quot;: True, 'with': True, 'should': True, 'to': True, 'only': True, 'under': True, 'do': True, 'his': True, 'very': True, &quot;they'd&quot;: True, 'cannot': True, 'during': True, 'him': True, &quot;we'll&quot;: True, 'did': True, &quot;they've&quot;: True, 'these': True, 'she': True, &quot;won't&quot;: True, 'where': True, &quot;i'll&quot;: True, &quot;you'd&quot;: True, 'up': True, 'are': True, 'further': True, 'what': True, &quot;there's&quot;: True, 'above': True, 'between': True, 'we': True, 'here': True, 'hers': True, &quot;aren't&quot;: True, 'both': True, &quot;wouldn't&quot;: True, 'against': True, &quot;i'd&quot;: True, &quot;weren't&quot;: True, &quot;i'm&quot;: True, &quot;can't&quot;: True, &quot;hadn't&quot;: True, &quot;couldn't&quot;: True, 'from': True, 'would': True, &quot;it's&quot;: True, 'been': True, 'whom': True, 'themselves': True, 'until': True, 'more': True, &quot;what's&quot;: True, 'those': True, 'me': True, 'myself': True, 'this': True, 'while': True, 'ought': True, 'of': True, 'my': True, 'is': True, &quot;didn't&quot;: True, 'it': True, 'itself': True, 'in': True, 'if': True, 'same': True, 'how': True, 'after': True, 'such': True, &quot;he'll&quot;: True, 'a': True, 'off': True, 'i': True, 'so': True, 'the': True, 'yours': True, &quot;that's&quot;: True, &quot;she'll&quot;: True, &quot;don't&quot;: True, 'being': True, 'over': True, 'through': True, 'yourselves': True, 'its': True, 'before': True, &quot;he's&quot;: True, &quot;we've&quot;: True, 'had': True, &quot;he'd&quot;: True, 'has': True, &quot;haven't&quot;: True, 'then': True, 'them': True, &quot;who's&quot;: True, &quot;you've&quot;: True, 'they': True, 'not': True, 'nor': True, 'each': True, &quot;mustn't&quot;: True, &quot;isn't&quot;: True, &quot;why's&quot;: True, 'because': True, 'ours \tourselves': True, 'doing': True, 'some': True, &quot;we'd&quot;: True, 'our': True, &quot;shan't&quot;: True, 'for': True, 'does': True, &quot;shouldn't&quot;: True, &quot;they'll&quot;: True, 'be': True, &quot;you're&quot;: True, 'by': True, 'on': True, 'about': True, 'theirs': True, 'could': True, 'or': True, 'own': True, 'into': True, 'yourself': True, 'down': True, 'your': True, &quot;doesn't&quot;: True, &quot;how's&quot;: True, 'her': True, 'few': True, 'there': True, 'their': True, 'too': True, 'was': True, &quot;we're&quot;: True, 'himself': True, &quot;i've&quot;: True, 'but': True, 'herself': True, 'than': True, &quot;here's&quot;: True, 'he': True, &quot;they're&quot;: True, &quot;wasn't&quot;: True, &quot;hasn't&quot;: True, 'below': True, 'were': True, 'and': True, 'am': True, 'an': True, 'as': True, 'at': True, 'have': True, 'any': True, 'again': True, &quot;let's&quot;: True, 'no': True, 'that': True, 'when': True, 'other': True, 'which': True, 'you': True, 'out': True, 'who': True, &quot;where's&quot;: True, 'most': True, 'why': True, &quot;she'd&quot;: True, &quot;you'll&quot;: True, &quot;she's&quot;: True, 'having': True, 'once': True}, 'tweet': {'rt': True, 'EXCLAMATION': True, 'USER': True, 'URL': True, 'DOTDOTDOT': True, 'QUESTION': True, '&amp;amp;': True, 'HASTAG': True}, 'de': {'kann': True, 'wie': True, 'werdet': True, 'aber': True, 'eines': True, 'nachdem': True, 'ihr': True, 'nach': True, 'weshalb': True, 'k\xc3\xb6nnt': True, 'eine': True, 'einen': True, 'einer': True, 'einem': True, 'weitere': True, 'als': True, 'wirst': True, 'dessen': True, 'auf': True, 'oder': True, 'daher': True, 'wer': True, 'aus': True, 'darum': True, 'da\xc3\x9f': True, 'f\xc3\xbcr': True, 'was': True, 'von': True, 'jenes': True, 'jener': True, 'bin': True, 'wir': True, 'werde': True, 'mein': True, 'deine': True, 'wann': True, 'wohin': True, 'euer': True, 'da': True, 'sollst': True, 'doch': True, 'unsere': True, 'das': True, 'du': True, 'bis': True, 'wenn': True, 'nun': True, 'woher': True, 'bei': True, 'musst': True, 'hattest': True, 'die': True, 'der': True, 'des': True, 'm\xc3\xbcssen': True, 'dem': True, 'den': True, 'seid': True, 'sein': True, 'ein': True, 'ihre': True, 'wieder': True, 'nein': True, '\xc3\xbcber': True, 'vom': True, 'unter': True, 'dass': True, 'am': True, 'sollen': True, 'an': True, 'hinter': True, 'hatte': True, 'im': True, 'unser': True, 'vor': True, 'in': True, 'werden': True, 'es': True, 'er': True, 'sowie': True, 'ich': True, 'und': True, 'weiter': True, 'hattet': True, 'dieser': True, 'dieses': True, 'sonst': True, 'sich': True, 'sie': True, 'zu': True, 'machen': True, 'dein': True, 'mit': True, 'jede': True, 'm\xc3\xbc\xc3\x9ft': True, 'dort': True, 'soll': True, 'jeden': True, 'jedem': True, 'soweit': True, 'wo': True, 'dies': True, 'warum': True, 'seine': True, 'wird': True, 'jetzt': True, 'auch': True, 'mu\xc3\x9ft': True, 'nicht': True, 'eure': True, 'jedes': True, 'jeder': True, 'sind': True, 'kannst': True, 'ja': True, 'zur': True, 'k\xc3\xb6nnen': True, 'mu\xc3\x9f': True, 'meine': True, 'bist': True, 'hatten': True, 'ist': True, 'hier': True, 'durch': True, 'deshalb': True, 'wieso': True, 'dadurch': True, 'sollt': True, 'zum': True}, 'ar': {'\xd8\xad\xd9\x8a\xd8\xab': True, '\xd8\xb0\xd9\x84\xd9\x83': True, '\xd8\xac\xd9\x85\xd9\x8a\xd8\xb9': True, '\xd9\x85\xd9\x82\xd8\xa7\xd8\xa8\xd9\x84': True, '\xd8\xa7\xd9\x84\xd9\x8a\xd9\x88\xd9\x85': True, '\xd8\xa7\xd9\x84\xd8\xb0\xd9\x8a': True, '\xd8\xa7\xd9\x84\xd8\xb0\xd9\x89': True, '\xd9\x87\xd8\xb0\xd8\xa7': True, '\xd8\xa7\xd9\x8a\xd8\xa7\xd8\xb1': True, '\xd9\x84\xd9\x87': True, '\xd9\x85\xd9\x86\xd9\x87\xd8\xa7': True, '\xd8\xa7\xd9\x83\xd8\xab\xd8\xb1': True, '\xd9\x88\xd9\x83\xd8\xa7\xd9\x86': True, '\xd9\x88\xd9\x81\xd9\x8a': True, '\xd9\x84\xd9\x83\xd9\x86': True, '\xd8\xad\xd9\x8a\xd9\x86': True, '\xd9\x83\xd9\x84\xd9\x85': True, '\xd9\x82\xd8\xa8\xd9\x84': True, '\xd8\xad\xd9\x88\xd8\xa7\xd9\x84\xd9\x89': True, '\xd8\xa7\xd9\x84\xd8\xa7\xd9\x88\xd9\x84\xd9\x89': True, '\xd8\xad\xd9\x88\xd9\x84': True, '\xd9\x85\xd9\x86\xd8\xb0': True, '\xd9\x86\xd9\x87\xd8\xa7\xd9\x8a\xd8\xa9': True, '\xd9\x81\xd9\x8a\xd9\x87': True, '\xd8\xa7\xd9\x84\xd8\xb0\xd8\xa7\xd8\xaa\xd9\x8a': True, '\xd9\x8a\xd9\x83\xd9\x88\xd9\x86': True, '\xd9\x87\xd9\x86\xd8\xa7\xd9\x83': True, '\xd9\x85\xd8\xb9': True, '\xd8\xa7\xd9\x84\xd8\xa7\xd8\xae\xd9\x8a\xd8\xb1\xd8\xa9': True, '\xd9\x84\xd9\x84\xd8\xa7\xd9\x85\xd9\x85': True, '\xd9\x85\xd8\xa7': True, '\xd9\x82\xd8\xa7\xd9\x84': True, '\xd9\x84\xd8\xa7': True, '\xd9\x88': True, '\xd9\x81\xd9\x8a\xd9\x87\xd8\xa7': True, '\xd9\x81': True, '\xd9\x80': True, '\xd8\xa7\xd9\x84\xd9\x85\xd8\xa7\xd8\xb6\xd9\x8a': True, '\xd8\xa7\xd9\x8a\xd8\xa7\xd9\x85': True, '\xd9\x82\xd8\xaf': True, '\xd8\xa7\xd9\x86\xd9\x87': True, '\xd9\x85\xd9\x86': True, '\xd9\x85\xd9\x84\xd9\x8a\xd8\xa7\xd8\xb1': True, '\xd9\x87\xd9\x8a': True, '\xd9\x84\xd9\x87\xd8\xa7': True, '\xd8\xa7\xd9\x84\xd8\xab\xd8\xa7\xd9\x86\xd9\x8a\xd8\xa9': True, '\xd9\x88\xd9\x82\xd8\xa7\xd9\x84\xd8\xaa': True, '\xd9\x81\xd8\xa7\xd9\x86': True, '\xd8\xa7\xd9\x84\xd9\x81': True, '\xd8\xb6\xd9\x85\xd9\x86': True, '\xd8\xa7\xd9\x84\xd9\x89': True, '\xd9\x8a\xd9\x88\xd9\x85': True, '\xd8\xa7\xd9\x85\xd8\xa7\xd9\x85': True, '\xd9\x88\xd8\xa7\xd8\xb6\xd8\xa7\xd9\x81': True, '\xd9\x85\xd8\xb3\xd8\xa7\xd8\xa1': True, '\xd9\x88\xd8\xa7\xd8\xad\xd8\xaf': True, '\xd9\x886': True, '\xd9\x83\xd9\x84': True, '\xd9\x8a\xd9\x85\xd9\x83\xd9\x86': True, '\xd8\xa7\xd9\x84\xd8\xa7\xd9\x88\xd9\x84': True, '\xd8\xa7\xd9\x84\xd8\xb3\xd8\xa7\xd8\xa8\xd9\x82': True, '\xd9\x81\xd9\x89': True, '\xd9\x84\xd9\x88\xd9\x83\xd8\xa7\xd9\x84\xd8\xa9': True, '\xd9\x81\xd9\x8a': True, '\xd9\x84\xd9\x85': True, '\xd9\x84\xd9\x86': True, '\xd8\xa7\xd9\x8a\xd8\xb6\xd8\xa7': True, '\xd8\xa7\xd9\x84\xd8\xb0\xd9\x8a\xd9\x86': True, '\xd8\xa7\xd9\x84\xd8\xaa\xd9\x89': True, '\xd8\xa7\xd9\x84\xd8\xaa\xd9\x8a': True, '\xd8\xaf\xd9\x88\xd9\x86': True, '\xd9\x88\xd9\x82\xd8\xaf': True, '\xd8\xa7\xd9\x83\xd8\xaf': True, '\xd8\xa7\xd9\x88\xd9\x84': True, '\xd8\xa7\xd9\x86\xd9\x87\xd8\xa7': True, '\xd9\x85\xd9\x84\xd9\x8a\xd9\x88\xd9\x86': True, '\xd8\xa7\xd9\x84\xd9\x85\xd9\x82\xd8\xa8\xd9\x84': True, '\xd8\xa7\xd9\x84\xd9\x88\xd9\x82\xd8\xaa': True, '\xd8\xab\xd9\x84\xd8\xa7\xd8\xab\xd8\xa9': True, '\xd9\x88\xd9\x84\xd8\xa7': True, '\xd8\xa8\xd9\x8a\xd9\x86': True, '\xd8\xae\xd9\x84\xd8\xa7\xd9\x84': True, '\xd9\x88\xd8\xa7\xd8\xb6\xd8\xa7\xd9\x81\xd8\xaa': True, '\xd9\x88\xd9\x82\xd8\xa7\xd9\x84': True, '\xd9\x82\xd9\x88\xd8\xa9': True, '\xd9\x83\xd9\x85\xd8\xa7': True, '\xd9\x86\xd9\x81\xd8\xb3\xd9\x87': True, '\xd9\x88\xd9\x87\xd9\x8a': True, '\xd9\x84\xd9\x82\xd8\xa7\xd8\xa1': True, '\xd9\x88\xd9\x83\xd8\xa7\xd9\x86\xd8\xaa': True, '\xd9\x88\xd9\x87\xd9\x88': True, '\xd9\x87\xd9\x88': True, '\xd8\xa7\xd9\x84\xd8\xab\xd8\xa7\xd9\x86\xd9\x8a': True, '\xd9\x88\xd9\x82\xd9\x81': True, '\xd8\xa7\xd9\x85\xd8\xb3': True, '\xd9\x88\xd9\x85\xd9\x86': True, '\xd8\xa7\xd9\x84\xd8\xa7': True, '\xd8\xa7\xd9\x85\xd8\xa7': True, '\xd8\xa7\xd9\x84\xd8\xa7\xd9\x86': True, '\xd9\x88\xd9\x84\xd9\x85': True}, 'es': {'tener': True, 'ampleamos': True, 'estais': True, 'estoy': True, 'hace': True, 'otro': True, 'podrian': True, 'tu': True, 'te': True, 'intentamos': True, 'porque': True, 'estaba': True, 'de': True, 'algunos': True, 'podeis': True, 'trabajais': True, 'mientras': True, 'somos': True, 'largo': True, 'ser': True, 'mi': True, 'podriamos': True, 'estamos': True, 'ellas': True, 'encima': True, 'eres': True, 'estan': True, 'tienen': True, 'muy': True, 'bien': True, 'sus': True, 'sobre': True, 'vamos': True, 'solo': True, 'como': True, 'aqui': True, 'ciertos': True, 'conseguir': True, 'una': True, 'lo': True, 'sabe': True, 'uno': True, 'cierto': True, 'por': True, 'cierta': True, 'haceis': True, 'vais': True, 'ante': True, 'tiene': True, 'podria': True, 'usa': True, 'uso': True, 'pero': True, 'trabaja': True, 'tenemos': True, 'trabajo': True, 'aquellos': True, 'saber': True, 'sabes': True, 'pueden': True, 'fuimos': True, 'valor': True, 'saben': True, 'me': True, 'ciertas': True, 'podriais': True, 'fue': True, 'del': True, 'era': True, 'fui': True, 'va': True, 'unos': True, 'eran': True, 'consigue': True, 'ir': True, 'ambos': True, 'eras': True, 'sois': True, 'tan': True, 'voy': True, 'bastante': True, 'usais': True, 'aquel': True, 'fueron': True, 'cual': True, 'sin': True, 'tiempo': True, 'quien': True, 'tambien': True, 'estado': True, 'las': True, 'hacer': True, 'haces': True, 'entre': True, 'algun': True, 'su': True, 'hago': True, 'dentro': True, 'si': True, 'vaya': True, 'con': True, 'hacen': True, 'se': True, 'primero': True, 'incluso': True, 'emplean': True, 'empleas': True, 'emplear': True, 'verdad': True, 'antes': True, 'le': True, 'la': True, 'gueno': True, 'conseguimos': True, 'arriba': True, 'hacemos': True, 'fin': True, 'yo': True, 'ya': True, 'cuando': True, 'usamos': True, 'consigo': True, 'trabajamos': True, 'nos': True, 'desde': True, 'tras': True, 'sabeis': True, 'modo': True, 'el': True, 'en': True, 'vosotros': True, 'mas': True, 'todo': True, 'es': True, 'teneis': True, 'consiguen': True, 'tuyo': True, 'algunas': True, 'consigues': True, 'puedo': True, 'usan': True, 'verdadero': True, 'verdadera': True, 'puede': True, 'que': True, 'usas': True, 'usar': True, 'entonces': True, 'vosotras': True, 'intentan': True, 'nosotros': True, 'podemos': True, 'os': True, 'intentas': True, 'intentar': True, 'trabajan': True, 'son': True, 'cada': True, 'donde': True, 'soy': True, 'empleais': True, 'trabajas': True, 'trabajar': True, 'unas': True, 'van': True, 'los': True, 'solamente': True, 'atras': True, 'poder': True, 'podrias': True, 'ellos': True, 'para': True, 'bajo': True, 'ha': True, 'ultimo': True, 'he': True, 'un': True, 'este': True, 'esta': True, 'esto': True, 'siendo': True, 'al': True, 'intenta': True, 'tengo': True, 'eramos': True, 'intento': True, 'sabemos': True, 'ni': True, 'mio': True, 'no': True, 'aquellas': True, 'intentais': True, 'empleo': True, 'alguno': True, 'alguna': True, 'muchos': True, 'dos': True}}</em><a class="headerlink" href="#ProcesadoresTexto.LimpiadorTweets.stopwords" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>languages = (&#8220;danish&#8221;, &#8220;dutch&#8221;, &#8220;english&#8221;, &#8220;finnish&#8221;, &#8220;french&#8221;, &#8220;german&#8221;,
+&#8220;hungarian&#8221;, &#8220;italian&#8221;, &#8220;norwegian&#8221;, &#8220;porter&#8221;, &#8220;portuguese&#8221;,
+&#8220;romanian&#8221;, &#8220;russian&#8221;, &#8220;spanish&#8221;, &#8220;swedish&#8221;)</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-ProcesadoresTexto.TestsProcesadoresTexto">
+<span id="procesadorestexto-testsprocesadorestexto-module"></span><h2>ProcesadoresTexto.TestsProcesadoresTexto module<a class="headerlink" href="#module-ProcesadoresTexto.TestsProcesadoresTexto" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+<div class="section" id="module-ProcesadoresTexto">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-ProcesadoresTexto" title="Enlazar permanentemente con este título">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Tabla de Contenidos</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">ProcesadoresTexto package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-ProcesadoresTexto.Doc2Vec">ProcesadoresTexto.Doc2Vec module</a></li>
+<li><a class="reference internal" href="#module-ProcesadoresTexto.GenerateVectorsFromTweets">ProcesadoresTexto.GenerateVectorsFromTweets module</a></li>
+<li><a class="reference internal" href="#module-ProcesadoresTexto.LimpiadorTweets">ProcesadoresTexto.LimpiadorTweets module</a></li>
+<li><a class="reference internal" href="#module-ProcesadoresTexto.TestsProcesadoresTexto">ProcesadoresTexto.TestsProcesadoresTexto module</a></li>
+<li><a class="reference internal" href="#module-ProcesadoresTexto">Module contents</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>Esta página</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/ProcesadoresTexto.txt"
+            rel="nofollow">Mostrar el código</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Búsqueda rápida</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Ir a" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Introduzca los términos de búsqueda o un nombre de módulo, clase o función.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Daniel Garnacho, Diego Castaño.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/ProcesadoresTexto.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

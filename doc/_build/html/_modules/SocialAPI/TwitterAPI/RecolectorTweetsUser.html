@@ -1,0 +1,268 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>SocialAPI.TwitterAPI.RecolectorTweetsUser &mdash; documentación de ConcursoPolicia - 1</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/translations.js"></script>
+    <link rel="top" title="documentación de ConcursoPolicia - 1" href="../../../index.html" />
+    <link rel="up" title="Código de módulo" href="../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Código fuente para SocialAPI.TwitterAPI.RecolectorTweetsUser</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">from</span> <span class="nn">SocialAPI.Recolector</span> <span class="kn">import</span> <span class="n">Recolector</span>
+<span class="kn">from</span> <span class="nn">ApoyoTwitter</span> <span class="kn">import</span> <span class="n">ApoyoTwitter</span>
+<span class="kn">from</span> <span class="nn">getAuthorizations</span> <span class="kn">import</span> <span class="n">GetAuthorizations</span>
+<span class="kn">from</span> <span class="nn">twython</span> <span class="kn">import</span> <span class="n">Twython</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
+
+<div class="viewcode-block" id="RecolectorTweetsUser"><a class="viewcode-back" href="../../../SocialAPI.TwitterAPI.html#SocialAPI.TwitterAPI.RecolectorTweetsUser.RecolectorTweetsUser">[documentos]</a><span class="k">class</span> <span class="nc">RecolectorTweetsUser</span><span class="p">(</span><span class="n">Recolector</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;docstring for RecolectorTweetsUser&quot;&quot;&quot;</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">escritor</span><span class="p">):</span>
+		<span class="nb">super</span><span class="p">(</span><span class="n">RecolectorTweetsUser</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">escritor</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">authorizator</span> <span class="o">=</span> <span class="n">GetAuthorizations</span><span class="p">(</span><span class="mi">299</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">twitter</span> <span class="o">=</span> <span class="bp">None</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">apoyo</span> <span class="o">=</span> <span class="n">ApoyoTwitter</span><span class="p">()</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">tipo_id</span> <span class="o">=</span> <span class="mi">1</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">inicializa</span><span class="p">()</span>
+		<span class="c1">#self.tiempos_por_escritor = {}</span>
+		
+
+<div class="viewcode-block" id="RecolectorTweetsUser.inicializa"><a class="viewcode-back" href="../../../SocialAPI.TwitterAPI.html#SocialAPI.TwitterAPI.RecolectorTweetsUser.RecolectorTweetsUser.inicializa">[documentos]</a>	<span class="k">def</span> <span class="nf">inicializa</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">authorizator</span><span class="o">.</span><span class="n">load_twitter_token</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tipo_id</span><span class="p">)</span>
+		<span class="n">api_key</span><span class="p">,</span> <span class="n">access_token</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">authorizator</span><span class="o">.</span><span class="n">get_twython_token</span><span class="p">()</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">twitter</span> <span class="o">=</span> <span class="n">Twython</span><span class="p">(</span><span class="n">api_key</span><span class="p">,</span> <span class="n">access_token</span><span class="o">=</span><span class="n">access_token</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RecolectorTweetsUser.recolecta"><a class="viewcode-back" href="../../../SocialAPI.TwitterAPI.html#SocialAPI.TwitterAPI.RecolectorTweetsUser.RecolectorTweetsUser.recolecta">[documentos]</a>	<span class="k">def</span> <span class="nf">recolecta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">identificador</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">3200</span><span class="p">):</span>
+		<span class="n">arrayFinal</span> <span class="o">=</span> <span class="p">[]</span>
+
+		<span class="k">if</span> <span class="n">query</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">identificador</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+			<span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Al menos debe haber un parametro usable&#39;</span><span class="p">)</span>
+
+		<span class="k">if</span> <span class="n">query</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+			<span class="k">if</span> <span class="n">query</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;@&#39;</span><span class="p">:</span>
+				<span class="n">query</span> <span class="o">=</span> <span class="n">query</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+		<span class="n">minimo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">apoyo</span><span class="o">.</span><span class="n">getLastTweetCollected</span><span class="p">(</span><span class="n">screen_name</span><span class="o">=</span><span class="n">query</span><span class="p">,</span> <span class="n">identificador</span><span class="o">=</span><span class="n">identificador</span><span class="p">)</span>
+		<span class="n">maximo</span> <span class="o">=</span> <span class="mi">0</span>
+		<span class="n">maximoGlobal</span> <span class="o">=</span> <span class="nb">long</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+		<span class="n">cont</span> <span class="o">=</span> <span class="mi">0</span>
+		<span class="n">flag_fin</span> <span class="o">=</span> <span class="bp">False</span>
+		<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+			<span class="k">try</span><span class="p">:</span>
+				<span class="n">statuses</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">privateRealizaConsulta</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">,</span> <span class="n">identificador</span><span class="o">=</span><span class="n">identificador</span><span class="p">,</span> <span class="n">maxi</span><span class="o">=</span><span class="n">maximo</span><span class="p">,</span> <span class="n">mini</span><span class="o">=</span><span class="n">minimo</span><span class="p">)</span>
+			<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+				<span class="n">flag_fin</span> <span class="o">=</span> <span class="bp">True</span>
+				<span class="n">statuses</span> <span class="o">=</span> <span class="p">[]</span>
+			
+			<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">statuses</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+				<span class="k">break</span>
+
+			<span class="k">for</span> <span class="n">status</span> <span class="ow">in</span> <span class="n">statuses</span><span class="p">:</span>
+				<span class="n">arrayFinal</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
+
+			<span class="n">maximo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMinIDtweets</span><span class="p">(</span><span class="n">arrayFinal</span><span class="p">,</span> <span class="n">query</span><span class="p">)</span>
+			<span class="n">maximo</span> <span class="o">-=</span> <span class="mi">1</span>
+			<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">arrayFinal</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">:</span>
+				<span class="bp">self</span><span class="o">.</span><span class="n">guarda</span><span class="p">(</span><span class="n">arrayFinal</span><span class="p">)</span>
+
+				<span class="n">auxMax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getMaxIDtweets</span><span class="p">(</span><span class="n">arrayFinal</span><span class="p">,</span> <span class="n">query</span><span class="p">)</span>
+				<span class="k">if</span> <span class="n">auxMax</span> <span class="o">&gt;</span> <span class="n">maximoGlobal</span><span class="p">:</span>
+					<span class="n">maximoGlobal</span> <span class="o">=</span> <span class="n">auxMax</span>
+					
+				<span class="n">cont</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">arrayFinal</span><span class="p">)</span>
+				<span class="n">arrayFinal</span> <span class="o">=</span> <span class="p">[]</span>
+			
+
+			<span class="c1">#limite de la api</span>
+			<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">arrayFinal</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">limit</span><span class="p">:</span>
+				<span class="k">break</span>
+
+		<span class="c1">#fin del while</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">guarda</span><span class="p">(</span><span class="n">arrayFinal</span><span class="p">)</span>
+		<span class="c1">#for tipo in self.tiempos_por_escritor:</span>
+		<span class="c1">#	print tipo + &quot;\t&quot; + str(self.tiempos_por_escritor[tipo])</span>
+		
+		<span class="k">if</span> <span class="n">maximoGlobal</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">apoyo</span><span class="o">.</span><span class="n">setLastUserTweet</span><span class="p">(</span><span class="n">maximoGlobal</span><span class="p">,</span> <span class="n">screen_name</span><span class="o">=</span><span class="n">query</span><span class="p">,</span> <span class="n">identificador</span><span class="o">=</span><span class="n">identificador</span><span class="p">)</span>
+
+
+		<span class="k">if</span> <span class="n">flag_fin</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
+			<span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;LIMITE&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RecolectorTweetsUser.guarda"><a class="viewcode-back" href="../../../SocialAPI.TwitterAPI.html#SocialAPI.TwitterAPI.RecolectorTweetsUser.RecolectorTweetsUser.guarda">[documentos]</a>	<span class="k">def</span> <span class="nf">guarda</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arrayDatos</span><span class="p">):</span>
+		<span class="k">for</span> <span class="n">escritor</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">escritores</span><span class="p">:</span>
+			<span class="c1">#medicion de tiempos</span>
+			<span class="c1">#tipo_escritor = escritor.__class__.__name__</span>
+			<span class="c1">#if tipo_escritor not in self.tiempos_por_escritor:</span>
+			<span class="c1">#	self.tiempos_por_escritor[tipo_escritor] = 0</span>
+			<span class="c1">#tiempo_inicio = time()</span>
+			<span class="n">escritor</span><span class="o">.</span><span class="n">escribe</span><span class="p">(</span><span class="n">arrayDatos</span><span class="p">)</span></div>
+			<span class="c1">#self.tiempos_por_escritor[tipo_escritor] += time() - tiempo_inicio</span>
+		
+
+<div class="viewcode-block" id="RecolectorTweetsUser.getMinIDtweets"><a class="viewcode-back" href="../../../SocialAPI.TwitterAPI.html#SocialAPI.TwitterAPI.RecolectorTweetsUser.RecolectorTweetsUser.getMinIDtweets">[documentos]</a>	<span class="k">def</span> <span class="nf">getMinIDtweets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tweets</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+
+		<span class="n">minimo</span> <span class="o">=</span> <span class="nb">long</span><span class="p">(</span><span class="mi">10</span><span class="o">**</span><span class="mi">20</span><span class="p">)</span>
+		<span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="n">tweets</span><span class="p">:</span>
+			<span class="k">if</span> <span class="n">minimo</span> <span class="o">&gt;</span> <span class="n">tweet</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]:</span>
+				<span class="n">minimo</span> <span class="o">=</span> <span class="n">tweet</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+		<span class="k">if</span> <span class="n">minimo</span> <span class="o">==</span> <span class="nb">long</span><span class="p">(</span><span class="mi">10</span><span class="o">**</span><span class="mi">20</span><span class="p">):</span>
+			<span class="k">return</span> <span class="mi">0</span>
+
+		<span class="k">return</span> <span class="n">minimo</span></div>
+
+<div class="viewcode-block" id="RecolectorTweetsUser.getMaxIDtweets"><a class="viewcode-back" href="../../../SocialAPI.TwitterAPI.html#SocialAPI.TwitterAPI.RecolectorTweetsUser.RecolectorTweetsUser.getMaxIDtweets">[documentos]</a>	<span class="k">def</span> <span class="nf">getMaxIDtweets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tweets</span><span class="p">,</span> <span class="n">query</span><span class="p">):</span>
+
+		<span class="n">maximo</span> <span class="o">=</span> <span class="nb">long</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+		<span class="k">for</span> <span class="n">tweet</span> <span class="ow">in</span> <span class="n">tweets</span><span class="p">:</span>
+				<span class="k">if</span> <span class="n">tweet</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">maximo</span><span class="p">:</span>
+					<span class="n">maximo</span> <span class="o">=</span> <span class="n">tweet</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+
+		<span class="k">return</span> <span class="n">maximo</span></div>
+
+
+<div class="viewcode-block" id="RecolectorTweetsUser.privateRealizaConsulta"><a class="viewcode-back" href="../../../SocialAPI.TwitterAPI.html#SocialAPI.TwitterAPI.RecolectorTweetsUser.RecolectorTweetsUser.privateRealizaConsulta">[documentos]</a>	<span class="k">def</span> <span class="nf">privateRealizaConsulta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">identificador</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">maxi</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">mini</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+		<span class="c1">#TODO busquedas por identificador</span>
+		<span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">authorizator</span><span class="o">.</span><span class="n">is_limit_api</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tipo_id</span><span class="p">):</span>
+			<span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;LIMITE&#39;</span><span class="p">)</span>
+
+		<span class="n">count</span> <span class="o">=</span> <span class="s1">&#39;200&#39;</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="k">if</span> <span class="n">maxi</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">mini</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> 
+				<span class="k">if</span> <span class="n">query</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+					<span class="n">retorno</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">twitter</span><span class="o">.</span><span class="n">get_user_timeline</span><span class="p">(</span><span class="n">screen_name</span><span class="o">=</span><span class="n">query</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="p">)</span>
+				<span class="k">else</span><span class="p">:</span>
+					<span class="n">retorno</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">twitter</span><span class="o">.</span><span class="n">get_user_timeline</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="n">identificador</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="p">)</span>
+
+			<span class="k">elif</span> <span class="n">maxi</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">mini</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+				<span class="k">if</span> <span class="n">query</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+					<span class="n">retorno</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">twitter</span><span class="o">.</span><span class="n">get_user_timeline</span><span class="p">(</span><span class="n">screen_name</span><span class="o">=</span><span class="n">query</span><span class="p">,</span> <span class="n">since_id</span><span class="o">=</span><span class="n">mini</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="p">)</span>
+				<span class="k">else</span><span class="p">:</span>
+					<span class="n">retorno</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">twitter</span><span class="o">.</span><span class="n">get_user_timeline</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="n">identificador</span><span class="p">,</span> <span class="n">since_id</span><span class="o">=</span><span class="n">mini</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="p">)</span>
+
+			<span class="k">elif</span> <span class="n">maxi</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">mini</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+				<span class="k">if</span> <span class="n">query</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+					<span class="n">retorno</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">twitter</span><span class="o">.</span><span class="n">get_user_timeline</span><span class="p">(</span><span class="n">screen_name</span><span class="o">=</span><span class="n">query</span><span class="p">,</span> <span class="n">max_id</span><span class="o">=</span><span class="n">maxi</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="p">)</span>
+				<span class="k">else</span><span class="p">:</span>
+					<span class="n">retorno</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">twitter</span><span class="o">.</span><span class="n">get_user_timeline</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="n">identificador</span><span class="p">,</span> <span class="n">max_id</span><span class="o">=</span><span class="n">maxi</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="p">)</span>
+
+			<span class="k">else</span><span class="p">:</span>
+				<span class="k">if</span> <span class="n">mini</span> <span class="o">&gt;</span> <span class="n">maxi</span><span class="p">:</span>
+					<span class="k">return</span> <span class="p">[]</span>
+					
+				<span class="k">if</span> <span class="n">query</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+					<span class="n">retorno</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">twitter</span><span class="o">.</span><span class="n">get_user_timeline</span><span class="p">(</span><span class="n">screen_name</span><span class="o">=</span><span class="n">query</span><span class="p">,</span> <span class="n">max_id</span><span class="o">=</span><span class="n">maxi</span><span class="p">,</span> <span class="n">since_id</span><span class="o">=</span><span class="n">mini</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="p">)</span>
+				<span class="k">else</span><span class="p">:</span>
+					<span class="n">retorno</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">twitter</span><span class="o">.</span><span class="n">get_user_timeline</span><span class="p">(</span><span class="n">user_id</span><span class="o">=</span><span class="n">identificador</span><span class="p">,</span> <span class="n">max_id</span><span class="o">=</span><span class="n">maxi</span><span class="p">,</span> <span class="n">since_id</span><span class="o">=</span><span class="n">mini</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="p">)</span>
+
+			<span class="bp">self</span><span class="o">.</span><span class="n">authorizator</span><span class="o">.</span><span class="n">add_query_to_key</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tipo_id</span><span class="p">)</span>
+			<span class="k">return</span> <span class="n">retorno</span>
+		<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+			<span class="k">print</span> <span class="n">e</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">authorizator</span><span class="o">.</span><span class="n">add_query_to_key</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tipo_id</span><span class="p">)</span>
+			<span class="k">if</span> <span class="s2">&quot;429&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
+				<span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;LIMITE&#39;</span><span class="p">)</span>
+			<span class="k">return</span> <span class="p">[]</span></div>
+			
+
+<div class="viewcode-block" id="RecolectorTweetsUser.privateParseaStatus"><a class="viewcode-back" href="../../../SocialAPI.TwitterAPI.html#SocialAPI.TwitterAPI.RecolectorTweetsUser.RecolectorTweetsUser.privateParseaStatus">[documentos]</a>	<span class="k">def</span> <span class="nf">privateParseaStatus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+		<span class="n">arrayTweets</span> <span class="o">=</span> <span class="p">[]</span>
+		
+		<span class="n">arrayTweets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
+
+		<span class="k">return</span> <span class="n">arrayTweets</span></div>
+
+<div class="viewcode-block" id="RecolectorTweetsUser.privateParseaUserFormStatus"><a class="viewcode-back" href="../../../SocialAPI.TwitterAPI.html#SocialAPI.TwitterAPI.RecolectorTweetsUser.RecolectorTweetsUser.privateParseaUserFormStatus">[documentos]</a>	<span class="k">def</span> <span class="nf">privateParseaUserFormStatus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">userAPI</span><span class="p">):</span>
+		<span class="n">user</span> <span class="o">=</span> <span class="p">{}</span>
+		<span class="c1">#id</span>
+		<span class="n">user</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">userAPI</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+		<span class="c1">#name</span>
+		<span class="n">user</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">userAPI</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
+		<span class="c1">#screen name</span>
+		<span class="n">user</span><span class="p">[</span><span class="s2">&quot;screen_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">userAPI</span><span class="p">[</span><span class="s2">&quot;screen_name&quot;</span><span class="p">]</span>
+		<span class="c1">#location</span>
+		<span class="n">user</span><span class="p">[</span><span class="s2">&quot;location&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">userAPI</span><span class="p">[</span><span class="s2">&quot;location&quot;</span><span class="p">]</span>
+		<span class="c1">#followers_count</span>
+		<span class="n">user</span><span class="p">[</span><span class="s2">&quot;followers_count&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">userAPI</span><span class="p">[</span><span class="s2">&quot;followers_count&quot;</span><span class="p">]</span>
+		<span class="c1">#created_at</span>
+		<span class="n">user</span><span class="p">[</span><span class="s2">&quot;created_at&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">userAPI</span><span class="p">[</span><span class="s2">&quot;created_at&quot;</span><span class="p">]</span>
+
+		<span class="k">return</span> <span class="n">user</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Código de módulo</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Búsqueda rápida</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Ir a" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Introduzca los términos de búsqueda o un nombre de módulo, clase o función.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Daniel Garnacho, Diego Castaño.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>DBbridge.Cassandra.CreaTablas &mdash; documentación de ConcursoPolicia - 1</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/translations.js"></script>
+    <link rel="top" title="documentación de ConcursoPolicia - 1" href="../../../index.html" />
+    <link rel="up" title="Código de módulo" href="../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Código fuente para DBbridge.Cassandra.CreaTablas</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">cassandra.cluster</span> <span class="kn">import</span> <span class="n">Cluster</span>
+
+<div class="viewcode-block" id="creaUsersTwitter"><a class="viewcode-back" href="../../../DBbridge.Cassandra.html#DBbridge.Cassandra.CreaTablas.creaUsersTwitter">[documentos]</a><span class="k">def</span> <span class="nf">creaUsersTwitter</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="p">(</span>
+             <span class="s1">&#39;CREATE TABLE users (&#39;</span>
+             <span class="s1">&#39;id_twitter bigint PRIMARY KEY&#39;</span>
+             <span class="s1">&#39;, name varchar&#39;</span>
+             <span class="s1">&#39;, screen_name varchar&#39;</span>
+             <span class="s1">&#39;, followers int&#39;</span>
+             <span class="s1">&#39;, following int&#39;</span>
+             <span class="s1">&#39;, location varchar&#39;</span>
+             <span class="s1">&#39;, created_at timestamp &#39;</span>
+             <span class="s1">&#39;, profile_img varchar&#39;</span>
+             <span class="s1">&#39;, last_tweet_collected bigint);&#39;</span>
+            <span class="p">)</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="creaIndexUsersTwitter"><a class="viewcode-back" href="../../../DBbridge.Cassandra.html#DBbridge.Cassandra.CreaTablas.creaIndexUsersTwitter">[documentos]</a><span class="k">def</span> <span class="nf">creaIndexUsersTwitter</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;CREATE INDEX indx_screen_name ON users (screen_name);&quot;</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="getSchemas"><a class="viewcode-back" href="../../../DBbridge.Cassandra.html#DBbridge.Cassandra.CreaTablas.getSchemas">[documentos]</a><span class="k">def</span> <span class="nf">getSchemas</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM system.schema_keyspaces;&quot;</span>
+    <span class="k">print</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span></div>
+<div class="viewcode-block" id="getTables"><a class="viewcode-back" href="../../../DBbridge.Cassandra.html#DBbridge.Cassandra.CreaTablas.getTables">[documentos]</a><span class="k">def</span> <span class="nf">getTables</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;select columnfamily_name from system.schema_columnfamilies where keyspace_name = &#39;twitter&#39;;&quot;</span>
+    <span class="k">print</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="creaTweets"><a class="viewcode-back" href="../../../DBbridge.Cassandra.html#DBbridge.Cassandra.CreaTablas.creaTweets">[documentos]</a><span class="k">def</span> <span class="nf">creaTweets</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;CREATE TABLE Tweets (&#39;</span>
+             <span class="s1">&#39;id_twitter bigint&#39;</span>
+             <span class="s1">&#39;, status text&#39;</span>
+             <span class="s1">&#39;, tuser bigint&#39;</span>
+             <span class="s1">&#39;, created_at timestamp&#39;</span>
+             <span class="s1">&#39;, lang text&#39;</span>
+             <span class="s1">&#39;, orig_tweet bigint&#39;</span>
+             <span class="s1">&#39;, favorite_count int&#39;</span>
+             <span class="s1">&#39;, retweet_count int&#39;</span>
+             <span class="s1">&#39;, media_urls map&lt;text, text&gt;&#39;</span>
+             <span class="s1">&#39;, latitude FLOAT&#39;</span>
+    		 <span class="s1">&#39;, longitude FLOAT&#39;</span>
+             <span class="s1">&#39;, lucene TEXT&#39;</span>
+             <span class="s1">&#39;, PRIMARY KEY (tuser, id_twitter)&#39;</span>
+             <span class="s1">&#39;)WITH CLUSTERING ORDER BY (id_twitter DESC);&#39;</span>
+             
+    <span class="p">)</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="creaIndexTweet"><a class="viewcode-back" href="../../../DBbridge.Cassandra.html#DBbridge.Cassandra.CreaTablas.creaIndexTweet">[documentos]</a><span class="k">def</span> <span class="nf">creaIndexTweet</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
+    <span class="c1">###usa el plugin &quot;https://github.com/Stratio/cassandra-lucene-index&quot; que usa LUCENE</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;DROP INDEX tweets_index;&quot;</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;CREATE CUSTOM INDEX tweets_index ON tweets (lucene)&quot;</span>
+        <span class="s2">&quot;USING &#39;com.stratio.cassandra.lucene.Index&#39;&quot;</span>
+        <span class="s2">&quot;WITH OPTIONS = {&quot;</span>
+        <span class="s2">&quot;&#39;refresh_seconds&#39; : &#39;60&#39;,&quot;</span>
+        <span class="s2">&quot;&#39;schema&#39; : &#39;{&quot;</span>
+        <span class="s2">&quot;fields : {&quot;</span>
+        <span class="s2">&quot;   id_twitter : {type : </span><span class="se">\&quot;</span><span class="s2">bigint</span><span class="se">\&quot;</span><span class="s2">},&quot;</span>
+        <span class="s2">&quot;   tuser  : {type : </span><span class="se">\&quot;</span><span class="s2">bigint</span><span class="se">\&quot;</span><span class="s2">},&quot;</span>
+        <span class="s2">&quot;   orig_tweet: {type : </span><span class="se">\&quot;</span><span class="s2">bigint</span><span class="se">\&quot;</span><span class="s2">},&quot;</span>
+        <span class="s2">&quot;   status  : {type : </span><span class="se">\&quot;</span><span class="s2">text</span><span class="se">\&quot;</span><span class="s2">, analyzer : </span><span class="se">\&quot;</span><span class="s2">english</span><span class="se">\&quot;</span><span class="s2">},&quot;</span>
+        <span class="s2">&quot;   created_at  : {type : </span><span class="se">\&quot;</span><span class="s2">date</span><span class="se">\&quot;</span><span class="s2">, pattern : </span><span class="se">\&quot;</span><span class="s2">yyyy-MM-dd HH:mm:ss</span><span class="se">\&quot;</span><span class="s2">,sorted:true},&quot;</span>
+        <span class="s2">&quot; place : {type : </span><span class="se">\&quot;</span><span class="s2">geo_point</span><span class="se">\&quot;</span><span class="s2">, latitude:</span><span class="se">\&quot;</span><span class="s2">latitude</span><span class="se">\&quot;</span><span class="s2">, longitude:</span><span class="se">\&quot;</span><span class="s2">longitude</span><span class="se">\&quot;</span><span class="s2">}&quot;</span>
+        <span class="s2">&quot;}&quot;</span>
+    <span class="s2">&quot;}&#39;&quot;</span>
+    <span class="s2">&quot;};&quot;</span>
+    <span class="p">)</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    query = &quot;CREATE INDEX indx_id_twitter ON tweets (id_twitter);&quot;</span>
+<span class="sd">    session.execute(query)</span>
+<span class="sd">    query = &quot;CREATE INDEX indx_orig_tweet ON tweets (orig_tweet);&quot;</span>
+<span class="sd">    session.execute(query)</span>
+<span class="sd">    query = &quot;CREATE INDEX indx_lang ON tweets (lang);&quot;</span>
+<span class="sd">    session.execute(query)&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="debug_func"><a class="viewcode-back" href="../../../DBbridge.Cassandra.html#DBbridge.Cassandra.CreaTablas.debug_func">[documentos]</a><span class="k">def</span> <span class="nf">debug_func</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;select * from system.schema_columnfamilies where keyspace_name = &#39;twitter&#39;;&quot;</span>
+    <span class="k">print</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="clean"><a class="viewcode-back" href="../../../DBbridge.Cassandra.html#DBbridge.Cassandra.CreaTablas.clean">[documentos]</a><span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;DROP TABLE Tweets;&quot;</span><span class="p">)</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;DROP TABLE users;&quot;</span><span class="p">)</span></div>
+<div class="viewcode-block" id="clean_tweets"><a class="viewcode-back" href="../../../DBbridge.Cassandra.html#DBbridge.Cassandra.CreaTablas.clean_tweets">[documentos]</a><span class="k">def</span> <span class="nf">clean_tweets</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;DROP TABLE Tweets;&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="alterTableUser"><a class="viewcode-back" href="../../../DBbridge.Cassandra.html#DBbridge.Cassandra.CreaTablas.alterTableUser">[documentos]</a><span class="k">def</span> <span class="nf">alterTableUser</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
+	<span class="c1">#friends_count</span>
+	<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;ALTER TABLE users ADD following int;&quot;</span>
+	<span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span></div>
+	
+
+    
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">cluster</span> <span class="o">=</span> <span class="n">Cluster</span><span class="p">()</span>
+    <span class="n">session</span> <span class="o">=</span> <span class="n">cluster</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;twitter&#39;</span><span class="p">)</span>
+    <span class="n">debug</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
+    	<span class="c1">#alterTableUser(session)</span>
+        <span class="c1">#clean_tweets(session)</span>
+        <span class="c1">#creaTweets(session)</span>
+        <span class="n">creaIndexTweet</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">clean</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
+        <span class="n">creaUsersTwitter</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
+        <span class="n">creaIndexUsersTwitter</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
+        <span class="c1">#print &quot;************usuario creado **************&quot;</span>
+        <span class="n">creaTweets</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
+        <span class="n">creaIndexTweet</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
+        
+        <span class="c1">#print &quot;************tweet creado **************&quot;</span>
+        <span class="n">getSchemas</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
+        <span class="n">getTables</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
+    
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Código de módulo</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Búsqueda rápida</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Ir a" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Introduzca los términos de búsqueda o un nombre de módulo, clase o función.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Daniel Garnacho, Diego Castaño.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
