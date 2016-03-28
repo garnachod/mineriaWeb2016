@@ -7,6 +7,19 @@ source venv/bin/activate
 ## al cambiar el código de una librería con el venv activo
 python setup.py install
 
+### TO DO:
+* API/APISentimientos.py (Llenar de código)
+* website/mineria/models.py (Carlos enterarte del modelo de tareas)
+* LuigiTasks/GenerateSentimenTrain.py (Llenar de código) (Dani o Carlos al menos definir clases)
+* LuigiTasks/GenerateSentimentModel.py (Llenar de  código) (Dani o Carlos al menos definir clases)
+* LuigiTasks/GenerateSentiment.py (lo mismo)
+* UI -> Añadir desplegable de idiomas permitidos
+
+### WorkFlow:
+* Se lanza una búsqueda en la web, se permite insertar un usuario de Twitter y el idioma del analisis
+* Si la tarea no esta computada se informa al usuario y se añade a tareas
+* Si la tarea esta computada se muestran los resultados en la interfaz
+
 
 ## Sentimental analysis using Word2Vec (Paragraph Vector)
 https://cs.stanford.edu/~quocle/paragraph_vector.pdf
