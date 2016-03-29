@@ -1,3 +1,4 @@
+from LuigiTasks.GenerateSentimentTrain import GenerateTextByLang
 from Config.Conf import Conf
 import luigi
 
@@ -5,39 +6,34 @@ class GenerateNLPByLang(luigi.Task):
 	"""
 	GenerateNLPByLang es la tarea que genera el modelo del texto
 	Utiliza ProcesadoresTexto.Doc2Vec para crear los vectores de los tweets
-	tiene como dependencia de tarea GenerateSentmentTrain.GenerateTextByLang
+	tiene como dependencia de tarea GenerateSentimentTrain.GenerateTextByLang
 	"""
 
-class SentimentalModel(object):
-	"""Mover a procesadores de texto?????"""
+	lang = luigi.Parameter()
 
+	def output(self):
+		conf = Conf()
+		path = conf.getAbsPath()
+		return luigi.LocalTarget('%s/Data/%s.d2v'%(self.lang))
 
-	"""sentimental model tiene como objetivo unificar el tratamiento 
-		de los tweets o textos segun llegan sin tener que pasar por dos clases
-		Sentimental model utiliza Doc2Vec para inferir el vector y el modelo de 
-		clasificador para clasificarlo
-	"""
-	def __init__(self, arg):
-		super(SentimentalModel, self).__init__()
-
-	def train():
-		pass
-
-	def load_def():
-		"""
-			carga el modelo desde una definicion json
-		"""
-		pass
-
-	def get_def():
-		"""
-			retorna en formato json la definicion del modelo
-		"""
-
+	def requires(self):
+		return GenerateTextByLang(self.lang)
 	
+	def run(self):
+		pass
 
-
-class GenerateModel(luigi.Task):
+class GenerateModelByLang(luigi.Task):
 	"""
 	GenerateModel crea el modelo de clasificacion de sentimientos. regresion lineal?
 	"""	
+	lang = luigi.Parameter()
+	def output(self):
+		conf = Conf()
+		path = conf.getAbsPath()
+		return luigi.LocalTarget('%s/Data/%s.model'%(self.lang))
+
+	def requires(self):
+		return [GenerateTextByLang(self.lang), GenerateNLPByLang(self.lang)]
+	
+	def run(self):
+		pass
