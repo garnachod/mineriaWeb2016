@@ -39,4 +39,11 @@ class GenerateTextByLang(luigi.Task):
 		"""
 		Por otro lado para procesar el texto, ProcesadoresTexto.LimpiadorTweets contiene todo.
 		"""
-		pass
+		consultas = ConsultasCassandra()
+		tweets = consultas.getTweetsTextAndLang(self.lang)
+		
+		contadorPerTag = {"POS":0, "NEG":0, "NAN":0}
+
+		for tweet in tweets:
+			"TODO:"
+			pass
