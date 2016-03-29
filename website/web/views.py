@@ -18,3 +18,24 @@ def index(request):
     #test
     getTask()
     return HttpResponse(template.render(context, request))
+
+def dashboard(request):
+    template = loader.get_template('mineria/dashboard.html')
+    context = { }
+    #test
+    getTask()
+    return HttpResponse(template.render(context))
+
+def charts(request):
+    template = loader.get_template('mineria/charts.html')
+    context = { }
+    #test
+    getTask()
+    return HttpResponse(template.render(context))
+
+def tables(request):
+    template = loader.get_template('mineria/tables.html')
+    context = { }
+    #test
+    getTask()
+    return HttpResponse(template.render(context))
