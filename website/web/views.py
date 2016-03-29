@@ -24,18 +24,12 @@ def dashboard(request):
     context = { }
     #test
     getTask()
-    return HttpResponse(template.render(context))
+    return HttpResponse(template.render(context,request))
 
-def charts(request):
-    template = loader.get_template('mineria/charts.html')
+def statistics(request):
+    template = loader.get_template('mineria/statistics.html')
     context = { }
     #test
     getTask()
-    return HttpResponse(template.render(context))
+    return HttpResponse(template.render(context,request))
 
-def tables(request):
-    template = loader.get_template('mineria/tables.html')
-    context = { }
-    #test
-    getTask()
-    return HttpResponse(template.render(context))
