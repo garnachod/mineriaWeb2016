@@ -22,9 +22,15 @@ python setup.py install
 
 
 ## Sentimental analysis using Word2Vec (Paragraph Vector)
-https://cs.stanford.edu/~quocle/paragraph_vector.pdf
 
-https://radimrehurek.com/gensim/
+
+### Papers del proyecto
+* [Paragraph Vector](https://cs.stanford.edu/~quocle/paragraph_vector.pdf)
+* [Twitter as a Corpus for Sentiment Analysis and Opinion Mining.](http://incc-tps.googlecode.com/svn/trunk/TPFinal/bibliografia/Pak%20and%20Paroubek%20(2010).%20Twitter%20as%20a%20Corpus%20for%20Sentiment%20Analysis%20and%20Opinion%20Mining.pdf)
+
+
+### Librería de procesamiento de lenguaje natural
+* https://radimrehurek.com/gensim/
 
 ## Instrucciones de instalación desde 0 (No hacer Carlos)
 * Instalar Cassandra: probado con Cassandra 2.1.11
