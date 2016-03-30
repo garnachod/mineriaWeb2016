@@ -1,4 +1,5 @@
 from DBbridge.ConsultasCassandra import ConsultasCassandra
+from ProcesadoresTexto.LimpiadorTweets import LimpiadorTweets
 from Config.Conf import Conf
 import luigi
 
@@ -26,7 +27,7 @@ class GenerateTextByLang(luigi.Task):
 		return luigi.LocalTarget('%s/Data/%s.train'%(self.lang))
 
 
-	def run(self):
+	def run(self,limite_balanceo):		
 		"""
 		Ejecucion:
 
@@ -39,11 +40,53 @@ class GenerateTextByLang(luigi.Task):
 		"""
 		Por otro lado para procesar el texto, ProcesadoresTexto.LimpiadorTweets contiene todo.
 		"""
+		Happy_emoticons = [":-)",":)", "=)",":D",";)"]   #Emoticonos de positividad
+		Sad_emoticons = [":-(",":(","=(",";("]	#Emoticonos negatividad
+		ID = 0 #ID unico para cada Tweet
+		outfile = open('sentimentalTweets.csv', 'w') #Fichero de salida
+
+		#Consultas a la base de datos 
 		consultas = ConsultasCassandra()
 		tweets = consultas.getTweetsTextAndLang(self.lang)
+
+		#Procesado de los Tweets
+		limpiarT = LimpiadorTweets()
 		
+		#Contadores para cada tag 
 		contadorPerTag = {"POS":0, "NEG":0, "NAN":0}
 
 		for tweet in tweets:
-			"TODO:"
-			pass
+			if contadorPerTag['POS'] <= limite_balanceo:
+				for icon in Happy_emoticons:
+					if icon in tweet[0]:
+						outfile.write("0 POSITIVO_%d\n" ID)
+						cl = clean(self,tweet[0])
+						outfile.write("1 %s\n" cl)
+						ID++
+						contadorPerTag['POS']++
+						pass
+			elif contadorPerTag['NEG'] <= limite_balanceo:
+				for icon in Sad_emoticons:
+					if icon in tweet[0]:
+						outfile.write("0 NEGATIVO_%d\n" ID)
+						cl = clean(self,tweet[0])
+						outfile.write("1 %s\n" cl)
+						ID++
+						contadorPerTag['NEG']++
+						pass
+
+		#Cerramos el fichero de texto
+		outfile.close() 
+		return 
+
+	def clean(self,tweet):		
+		#Procesado de los Tweets
+		limpiarT = LimpiadorTweets()
+
+		cleaned = limpiarT.clean(tweet)
+
+		cleaned = stopWordsByLanguagefilter(cleaned,self.lang)
+
+		cleaned = stemmingByLanguage(cleaned,self.lang)
+
+		return cleaned
