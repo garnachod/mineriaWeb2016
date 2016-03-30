@@ -20,14 +20,15 @@ class GenerateTextByLang(luigi.Task):
 	El sentimiento puede ser POS, NEG o NAN (si no lo hemos identificado)
 	"""
 	lang = luigi.Parameter()
+	limite_balanceo = luigi.IntParameter(default=100000)
 
 	def output(self):
 		conf = Conf()
 		path = conf.getAbsPath()
-		return luigi.LocalTarget('%s/Data/%s.train'%(self.lang))
+		return luigi.LocalTarget('%s/Data/%s.train'%(path, self.lang), format=luigi.format.TextFormat(encoding='utf8'))
 
 
-	def run(self,limite_balanceo):		
+	def run(self):
 		"""
 		Ejecucion:
 
@@ -36,61 +37,59 @@ class GenerateTextByLang(luigi.Task):
 		se pueden almacenar tweets en el idioma dado pero que no contengan sentimiento 
 		esto mejora el procesamiento de texto.
 		"""
-
 		"""
-		Por otro lado para procesar el texto, ProcesadoresTexto.LimpiadorTweets contiene todo.
+		http://incc-tps.googlecode.com/svn/trunk/TPFinal/bibliografia/Pak%20and%20Paroubek%20(2010).%20Twitter%20as%20a%20Corpus%20for%20Sentiment%20Analysis%20and%20Opinion%20Mining.pdf
 		"""
-		Happy_emoticons = [":-)",":)", "=)",":D",";)"]   #Emoticonos de positividad
-		Sad_emoticons = [":-(",":(","=(",";("]	#Emoticonos negatividad
-		ID = 0 #ID unico para cada Tweet
-		outfile = open('sentimentalTweets.csv', 'w') #Fichero de salida
+		Happy_emoticons = [":-)",":)", "=)",":D",";)"] #Emoticonos de positividad
+		Sad_emoticons = [":-(",":(","=(",";("] #Emoticonos negatividad
 
 		#Consultas a la base de datos 
 		consultas = ConsultasCassandra()
 		tweets = consultas.getTweetsTextAndLang(self.lang)
-
-		#Procesado de los Tweets
-		limpiarT = LimpiadorTweets()
 		
 		#Contadores para cada tag 
 		contadorPerTag = {"POS":0, "NEG":0, "NAN":0}
 
-		for tweet in tweets:
-			if contadorPerTag['POS'] <= limite_balanceo:
-				for icon in Happy_emoticons:
-					if icon in tweet[0]:
-						outfile.write("0 POSITIVO_%d;" % ID)
-						cl = clean(self,tweet[0])
-						outfile.write("1 %s\n" % cl)
-						ID+=1
-						contadorPerTag['POS']+=1
-						break
-			elif contadorPerTag['NEG'] <= limite_balanceo:
-				for icon in Sad_emoticons:
-					if icon in tweet[0]:
-						outfile.write("0 NEGATIVO_%d;" % ID)
-						cl = clean(self,tweet[0])
-						outfile.write("1 %s\n" % cl)
-						ID+=1
-						contadorPerTag['NEG']+=1
-						break
+		with self.output().open('w') as outfile:
+			for tweet in tweets:
+				flag = False 
+				if contadorPerTag['POS'] <= self.limite_balanceo:
+					for icon in Happy_emoticons:
+						if icon in tweet[0]:
+							#escritura de la etiqueta
+							outfile.write(u"POS_%d\n" % contadorPerTag['POS'])
+							#escritura del tweet
+							outfile.write(u"%s\n"% self.clean(tweet))
+							#se aumenta el contador de elementos positivos
+							contadorPerTag['POS']+=1
+							flag = True
+							break
 
-		#Cerramos el fichero de texto
-		outfile.close() 
-		return 
+
+				if contadorPerTag['NEG'] <= self.limite_balanceo and flag == False:
+					for icon in Sad_emoticons:
+						if icon in tweet[0]:
+							#escritura de la etiqueta
+							outfile.write(u"NEG_%d\n" % contadorPerTag['POS'])
+							#escritura del tweet
+							outfile.write(u"%s\n"% self.clean(tweet))
+							#se aumenta el contador de elementos negativos
+							contadorPerTag['NEG'] += 1
+							break
+
+				if contadorPerTag['NEG'] > self.limite_balanceo and contadorPerTag['POS'] > self.limite_balanceo:
+					#si se ha llegado a los dos limites no hace falta que sigamos computando
+					break
+
 
 	def clean(self,tweet):	
 		"""
-		Realiza llamadas a la función que limpia Tweets para
-		a continuación poder procesarlos.
+		Realiza llamadas a la funcion que limpia Tweets para
+		a continuacion poder procesarlos.
 		"""	
 		#Procesado de los Tweets
-		limpiarT = LimpiadorTweets()
+		tweetLimpio = LimpiadorTweets.clean(tweet.status)
+		tweetSinStopWords = LimpiadorTweets.stopWordsByLanguagefilter(tweetLimpio, tweet.lang)
+		tweetStemmed = LimpiadorTweets.stemmingByLanguage(tweetSinStopWords, tweet.lang)
 
-		cleaned = limpiarT.clean(tweet)
-
-		cleaned = stopWordsByLanguagefilter(cleaned,self.lang)
-
-		cleaned = stemmingByLanguage(cleaned,self.lang)
-
-		return cleaned
+		return tweetStemmed
