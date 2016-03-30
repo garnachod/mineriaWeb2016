@@ -57,9 +57,9 @@ class GenerateTextByLang(luigi.Task):
 					for icon in Happy_emoticons:
 						if icon in tweet[0]:
 							#escritura de la etiqueta
-							outfile.write("POS_%d\n" % contadorPerTag['POS'])
+							outfile.write(u"POS_%d\n" % contadorPerTag['POS'])
 							#escritura del tweet
-							outfile.write("%s\n"% self.clean(tweet))
+							outfile.write(u"%s\n"% self.clean(tweet))
 							#se aumenta el contador de elementos positivos
 							contadorPerTag['POS']+=1
 							flag = True
@@ -70,9 +70,9 @@ class GenerateTextByLang(luigi.Task):
 					for icon in Sad_emoticons:
 						if icon in tweet[0]:
 							#escritura de la etiqueta
-							outfile.write("NEG_%d\n" % contadorPerTag['POS'])
+							outfile.write(u"NEG_%d\n" % contadorPerTag['POS'])
 							#escritura del tweet
-							outfile.write("%s\n"% self.clean(tweet))
+							outfile.write(u"%s\n"% self.clean(tweet))
 							#se aumenta el contador de elementos negativos
 							contadorPerTag['NEG'] += 1
 							break
