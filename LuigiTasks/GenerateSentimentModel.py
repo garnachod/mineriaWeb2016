@@ -1,4 +1,5 @@
 from LuigiTasks.GenerateSentimentTrain import GenerateTextByLang
+from ProcesadoresTexto.Doc2Vec import Doc2Vec
 from Config.Conf import Conf
 import luigi
 
@@ -20,7 +21,20 @@ class GenerateNLPByLang(luigi.Task):
 		return GenerateTextByLang(self.lang)
 	
 	def run(self):
-		pass
+
+
+		doc2vec = Doc2Vec()
+		input_path = "sentimentalTweets.csv"
+		savePath = self.path.replace("check","model")
+
+		#Generamos el modelo del texto mediante Doc2Vec
+		doc2vec.train(self,input_path, save_location)
+
+		conf = Conf()
+
+		d2v.train(self.input().path, savePath, dimension = conf.getDimVectors(), epochs = 20, method="DBOW")
+		out.write("OK")
+		return
 
 class GenerateModelByLang(luigi.Task):
 	"""
