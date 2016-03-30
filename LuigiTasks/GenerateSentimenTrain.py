@@ -28,7 +28,7 @@ class GenerateTextByLang(luigi.Task):
 		return luigi.LocalTarget('%s/Data/%s.train'%(self.lang))
 
 
-	def run(self):		
+	def run(self):
 		"""
 		Ejecucion:
 
@@ -40,10 +40,8 @@ class GenerateTextByLang(luigi.Task):
 		"""
 		http://incc-tps.googlecode.com/svn/trunk/TPFinal/bibliografia/Pak%20and%20Paroubek%20(2010).%20Twitter%20as%20a%20Corpus%20for%20Sentiment%20Analysis%20and%20Opinion%20Mining.pdf
 		"""
-		Happy_emoticons = [":-)",":)", "=)",":D",";)"]   #Emoticonos de positividad
-		Sad_emoticons = [":-(",":(","=(",";("]	#Emoticonos negatividad
-
-		
+		Happy_emoticons = [":-)",":)", "=)",":D",";)"] #Emoticonos de positividad
+		Sad_emoticons = [":-(",":(","=(",";("] #Emoticonos negatividad
 
 		#Consultas a la base de datos 
 		consultas = ConsultasCassandra()
