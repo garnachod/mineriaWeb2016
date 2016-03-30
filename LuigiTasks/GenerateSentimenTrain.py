@@ -53,7 +53,7 @@ class GenerateTextByLang(luigi.Task):
 		with self.output().open('w') as outfile:
 			for tweet in tweets:
 				flag = False 
-				if contadorPerTag['POS'] <= limite_balanceo:
+				if contadorPerTag['POS'] <= self.limite_balanceo:
 					for icon in Happy_emoticons:
 						if icon in tweet[0]:
 							#escritura de la etiqueta
@@ -66,7 +66,7 @@ class GenerateTextByLang(luigi.Task):
 							break
 
 
-				if contadorPerTag['NEG'] <= limite_balanceo and flag == False:
+				if contadorPerTag['NEG'] <= self.limite_balanceo and flag == False:
 					for icon in Sad_emoticons:
 						if icon in tweet[0]:
 							#escritura de la etiqueta
