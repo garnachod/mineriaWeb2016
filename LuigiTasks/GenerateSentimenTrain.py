@@ -59,27 +59,31 @@ class GenerateTextByLang(luigi.Task):
 			if contadorPerTag['POS'] <= limite_balanceo:
 				for icon in Happy_emoticons:
 					if icon in tweet[0]:
-						outfile.write("0 POSITIVO_%d\n" ID)
+						outfile.write("0 POSITIVO_%d;" % ID)
 						cl = clean(self,tweet[0])
-						outfile.write("1 %s\n" cl)
-						ID++
-						contadorPerTag['POS']++
-						pass
+						outfile.write("1 %s\n" % cl)
+						ID+=1
+						contadorPerTag['POS']+=1
+						break
 			elif contadorPerTag['NEG'] <= limite_balanceo:
 				for icon in Sad_emoticons:
 					if icon in tweet[0]:
-						outfile.write("0 NEGATIVO_%d\n" ID)
+						outfile.write("0 NEGATIVO_%d;" % ID)
 						cl = clean(self,tweet[0])
-						outfile.write("1 %s\n" cl)
-						ID++
-						contadorPerTag['NEG']++
-						pass
+						outfile.write("1 %s\n" % cl)
+						ID+=1
+						contadorPerTag['NEG']+=1
+						break
 
 		#Cerramos el fichero de texto
 		outfile.close() 
 		return 
 
-	def clean(self,tweet):		
+	def clean(self,tweet):	
+		"""
+		Realiza llamadas a la función que limpia Tweets para
+		a continuación poder procesarlos.
+		"""	
 		#Procesado de los Tweets
 		limpiarT = LimpiadorTweets()
 
