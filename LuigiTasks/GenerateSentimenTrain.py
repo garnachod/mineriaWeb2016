@@ -25,7 +25,7 @@ class GenerateTextByLang(luigi.Task):
 	def output(self):
 		conf = Conf()
 		path = conf.getAbsPath()
-		return luigi.LocalTarget('%s/Data/%s.train'%(self.lang))
+		return luigi.LocalTarget('%s/Data/%s.train'%(path, self.lang))
 
 
 	def run(self):
