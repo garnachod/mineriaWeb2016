@@ -25,7 +25,7 @@ class GenerateTextByLang(luigi.Task):
 	def output(self):
 		conf = Conf()
 		path = conf.getAbsPath()
-		return luigi.LocalTarget('%s/Data/%s.train'%(path, self.lang))
+		return luigi.LocalTarget('%s/Data/%s.train'%(path, self.lang), format=luigi.format.TextFormat(encoding='utf8'))
 
 
 	def run(self):
@@ -77,7 +77,7 @@ class GenerateTextByLang(luigi.Task):
 							contadorPerTag['NEG'] += 1
 							break
 
-				if contadorPerTag['NEG'] > limite_balanceo and contadorPerTag['POS'] > limite_balanceo:
+				if contadorPerTag['NEG'] > self.limite_balanceo and contadorPerTag['POS'] > self.limite_balanceo:
 					#si se ha llegado a los dos limites no hace falta que sigamos computando
 					break
 
