@@ -52,14 +52,13 @@ class GenerateTextByLang(luigi.Task):
 
 		with self.output().open('w') as outfile:
 			for tweet in tweets:
-
 				if contadorPerTag['NEG'] >= self.limite_balanceo and contadorPerTag['POS'] >= self.limite_balanceo:
 					#si se ha llegado a los dos limites no hace falta que sigamos computando
 					break
 
 				tw_clean = self.clean(tweet)
 				if len(tw_clean.split(" ")) <= 1:
-					break
+					continue
 
 				flag = False 
 				if contadorPerTag['POS'] <= self.limite_balanceo:
