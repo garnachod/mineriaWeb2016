@@ -92,8 +92,12 @@ class Doc2Vec(object):
 		super(Doc2Vec, self).__init__()
 		self.doc2vec = None
 		
-	def train(self,input_path, save_location, dimension = 50, epochs = 20, method="DBOW"):
-		sentences = LabeledLineSentence(input_path)
+	def train(self,input_path, save_location, dimension = 50, epochs = 20, method="DBOW", isString= False):
+		sentence = None
+		if isString == False:
+			sentences = LabeledLineSentence(input_path)
+		else:
+			sentences = LabeledLineSentence(input_path, ides="String")
 
 		total_start = time.time()
 		dm_ = 1 
