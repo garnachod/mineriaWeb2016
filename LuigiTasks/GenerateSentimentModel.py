@@ -21,20 +21,13 @@ class GenerateNLPByLang(luigi.Task):
 		return GenerateTextByLang(self.lang)
 	
 	def run(self):
-
-
-		doc2vec = Doc2Vec()
-		input_path = "sentimentalTweets.csv"
-		savePath = self.path.replace("check","model")
-
-		#Generamos el modelo del texto mediante Doc2Vec
-		doc2vec.train(self,input_path, save_location)
-
-		conf = Conf()
-
-		d2v.train(self.input().path, savePath, dimension = conf.getDimVectors(), epochs = 20, method="DBOW")
-		out.write("OK")
-		return
+		with self.output().open("w") as out:
+			d2v = Doc2Vec()
+			savePath = self.path.replace("check","model")
+			
+			conf = Conf()
+			d2v.train(self.input().path, savePath, dimension = conf.getDimVectors(), epochs = 20, method="DBOW")
+			out.write("OK")
 
 class GenerateModelByLang(luigi.Task):
 	"""

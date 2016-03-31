@@ -27,7 +27,7 @@ class Conf():
 			#Neo4j
 			self.neo4j_password = 'tfg_neo4j'
 			#vectors
-			self.dimVectors = 200
+			self.dimVectors = 50
 
 		def getDomain(self):
 			return self.domain
