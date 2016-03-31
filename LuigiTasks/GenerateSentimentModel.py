@@ -1,6 +1,9 @@
 from LuigiTasks.GenerateSentimentTrain import GenerateTextByLang
-from ProcesadoresTexto.Doc2Vec import Doc2Vec
+from ProcesadoresTexto.Doc2Vec import Doc2Vec, LabeledLineSentence
 from Config.Conf import Conf
+import numpy as np
+from sklearn import linear_model
+from sklearn.cross_validation import train_test_split
 import luigi
 
 class GenerateNLPByLang(luigi.Task):
@@ -15,26 +18,19 @@ class GenerateNLPByLang(luigi.Task):
 	def output(self):
 		conf = Conf()
 		path = conf.getAbsPath()
-		return luigi.LocalTarget('%s/Data/%s.d2v'%(self.lang))
+		return luigi.LocalTarget('%s/Data/%s.check'%(path, self.lang))
 
 	def requires(self):
 		return GenerateTextByLang(self.lang)
 	
 	def run(self):
+		with self.output().open("w") as out:
+			d2v = Doc2Vec()
+			savePath = self.output().path.replace("check","model")
 
-
-		doc2vec = Doc2Vec()
-		input_path = "sentimentalTweets.csv"
-		savePath = self.path.replace("check","model")
-
-		#Generamos el modelo del texto mediante Doc2Vec
-		doc2vec.train(self,input_path, save_location)
-
-		conf = Conf()
-
-		d2v.train(self.input().path, savePath, dimension = conf.getDimVectors(), epochs = 20, method="DBOW")
-		out.write("OK")
-		return
+			conf = Conf()
+			d2v.train(self.input().path, savePath, dimension = conf.getDimVectors(), epochs = 20, method="DBOW", isString=True)
+			out.write("OK")
 
 class GenerateModelByLang(luigi.Task):
 	"""
@@ -44,10 +40,50 @@ class GenerateModelByLang(luigi.Task):
 	def output(self):
 		conf = Conf()
 		path = conf.getAbsPath()
-		return luigi.LocalTarget('%s/Data/%s.model'%(self.lang))
+		return luigi.LocalTarget('%s/Data/%s.regLog'%(path, self.lang))
 
 	def requires(self):
 		return [GenerateTextByLang(self.lang), GenerateNLPByLang(self.lang)]
 	
 	def run(self):
-		pass
+		d2v = None
+		modelLoc = ""
+		ficheroTweets = None
+		for input in self.input():
+			if "check" in input.path:
+				d2v = Doc2Vec()
+				modelLoc = input.path.replace("check", "model")
+			else:
+				ficheroTweets = input.path
+
+		lab = LabeledLineSentence(ficheroTweets, ides="String")
+		Y = []
+		X = []
+		for tweet in lab:
+			tag = tweet.tags
+			if "POS" in tag[0]:
+				Y.append(1)
+			elif "NEG" in tag[0]:
+				Y.append(0)
+
+			vecX = d2v.simulateVectorsFromVectorText(tweet.words, modelLoc)
+			X.append(vecX)
+
+		Y = np.array(Y)
+		X = np.array(X)
+
+		X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.20, random_state=42)
+
+		logreg = linear_model.LogisticRegression(C=1e5)
+		logreg.fit(X_train, y_train)
+
+		# Explained variance score: 1 is perfect prediction
+		print('Train score: %.2f' % logreg.score(X_train, y_train))
+		print('Test score: %.2f' % logreg.score(X_test, y_test))
+
+		tw_ejemplo = "carlos no es buena persona".split(" ")
+		vecX = d2v.simulateVectorsFromVectorText(tw_ejemplo, modelLoc)
+
+		print ('la clase predicha es: %d' % logreg.predict(vecX))
+
+

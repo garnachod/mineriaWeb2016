@@ -45,13 +45,22 @@ class GenerateTextByLang(luigi.Task):
 
 		#Consultas a la base de datos 
 		consultas = ConsultasCassandra()
-		tweets = consultas.getTweetsTextAndLang(self.lang)
+		tweets = consultas.getTweetsTextAndLang(self.lang, limit = 50000000)
 		
 		#Contadores para cada tag 
 		contadorPerTag = {"POS":0, "NEG":0, "NAN":0}
 
 		with self.output().open('w') as outfile:
 			for tweet in tweets:
+
+				if contadorPerTag['NEG'] >= self.limite_balanceo and contadorPerTag['POS'] >= self.limite_balanceo:
+					#si se ha llegado a los dos limites no hace falta que sigamos computando
+					break
+
+				tw_clean = self.clean(tweet)
+				if len(tw_clean.split(" ")) <= 1:
+					break
+
 				flag = False 
 				if contadorPerTag['POS'] <= self.limite_balanceo:
 					for icon in Happy_emoticons:
@@ -59,7 +68,7 @@ class GenerateTextByLang(luigi.Task):
 							#escritura de la etiqueta
 							outfile.write(u"POS_%d\n" % contadorPerTag['POS'])
 							#escritura del tweet
-							outfile.write(u"%s\n"% self.clean(tweet))
+							outfile.write(u"%s\n"% tw_clean)
 							#se aumenta el contador de elementos positivos
 							contadorPerTag['POS']+=1
 							flag = True
@@ -70,16 +79,23 @@ class GenerateTextByLang(luigi.Task):
 					for icon in Sad_emoticons:
 						if icon in tweet[0]:
 							#escritura de la etiqueta
-							outfile.write(u"NEG_%d\n" % contadorPerTag['POS'])
+							outfile.write(u"NEG_%d\n" % contadorPerTag['NEG'])
 							#escritura del tweet
-							outfile.write(u"%s\n"% self.clean(tweet))
+							outfile.write(u"%s\n"% tw_clean)
 							#se aumenta el contador de elementos negativos
 							contadorPerTag['NEG'] += 1
+							flag = True
 							break
 
-				if contadorPerTag['NEG'] > self.limite_balanceo and contadorPerTag['POS'] > self.limite_balanceo:
-					#si se ha llegado a los dos limites no hace falta que sigamos computando
-					break
+				if flag == False and contadorPerTag['NAN'] < 1000000:
+					#escritura de la etiqueta
+					outfile.write(u"NAN_%d\n" % contadorPerTag['NAN'])
+					#escritura del tweet
+					outfile.write(u"%s\n"% tw_clean)
+					#se aumenta el contador de elementos negativos
+					contadorPerTag['NAN'] += 1
+
+				
 
 
 	def clean(self,tweet):	
@@ -90,6 +106,5 @@ class GenerateTextByLang(luigi.Task):
 		#Procesado de los Tweets
 		tweetLimpio = LimpiadorTweets.clean(tweet.status)
 		tweetSinStopWords = LimpiadorTweets.stopWordsByLanguagefilter(tweetLimpio, tweet.lang)
-		tweetStemmed = LimpiadorTweets.stemmingByLanguage(tweetSinStopWords, tweet.lang)
 
-		return tweetStemmed
+		return tweetSinStopWords

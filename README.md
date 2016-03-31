@@ -7,6 +7,9 @@ source venv/bin/activate
 ## al cambiar el código de una librería con el venv activo
 python setup.py install
 
+## ejemplo del ejecucion de Luigi
+* PYTHONPATH='' luigi --module GenerateSentimenTrain GenerateTextByLang --lang es
+
 ### TO DO:
 * API/APISentimientos.py (Llenar de código)
 * website/mineria/models.py (Carlos enterarte del modelo de tareas)
