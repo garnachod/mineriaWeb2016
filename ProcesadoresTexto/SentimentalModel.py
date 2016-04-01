@@ -4,9 +4,6 @@ import numpy as np
 import json
 
 class SentimentalModel(object):
-	"""Mover a procesadores de texto?????"""
-
-
 	"""sentimental model tiene como objetivo unificar el tratamiento 
 		de los tweets o textos segun llegan sin tener que pasar por dos clases
 		Sentimental model utiliza Doc2Vec para inferir el vector y el modelo de 
@@ -14,14 +11,6 @@ class SentimentalModel(object):
 	"""
 	def __init__(self, text_Model_Location, lang, is_lemat):
 		super(SentimentalModel, self).__init__()
-
-	def train(self):
-
-
-		###NO ENTIENDO: SERÍA UNA LLAMADA AL FICHERO DE TRAIN NO???
-
-		pass
-
 
 
 	def classifyMentions(self,tweets):
@@ -34,7 +23,7 @@ class SentimentalModel(object):
 
 		#Realizamos una clasificación de los Tweet de las menciones
 		for tweet in tweets:
-			result = classifyText(self,tweet)
+			result = self.classifyText(self,tweet)
 			results[tweet] = result
 
 		#Guardamos los resultados en un Json
@@ -50,26 +39,62 @@ class SentimentalModel(object):
 		del Tweet
 		"""
 		modelLoc = ""
-		X = []
 
 		#Primero Cargamos y obtenemos el modelo
-		load_def(self)
-		modelLoc = get_def(self)
+		self.load_def(self)
+		modelLoc = self.get_def(self)
+
+		Y = []
+		X = []
+		for tweet in lab:
+			tag = tweet.tags
+			if "POS" in tag[0]:
+				Y.append(1)
+			elif "NEG" in tag[0]:
+				Y.append(0)
+
+			vecX = d2v.simulateVectorsFromVectorText(tweet.words, modelLoc)
+			X.append(vecX)
+
+		Y = np.array(Y)
+		X = np.array(X)
+
+		X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.20, random_state=42)
+
+		logreg = linear_model.LogisticRegression(C=1e5)
+		logreg.fit(X_train, y_train)
 
 		#Se procede a realizar el Preprocesado del Tweet
-		X = Preprocesado(self,text,modelLoc)
+		vectX = Preprocesado(self,text,modelLoc)
 
-		"TODO: realizar la clasificación"
+		result = logreg.predict(vecX)
 
-		pass
+		print ('la clase predicha es: %d' % result)
+
+		return result
+
+
 	def load_def(self, location=None, string=None):
 		"""
 			carga el modelo desde una definicion json
 			al menos tiene que tener un parametro distinto de None
 		"""
 
-		###NO ENTIENDO DESDE UN JSON???
-		pass
+		d2v = None
+		modelLoc = ""
+		ficheroTweets = None
+
+
+		for input in location:
+			if "check" in input.path:
+				d2v = Doc2Vec()
+				modelLoc = location.replace("check", "model")
+			else:
+				ficheroTweets = location
+
+		lab = LabeledLineSentence(ficheroTweets,string)
+
+		return
 
 	def get_def(self):
 		"""
@@ -93,9 +118,7 @@ class SentimentalModel(object):
 		"""
 		Realiza el preprocesado de los Tweets y los convierte en 
 		un array de palabras.
-		"""	
-
-		X = []
+		"""
 
 		#Preprocesado del texto/Tweet
 		tw_clean = self.clean(tweet)
@@ -105,8 +128,4 @@ class SentimentalModel(object):
 
 		vecX = d2v.simulateVectorsFromVectorText(tw_clean, model)
 
-		X.append(vecX)
-
-		X = np.array(X)
-
-		return X
+		return vecX
