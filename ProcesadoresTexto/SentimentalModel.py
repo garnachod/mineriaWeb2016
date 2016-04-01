@@ -59,7 +59,7 @@ class SentimentalModel(object):
 		#Se procede a realizar el Preprocesado del Tweet
 		X = Preprocesado(self,text,modelLoc)
 
-
+		"TODO: realizar la clasificación"
 
 		pass
 	def load_def(self, location=None, string=None):
