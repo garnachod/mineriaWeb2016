@@ -9,8 +9,24 @@ class SentimentalModel(object):
 		Sentimental model utiliza Doc2Vec para inferir el vector y el modelo de 
 		clasificador para clasificarlo, asi como el lenguaje
 	"""
-	def __init__(self, text_Model_Location, lang, is_lemat):
+	"""
+		Carlos!!!!!!
+			se rellenan los objetos aqui abajo definidos
+	"""
+	def __init__(self, model_location = None, is_lemat=False):
 		super(SentimentalModel, self).__init__()
+		#modelo doc2vec, genera los vectores.
+		self.d2v = None
+		#modelo regresion logistica, predice las clases
+		self.logreg = None
+		#lenguaje uno u otro ["es", "en"]
+		self.lang = None
+
+		#si la localizacion del modelo no es none
+		if model_location is not None:
+			self.load_def(location = model_location)
+
+
 
 
 	def classifyMentions(self,tweets):
@@ -27,6 +43,7 @@ class SentimentalModel(object):
 			results[tweet] = result
 
 		#Guardamos los resultados en un Json
+		
 		with open('results.txt', 'w') as outfile:
     		json.dump(results, outfile)	
 
@@ -34,40 +51,9 @@ class SentimentalModel(object):
 
 
 	def classifyText(self, text):
-		"""
-		Dado un texto sin procesar realizamos la clasificación
-		del Tweet
-		"""
-		modelLoc = ""
-
-		#Primero Cargamos y obtenemos el modelo
-		self.load_def(self)
-		modelLoc = self.get_def(self)
-
-		Y = []
-		X = []
-		for tweet in lab:
-			tag = tweet.tags
-			if "POS" in tag[0]:
-				Y.append(1)
-			elif "NEG" in tag[0]:
-				Y.append(0)
-
-			vecX = d2v.simulateVectorsFromVectorText(tweet.words, modelLoc)
-			X.append(vecX)
-
-		Y = np.array(Y)
-		X = np.array(X)
-
-		X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.20, random_state=42)
-
-		logreg = linear_model.LogisticRegression(C=1e5)
-		logreg.fit(X_train, y_train)
-
 		#Se procede a realizar el Preprocesado del Tweet
-		vectX = Preprocesado(self,text,modelLoc)
-
-		result = logreg.predict(vecX)
+		vectX = self.Preprocesado(text)
+		result = self.logreg.predict(vecX)
 
 		print ('la clase predicha es: %d' % result)
 
@@ -78,30 +64,44 @@ class SentimentalModel(object):
 		"""
 			carga el modelo desde una definicion json
 			al menos tiene que tener un parametro distinto de None
+
+			parametros de entrada:
+				location: si no es None, es la localizacion en disco del JSON
+				string: si no es None, es el modelo JSON sin parsear (json.parse())
+
+			dentro de este json habra 3 variables:
+				text_model: "localizacion en disco del modelo de texto en formato string"
+				clasf_model: "localizacion en disco del modelo de clasificacion"
+				lang: "lenguaje: solo puede ser (es, en)"
+
+			estos modelos se han generado y guardado en LuigiTask/GenerateSentimentModel.py GenerateModelByLang
+		"""
+		"""
+			rellenar esto
+		"""
+		#modelo doc2vec, genera los vectores.
+		self.d2v = None
+		#modelo regresion logistica, predice las clases
+		self.logreg = None
+		#lenguaje uno u otro ["es", "en"]
+		self.lang = None
+
+	@staticmethod
+	def get_def(d2v_loc, logreg_loc, lang):
+		"""
+			Para que la definicion del JSON y la lectura sea igual, lo metemos en la misma clase
+			si nos fijamos en el @staticmethod, no tiene self
+
+			genera y retorna un string JSON que dentro habra 3 variables:
+				text_model: "localizacion en disco del modelo de texto en formato string"
+				clasf_model: "localizacion en disco del modelo de clasificacion"
+				lang: "lenguaje: solo puede ser (es, en)"
+
+
+			la idea es que en LuigiTask/GenerateSentimentModel.py GenerateModelByLang se llame a este metodo
+			para guardarlo con el formato bueno.
 		"""
 
-		d2v = None
-		modelLoc = ""
-		ficheroTweets = None
-
-
-		for input in location:
-			if "check" in input.path:
-				d2v = Doc2Vec()
-				modelLoc = location.replace("check", "model")
-			else:
-				ficheroTweets = location
-
-		lab = LabeledLineSentence(ficheroTweets,string)
-
-		return
-
-	def get_def(self):
-		"""
-			retorna en formato json string la definicion del modelo
-		"""
-
-		###NO ENTIENDO DESDE UN JSON???
 
 	def clean(self,tweet):	
 		"""
