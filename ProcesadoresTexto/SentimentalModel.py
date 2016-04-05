@@ -28,13 +28,13 @@ class SentimentalModel(object):
 
 	def classifyMentions(self,tweets):
 		"""
-		Dada una mencion a una compañía (array de Tweets),
-		se realiza una clasificación y nos devuelve su json
+		Dada una mencion a una compania (array de Tweets),
+		se realiza una clasificacion y nos devuelve su json
 		para posteriormente pintarlo.
 		"""
 		results = {}
 
-		#Realizamos una clasificación de los Tweet de las menciones
+		#Realizamos una clasificacion de los Tweet de las menciones
 		for tweet in tweets:
 			result = self.classifyText(self,tweet)
 			results[tweet] = result
@@ -42,13 +42,13 @@ class SentimentalModel(object):
 		#Guardamos los resultados en un Json
 		
 		with open('results.txt', 'w') as outfile:
-    		json.dump(results, outfile)	
+			json.dump(results, outfile)	
 
 		return 
 
 
 	def classifyText(self, text):
-		"""Realiza la Clasificacón de un tweet mediante una 
+		"""Realiza la Clasificacion de un tweet mediante una 
 		llamada a logreg.predict"""
 
 		#Se procede a realizar el Preprocesado del Tweet
@@ -81,22 +81,22 @@ class SentimentalModel(object):
 		if location is not None:
 			#Lectura del fichero JSON dado por parametro
 			with open(location) as data_file:    
-    			data = json.load(data_file)
-    	else if string is not None:
-    		#Realizamos el parseo del JSON  
-    			data = json.load(string)
-    	else
-    		print "Parameters Error"
-    		return "ERR"
+				data = json.load(data_file)
+		elif string is not None:
+			#Realizamos el parseo del JSON  
+				data = json.load(string)
+		else:
+			print "Parameters Error"
+			return "ERR"
 
-    	#Modelo que nos genera los vectores
-    	self.d2v = data['text_model']
-    	#Almacenamos el modelo (regresion logistica)
-    	self.logreg = data['clasf_model']
-    	#Almacenamos el lenguaje
-    	self.lang = data['lang']
+		#Modelo que nos genera los vectores
+		self.d2v = data['text_model']
+		#Almacenamos el modelo (regresion logistica)
+		self.logreg = data['clasf_model']
+		#Almacenamos el lenguaje
+		self.lang = data['lang']
 
-    	return "OK"
+		return "OK"
 
 	@staticmethod
 	def get_def(d2v_loc, logreg_loc, lang):
@@ -114,13 +114,10 @@ class SentimentalModel(object):
 			para guardarlo con el formato bueno.
 		"""
 
-		#Escritura de las variabeles en un JSON
-		with open('sentimentalModelJSON.txt', 'w') as outfile:
-    		json.dump({'text_model':d2v_loc, 'lasf_model':logreg_loc, 'lang':lang}, outfile, indent=4)
-
-
-    	#Retornamos el string que contien el JSON
-    	return 'sentimentalModelJSON.txt'
+		#Escritura de las variabeles en un JSON String
+		cadena_json = json.dumps({'text_model':d2v_loc, 'clasf_model':logreg_loc, 'lang':lang})
+		#Retornamos el string que es json
+		return cadena_json
 
 
 	def clean(self,tweet):	

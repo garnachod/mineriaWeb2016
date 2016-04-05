@@ -4,6 +4,8 @@ from Config.Conf import Conf
 import numpy as np
 from sklearn import linear_model
 from sklearn.cross_validation import train_test_split
+from ProcesadoresTexto.SentimentalModel import SentimentalModel
+from sklearn.externals import joblib
 import luigi
 
 class GenerateNLPByLang(luigi.Task):
@@ -40,7 +42,7 @@ class GenerateModelByLang(luigi.Task):
 	def output(self):
 		conf = Conf()
 		path = conf.getAbsPath()
-		return luigi.LocalTarget('%s/Data/%s.regLog'%(path, self.lang))
+		return luigi.LocalTarget('%s/Data/%s.mod_def'%(path, self.lang))
 
 	def requires(self):
 		return [GenerateTextByLang(self.lang), GenerateNLPByLang(self.lang)]
@@ -63,11 +65,14 @@ class GenerateModelByLang(luigi.Task):
 			tag = tweet.tags
 			if "POS" in tag[0]:
 				Y.append(1)
+				vecX = d2v.simulateVectorsFromVectorText(tweet.words, modelLoc)
+				X.append(vecX)
 			elif "NEG" in tag[0]:
-				Y.append(0)
+				Y.append(-1)
+				vecX = d2v.simulateVectorsFromVectorText(tweet.words, modelLoc)
+				X.append(vecX)
 
-			vecX = d2v.simulateVectorsFromVectorText(tweet.words, modelLoc)
-			X.append(vecX)
+			
 
 		Y = np.array(Y)
 		X = np.array(X)
@@ -85,5 +90,11 @@ class GenerateModelByLang(luigi.Task):
 		vecX = d2v.simulateVectorsFromVectorText(tw_ejemplo, modelLoc)
 
 		print ('la clase predicha es: %d' % logreg.predict(vecX))
+
+		with self.output().open("w") as fout:
+			logreg_model_path = self.output().path.replace("mod_def", "logreg")
+			senti = SentimentalModel.get_def(modelLoc, logreg_model_path, self.lang)
+			fout.write(senti)
+			joblib.dump(logreg, logreg_model_path)
 
 
