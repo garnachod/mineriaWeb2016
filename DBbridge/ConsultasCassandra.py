@@ -477,7 +477,7 @@ class ConsultasCassandra(object):
 			El formato de tweet es el común:
 				status, favorite_count, retweet_count, orig_tweet, media_urls, screen_name, profile_img, id_twitter
 		"""
-		query = "SELECT status, favorite_count, retweet_count, orig_tweet, media_urls, tuser, id_twitter, created_at FROM tweets WHERE lucene =\'{"
+		query = "SELECT status, favorite_count, retweet_count, orig_tweet, media_urls, tuser, id_twitter, created_at, lang FROM tweets WHERE lucene =\'{"
 		if use_max_id:
 			query += "filter : {type:\"boolean\", must:["
 			query += "{type:\"match\", field:\"orig_tweet\", value:0}, "
@@ -490,7 +490,7 @@ class ConsultasCassandra(object):
 		query += "}\' limit %s;"
 		
 
-		Row = namedtuple('Row', 'status, favorite_count, retweet_count, orig_tweet, media_urls, screen_name, profile_img, id_twitter, created_at')
+		Row = namedtuple('Row', 'status, favorite_count, retweet_count, orig_tweet, media_urls, screen_name, profile_img, id_twitter, created_at, lang')
 
 		try:
 			rows = self.session_cassandra.execute(query, [limit])
@@ -498,7 +498,7 @@ class ConsultasCassandra(object):
 			#JOIN
 			for row in rows:
 				user = self.getUserByIDShortCassandra(row.tuser)
-				fila = Row(row.status, row.favorite_count, row.retweet_count, row.orig_tweet, row.media_urls, user.screen_name, user.profile_img, row.id_twitter, row.created_at)
+				fila = Row(row.status, row.favorite_count, row.retweet_count, row.orig_tweet, row.media_urls, user.screen_name, user.profile_img, row.id_twitter, row.created_at, row.lang)
 				retorno.append(fila)
 			return retorno
 		except Exception, e:

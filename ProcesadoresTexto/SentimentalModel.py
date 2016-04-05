@@ -2,6 +2,7 @@ from ProcesadoresTexto.LimpiadorTweets import LimpiadorTweets
 from ProcesadoresTexto.Doc2Vec import Doc2Vec, LabeledLineSentence
 import numpy as np
 import json
+from sklearn.externals import joblib
 
 class SentimentalModel(object):
 	"""sentimental model tiene como objetivo unificar el tratamiento 
@@ -23,9 +24,6 @@ class SentimentalModel(object):
 		if model_location is not None:
 			self.load_def(location = model_location)
 
-
-
-
 	def classifyMentions(self,tweets):
 		"""
 		Dada una mencion a una compania (array de Tweets),
@@ -36,15 +34,11 @@ class SentimentalModel(object):
 
 		#Realizamos una clasificacion de los Tweet de las menciones
 		for tweet in tweets:
-			result = self.classifyText(self,tweet)
-			results[tweet] = result
+			result = self.classifyText(tweet)
+			if result is not None:
+				results[tweet] = result
 
-		#Guardamos los resultados en un Json
-		
-		with open('results.txt', 'w') as outfile:
-			json.dump(results, outfile)	
-
-		return 
+		return json.dumps(results)
 
 
 	def classifyText(self, text):
@@ -53,7 +47,11 @@ class SentimentalModel(object):
 
 		#Se procede a realizar el Preprocesado del Tweet
 		vectX = self.Preprocesado(text)
-		result = self.logreg.predict(vecX)
+		if vecX is None:
+			return None
+
+		logreg = joblib.load(self.logreg)
+		result = logreg.predict(vecX)
 
 		print ('la clase predicha es: %d' % result)
 
@@ -80,11 +78,11 @@ class SentimentalModel(object):
 		#Comprobacion de los parametros de entrada
 		if location is not None:
 			#Lectura del fichero JSON dado por parametro
-			with open(location) as data_file:    
+			with open(location, "r") as data_file:
 				data = json.load(data_file)
 		elif string is not None:
 			#Realizamos el parseo del JSON  
-				data = json.load(string)
+			data = json.loads(string)
 		else:
 			print "Parameters Error"
 			return "ERR"
@@ -131,7 +129,7 @@ class SentimentalModel(object):
 
 		return tweetSinStopWords
 
-	def Preprocesado(self,tweet,model):
+	def Preprocesado(self,tweet):
 		"""
 		Realiza el preprocesado de los Tweets y los convierte en 
 		un array de palabras.
@@ -141,8 +139,9 @@ class SentimentalModel(object):
 		tw_clean = self.clean(tweet)
 		if len(tw_clean.split(" ")) <= 1:
 			print "No se puede procesar el Tweet, ya que no contiene texto"
-			return
+			return None
 
-		vecX = d2v.simulateVectorsFromVectorText(tw_clean, model)
+		d2v_ = Doc2Vec()
+		vecX = d2v_.simulateVectorsFromVectorText(tw_clean, self.d2v)
 
 		return vecX

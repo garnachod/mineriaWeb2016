@@ -122,6 +122,9 @@ class RecolectorContenidoTweet(luigi.Task):
 			else:
 				raise e
 
+		with self.output().open('w') as out_file:
+			out_file.write("OK")
+
 class RecolectorSeguidoresTwitter(luigi.Task):
 	"""
 		Uso:
