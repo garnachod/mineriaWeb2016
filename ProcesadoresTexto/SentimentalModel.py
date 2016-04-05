@@ -9,10 +9,7 @@ class SentimentalModel(object):
 		Sentimental model utiliza Doc2Vec para inferir el vector y el modelo de 
 		clasificador para clasificarlo, asi como el lenguaje
 	"""
-	"""
-		Carlos!!!!!!
-			se rellenan los objetos aqui abajo definidos
-	"""
+	
 	def __init__(self, model_location = None, is_lemat=False):
 		super(SentimentalModel, self).__init__()
 		#modelo doc2vec, genera los vectores.
@@ -51,6 +48,9 @@ class SentimentalModel(object):
 
 
 	def classifyText(self, text):
+		"""Realiza la Clasificacón de un tweet mediante una 
+		llamada a logreg.predict"""
+
 		#Se procede a realizar el Preprocesado del Tweet
 		vectX = self.Preprocesado(text)
 		result = self.logreg.predict(vecX)
@@ -76,15 +76,27 @@ class SentimentalModel(object):
 
 			estos modelos se han generado y guardado en LuigiTask/GenerateSentimentModel.py GenerateModelByLang
 		"""
-		"""
-			rellenar esto
-		"""
-		#modelo doc2vec, genera los vectores.
-		self.d2v = None
-		#modelo regresion logistica, predice las clases
-		self.logreg = None
-		#lenguaje uno u otro ["es", "en"]
-		self.lang = None
+
+		#Comprobacion de los parametros de entrada
+		if location is not None:
+			#Lectura del fichero JSON dado por parametro
+			with open(location) as data_file:    
+    			data = json.load(data_file)
+    	else if string is not None:
+    		#Realizamos el parseo del JSON  
+    			data = json.load(string)
+    	else
+    		print "Parameters Error"
+    		return "ERR"
+
+    	#Modelo que nos genera los vectores
+    	self.d2v = data['text_model']
+    	#Almacenamos el modelo (regresion logistica)
+    	self.logreg = data['clasf_model']
+    	#Almacenamos el lenguaje
+    	self.lang = data['lang']
+
+    	return "OK"
 
 	@staticmethod
 	def get_def(d2v_loc, logreg_loc, lang):
@@ -101,6 +113,14 @@ class SentimentalModel(object):
 			la idea es que en LuigiTask/GenerateSentimentModel.py GenerateModelByLang se llame a este metodo
 			para guardarlo con el formato bueno.
 		"""
+
+		#Escritura de las variabeles en un JSON
+		with open('sentimentalModelJSON.txt', 'w') as outfile:
+    		json.dump({'text_model':d2v_loc, 'lasf_model':logreg_loc, 'lang':lang}, outfile, indent=4)
+
+
+    	#Retornamos el string que contien el JSON
+    	return 'sentimentalModelJSON.txt'
 
 
 	def clean(self,tweet):	
