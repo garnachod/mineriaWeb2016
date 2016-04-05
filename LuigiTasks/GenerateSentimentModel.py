@@ -83,14 +83,14 @@ class GenerateModelByLang(luigi.Task):
 		logreg.fit(X_train, y_train)
 
 		# Explained variance score: 1 is perfect prediction
-		print('Train score: %.2f' % logreg.score(X_train, y_train))
-		print('Test score: %.2f' % logreg.score(X_test, y_test))
-
+		print('Train score: %.5f' % logreg.score(X_train, y_train))
+		print('Test score: %.5f' % logreg.score(X_test, y_test))
+		"""
 		tw_ejemplo = "carlos no es buena persona".split(" ")
 		vecX = d2v.simulateVectorsFromVectorText(tw_ejemplo, modelLoc)
 
 		print ('la clase predicha es: %d' % logreg.predict(vecX))
-
+		"""
 		with self.output().open("w") as fout:
 			logreg_model_path = self.output().path.replace("mod_def", "logreg")
 			senti = SentimentalModel.get_def(modelLoc, logreg_model_path, self.lang)
