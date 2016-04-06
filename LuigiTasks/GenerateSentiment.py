@@ -40,3 +40,7 @@ class GenerateSentimentMetions(luigi.Task):
 			strSentsOut = json.dumps(sentsOut)
 			outfile.write(strSentsOut)
 		
+class GenerateSentimentUser(luigi.Task):
+	"""docstring for GenerateSentimentUser"""
+	pass
+		
