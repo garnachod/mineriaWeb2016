@@ -1,3 +1,38 @@
+import os
+import luigi
+from LuigiTasks.GenerateSentiment import GenerateSentimentMetions
+#from LuigiTasks.GenerateSim import GenerateSimRelations_semantic, GenerateSimRelations_topics, GenerateSimAll_topics, GenerateSimAll_semantic
+from DBbridge.ConsultasCassandra import ConsultasCassandra
+
+from Config.Conf import Conf
+import json
+
+#import time
+
+import multiprocessing
+
+re_tuser = re.compile(r'@?[a-zA-Z0-9_]+')
+
+
+class _generateSentimentUser(multiprocessing.Process):
+	"""docstring for _generateSentimentUser"""
+	def __init__(self, lang, username, id_tarea):
+		super(_generateSentimentUser, self).__init__()
+		self.lang = lang
+		self.username = username
+		self.id_tarea = id_tarea
+
+	def run(self):
+		#configuracion del sistema
+		conf = Conf()
+		path = conf.getAbsPath()
+		comand = "PYTHONPATH=\"${PYTHONPATH}:./LuigiTasks\" && export PYTHONPATH && luigi --module GenerateSentiment "
+		
+		comand += " --lang " + self.lang + "  --idtarea " + str(self.id_tarea)
+		comand += " > /dev/null 2>&1"
+		
+		os.popen(comand)
+
 class APISentimientos(object):
 	"""APISentimientos, operaciones permitidas en la api relativa a los sentimientos"""
 
@@ -19,6 +54,7 @@ class APISentimientos(object):
 		"""
 		pos = 0
 		neg = 0
+
 		return pos, neg
 
 	def getSentimentsByUser(username, lang):
@@ -38,6 +74,31 @@ class APISentimientos(object):
 		"""
 		pos = 0
 		neg = 0
+
+		if len(username) > 16 or len(username) < 2 or re_tuser.match(username) == None:
+			raise Exception("Parametros incorrectos")
+
+		if lang != 'es' and lang != 'en':
+			raise Exception("Parametros incorrectos")
+
+
+		sentiment = GenerateSentimentMetions(lang = lang, username = username)
+		print id_tarea
+
+		#Comprobamos si existe el JSON que nos define a dicho usuario
+		if os.path.isfile(sentiment.output().path) == False:
+			p = _generateSentimentUser(lang, username, id_tarea)
+			p.start()
+			return False
+		
+		#Lectura del JSON que nos dice los sentimientos de los usuarios
+		with open(sentiment.output().path) as data_file:    
+    		data = json.load(data_file)
+
+    	#Cargamos el numero de positivos y negativos
+    	pos = data["pos"]
+    	neg = data["neg"]
+
 		return pos, neg
 
 	def isTaskFinished(username, lang, tipo_tarea):
