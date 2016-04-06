@@ -17,6 +17,7 @@ class SentimentalModel(object):
 		self.d2v = None
 		#modelo regresion logistica, predice las clases
 		self.logreg = None
+		self.logreg_model = None
 		#lenguaje uno u otro ["es", "en"]
 		self.lang = None
 
@@ -27,35 +28,34 @@ class SentimentalModel(object):
 	def classifyMentions(self,tweets):
 		"""
 		Dada una mencion a una compania (array de Tweets),
-		se realiza una clasificacion y nos devuelve su json
+		se realiza una clasificacion y nos devuelve su objeto
 		para posteriormente pintarlo.
 		"""
-		results = {}
+		results = {"1":0, "-1":0}
 
 		#Realizamos una clasificacion de los Tweet de las menciones
 		for tweet in tweets:
 			result = self.classifyText(tweet)
 			if result is not None:
-				results[tweet] = result
+				results[str(result)] += 1
 
-		return json.dumps(results)
+		return results
 
 
-	def classifyText(self, text):
+	def classifyText(self, tweet):
 		"""Realiza la Clasificacion de un tweet mediante una 
 		llamada a logreg.predict"""
 
 		#Se procede a realizar el Preprocesado del Tweet
-		vectX = self.Preprocesado(text)
-		if vecX is None:
+		vectX = self.Preprocesado(tweet)
+		if vectX is None:
 			return None
 
-		logreg = joblib.load(self.logreg)
-		result = logreg.predict(vecX)
+		result = self.logreg_model.predict(np.array([vectX]))
 
 		print ('la clase predicha es: %d' % result)
 
-		return result
+		return result[0]
 
 
 	def load_def(self, location=None, string=None):
@@ -91,6 +91,7 @@ class SentimentalModel(object):
 		self.d2v = data['text_model']
 		#Almacenamos el modelo (regresion logistica)
 		self.logreg = data['clasf_model']
+		self.logreg_model = joblib.load(self.logreg)
 		#Almacenamos el lenguaje
 		self.lang = data['lang']
 

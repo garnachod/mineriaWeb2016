@@ -30,6 +30,7 @@ python setup.py install
 ### Papers del proyecto
 * [Paragraph Vector](https://cs.stanford.edu/~quocle/paragraph_vector.pdf)
 * [Twitter as a Corpus for Sentiment Analysis and Opinion Mining.](http://incc-tps.googlecode.com/svn/trunk/TPFinal/bibliografia/Pak%20and%20Paroubek%20(2010).%20Twitter%20as%20a%20Corpus%20for%20Sentiment%20Analysis%20and%20Opinion%20Mining.pdf)
+* [Paragraph vector + LSTMs](https://cs224d.stanford.edu/reports/HongJames.pdf)
 
 
 ### Librería de procesamiento de lenguaje natural

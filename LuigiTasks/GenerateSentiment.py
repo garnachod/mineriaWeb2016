@@ -1,8 +1,10 @@
 from DBbridge.ConsultasCassandra import ConsultasCassandra
 from LuigiTasks.RecolectorTwitter import RecolectorContenidoTweet
 from LuigiTasks.GenerateSentimentModel import GenerateModelByLang
+from ProcesadoresTexto.SentimentalModel import SentimentalModel
 from Config.Conf import Conf
 import luigi
+import json
 
 class GenerateSentimentMetions(luigi.Task):
 	lang = luigi.Parameter()
@@ -19,11 +21,22 @@ class GenerateSentimentMetions(luigi.Task):
 		return [RecolectorContenidoTweet(busqueda=self.user, limitedescarga="10000"), GenerateModelByLang(lang=self.lang)]
 
 	def run(self):
+		sentimentModel = None
+		for input in self.input():
+			if "mod_def" in input.path:
+				sentimentModel = SentimentalModel(model_location = input.path)
+
 		consultas = ConsultasCassandra()
-		tweets = consultas.getTweetsTopicsCassandra(self.user, limit=10000)
-		tweetsStatus = []
+		tweets = consultas.getStatusTopicsCassandra(self.user, limit=10000)
+		tweets_in = []
 		for tweet in tweets:
 			if tweet.lang == self.lang:
-				tweetsStatus.apend(tweet.status)
+				tweets_in.append(tweet)
 
+		sents = sentimentModel.classifyMentions(tweets_in)
+
+		sentsOut =  {"pos" : sents["1"], "neg" : sents["-1"]}
+		with self.output().open("w") as outfile:
+			strSentsOut = json.dumps(sentsOut)
+			outfile.write(strSentsOut)
 		
