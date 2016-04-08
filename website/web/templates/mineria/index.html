@@ -95,16 +95,13 @@
                         <input id="search" type="text" class="form-control" name="search" value="" placeholder="Company Search">                                        
                     </div>  
                 
-                <div class="input-group-btn search-panel">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    	<span id="search_concept">Filter by</span> <i class="glyphicon glyphicon-search"></i> <span class="caret"></span>
-                    </button>
-                     <ul class="dropdown-menu" role="menu">
-                      <li><a href="#spanish">Spanish</a></li>
-                      <li><a href="#english">English</a></li>
-                    </ul>
-                	
-				</div>
+                
+                    <p>Language:</p>
+                     <select class="form-control" id="lang" name="lang">
+                      <option>ES</option>
+                      <option>EN</option>
+                    </select>
+
                     <div class="form-group">
                         <!-- Button -->
                         <form action="dashboard.html" method="get"> {% csrf_token %}
