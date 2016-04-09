@@ -2,7 +2,8 @@ from LuigiTasks.GenerateSentimentTrain import GenerateTextByLang
 from ProcesadoresTexto.Doc2Vec import Doc2Vec, LabeledLineSentence
 from Config.Conf import Conf
 import numpy as np
-from sklearn import linear_model, svm
+from sklearn import linear_model
+from sklearn.neural_network import MLPClassifier 
 from sklearn.cross_validation import train_test_split
 from ProcesadoresTexto.SentimentalModel import SentimentalModel
 from sklearn.externals import joblib
@@ -98,9 +99,9 @@ class GenerateModelByLang(luigi.Task):
 			joblib.dump(logreg, logreg_model_path)
 
 
-class GenerateModelByLang_svm(luigi.Task):
+class GenerateModelByLang_MLP(luigi.Task):
 	"""
-	GenerateModel crea el modelo de clasificacion de sentimientos. con svm
+	GenerateModel crea el modelo de clasificacion de sentimientos. con multilayer perceptron
 	"""	
 	lang = luigi.Parameter()
 	def output(self):
@@ -144,7 +145,7 @@ class GenerateModelByLang_svm(luigi.Task):
 		X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.20, random_state=42)
 
 		
-		clf = svm.SVC(kernel='linear', C=1e5)
+		clf = MLPClassifier(algorithm='l-bfgs', alpha=1e-5, hidden_layer_sizes=(5, 2), random_state=1)
 		clf.fit(X_train, y_train)
 
 		# Explained variance score: 1 is perfect prediction
