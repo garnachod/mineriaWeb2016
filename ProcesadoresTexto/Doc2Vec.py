@@ -13,7 +13,7 @@ from collections import deque
 import fileinput
 
 
-class LabeledLineSentence:
+class LabeledLineSentence(object):
 	"""
 		ides:
 			Number	
@@ -52,12 +52,18 @@ class LabeledLineSentence:
 			# pop out an element at from the right of the queue
 			return self.dq.pop()
 
+	def getIdes(self, line):
+		if self.ides == "Number":
+			return [str(long(line))]
+		else:
+			return [line.replace("\n", "")]
+
 	def loadData(self):
 		if self.finishedDoc == True:
 			return
 
 		while len(self.dq) < self.dq.maxlen:
-			last_identif = 0
+			
 			try:
 				line = self.fileOpened.readline()
 			except:
@@ -70,10 +76,8 @@ class LabeledLineSentence:
 				print "Documento terminado"
 				break
 	
-			if self.ides == "Number":
-				last_identif = long(line)
-			else:
-				last_identif = line.replace("\n", "")
+			
+			identificadores = self.getIdes(line)
 
 			line = self.fileOpened.readline()
 		
@@ -84,24 +88,42 @@ class LabeledLineSentence:
 					palabras_clean.append(palabra)
 
 			if len(palabras_clean) > 0:
-				self.dq.appendleft(TaggedDocument(palabras_clean, [str(last_identif)]))
+				self.dq.appendleft(TaggedDocument(palabras_clean, identificadores))
+
+class LabeledLineSentence_sent(LabeledLineSentence):
+	"""docstring for LabeledLineSentence_sent"""
+	def __init__(self, source):
+		super(LabeledLineSentence_sent, self).__init__(source, "String")
+		
+	def getIdes(self, line):
+		if self.ides == "Number":
+			return [str(long(line))]
+		else:
+			if "POS" in line:
+				return [line.replace("\n", ""), "POS"]
+			elif "NEG" in line:
+				return [line.replace("\n", ""), "NEG"]
+			else:
+				return [line.replace("\n", "")]
 
 class Doc2Vec(object):
 	"""docstring for Doc2Vec"""
 	def __init__(self):
 		super(Doc2Vec, self).__init__()
 		self.doc2vec = None
+
+	def getSentences(self, input_path, isString = False):
+		if isString == False:
+			return LabeledLineSentence(input_path)
+		else:
+			return LabeledLineSentence(input_path, ides="String")
 		
 	def train(self,input_path, save_location, dimension = 50, epochs = 20, method="DBOW", isString= False):
-		sentence = None
-		if isString == False:
-			sentences = LabeledLineSentence(input_path)
-		else:
-			sentences = LabeledLineSentence(input_path, ides="String")
-
+		sentences= self.getSentences(input_path, isString = isString)
+		
 		total_start = time.time()
 		dm_ = 1 
-		if method != "DBOW":
+		if method == "DBOW":
 			dm_ = 0
 		model = gensim.models.Doc2Vec(min_count=1, window=7, size=dimension, dm = dm_, sample=1e-3, negative=5,workers=6, alpha=0.02)
 		
@@ -149,3 +171,16 @@ class Doc2Vec(object):
 		
 		vector = np.array(self.doc2vec.infer_vector(vectorText, steps=3, alpha=0.1))
 		return vector / np.linalg.norm(vector)
+
+
+class Doc2Vec_sent(Doc2Vec):
+	"""docstring for Doc2Vec_sent"""
+	def __init__(self):
+		super(Doc2Vec_sent, self).__init__()
+
+	def getSentences(self, input_path, isString = False):
+		if isString == False:
+			return LabeledLineSentence(input_path)
+		else:
+			return LabeledLineSentence_sent(input_path)
+		
