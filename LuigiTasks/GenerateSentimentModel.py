@@ -79,10 +79,10 @@ class GenerateModelByLang(luigi.Task):
 		return logreg
 
 	def test(self, d2v, d2v_loc, model):
-		tw_ejemplo = "carlos no es buena persona".split(" ")
+		tw_ejemplo = "no me gusta nada esta empresa porque mata gente".split(" ")
 		vecX = d2v.simulateVectorsFromVectorText(tw_ejemplo, d2v_loc)
 
-		print ('la clase predicha es: %d' % model.predict(vecX))
+		print ('la clase predicha es: %d' % model.predict([vecX]))
 	
 	def run(self):
 		d2v = None
