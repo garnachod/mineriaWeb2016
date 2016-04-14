@@ -48,8 +48,8 @@ def task(request):
 
 
 def statistics(request):
-	template = loader.get_template('mineria/statistics.html')
-	context = { }
-
-	return HttpResponse(template.render(context,request))
+	tareas = Tarea.objects.order_by('-inicio')
+	context = {'tareas' : tareas}
+	
+	return render(request, "mineria/statistics.html", context)
 
