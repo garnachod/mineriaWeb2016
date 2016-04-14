@@ -106,7 +106,7 @@ class APISentimientos(object):
 		return pos, neg
 
 	@staticmethod
-	def isTaskFinished(username, lang, tipo_tarea):
+	def isTaskFinished(username, lang, tipo_tarea, download=True):
 		"""
 		comprueba si una tarea esta terminada o no
 		Al ser por debajo tareas luigi, comprueba si el fichero existe
@@ -116,6 +116,7 @@ class APISentimientos(object):
 		username : usuario de la red social con @ o sin @
 		lang : lenguaje de los usuarios a analizar
 		tipo_tarea : SentimentsByUser o SentimentsByMentions
+		download : si true, si no esta el fichero, lanza la tarea, si false no lo crea
 		
 		Returns
 		-------
@@ -133,8 +134,9 @@ class APISentimientos(object):
 
 			#Comprobamos si existe el JSON que nos define a dicho usuario
 			if os.path.isfile(sentiment.output().path) == False:
-				p = _generateSentiment(lang, username, True)
-				p.start()
+				if download:
+					p = _generateSentiment(lang, username, True)
+					p.start()
 				return False
 			else:
 				return sentiment.output().path
@@ -143,8 +145,9 @@ class APISentimientos(object):
 
 			#Comprobamos si existe el JSON que nos define a dicho usuario
 			if os.path.isfile(sentiment.output().path) == False:
-				p = _generateSentiment(lang, username, False)
-				p.start()
+				if download:
+					p = _generateSentiment(lang, username, False)
+					p.start()
 				return False
 			else:
 				return sentiment.output().path
