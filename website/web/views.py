@@ -7,6 +7,7 @@ from API.APISentimientos import APISentimientos
 from collections import namedtuple
 import datetime
 import json
+import calendar
 
 
 def createTask(tipo, username, idioma):
@@ -75,18 +76,49 @@ def statistics(request):
 
 	tareas = Tarea.objects.order_by('-inicio')
 
+	count = 0
+	act_month = datetime.date.today().month
+	act_year = datetime.date.today().year
 	array = []
+
+	mes = calendar.month_name[act_month]
+
 	for t in tareas:
-		array.append(t.inicio)
-	
+		d = t.inicio
+		array.append(d)
 
-	print "HOLAAAAAAAAAAAA:"
-	#array = [1,2,3,4]
-	#array = [50, 20, 10, 40, 15, 25]
-	print array
-
-	#json_tar = json.dumps(array)
-	context = {'tareas' : tareas, 'array' : array}
+	content_month = obtainMes(array,act_month)
+	content_year = obtainYear(array,act_year)
+    
+	context = {'tareas' : tareas, 'month': mes,'year': act_year, 'array_month' : content_month,
+	'array_year' : content_year}
 	
 	return render(request, "mineria/statistics.html", context)
 
+def obtainMes(array,act_month):
+	cadena = ""
+	count = 0 
+	count_a = 0
+	while count_a<32:
+		count_a = count_a + 1
+		count = 0
+		for day in array:
+			if day.month == act_month and count_a == day.day:
+				count = count +1
+		cadena = cadena + "%d," % count
+
+	return cadena
+
+def obtainYear(array,act_year):
+	cadena = ""
+	count = 0 
+	count_a = 0
+	while count_a<13:
+		count_a = count_a + 1
+		count = 0
+		for day in array:
+			if day.year == act_year and count_a == day.month:
+				count = count +1
+		cadena = cadena + "%d," % count
+
+	return cadena

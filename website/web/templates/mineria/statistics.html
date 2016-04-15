@@ -84,30 +84,24 @@
                 <!-- /.row -->
                 <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title">Sentimientos</h3>
+                                <h3 class="panel-title">Stadistics from Month: {{month}}</h3>
                             </div>
                             <div class="panel-body">
                                 <div id="chart1"></div>
                             </div>
                         </div>
 
-                         <div class="panel-heading">
-                                <h3 class="panel-title">Sentimientos</h3>
+                <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Stadistics from Year: {{year}}</h3>
                             </div>
                             <div class="panel-body">
-                                <div id="chart1"></div>
+                                <div id="chart2"></div>
                             </div>
                         </div>
-                        <div class="list-group">
-                        {% for tarea in tareas %}
-                        <a href="/task.html?id={{ tarea.id }}" class="list-group-item">
-                                        
-                                        <i class="fa fa-fw fa-check"></i> {{ tarea.inicio }}
-                                        {{ array }}
-                                    </a>
-                                    {% endfor %}
-                                    
-                                </div>
+
+                         
+                       
                 <!-- /.row -->
                 
 
@@ -130,47 +124,45 @@
 <!-- Load d3.js and c3.js -->
 <script src="{% static "mineria/js/d3.min.js" %}" charset="utf-8"></script>
 <script src="{% static "mineria/js/c3.min.js" %}"></script>
-<script src="../../dist/vis.js"></script>
-<link href="../../dist/vis.css" rel="stylesheet" type="text/css" />
+
+
 
 
 <script>
+
 var chart = c3.generate({
-    bindto: '#chart',
+    bindto: '#chart1',
     data: {
-        columns: [
-            ['positivo', {{ pos }}],
-            ['negativo', {{ neg }}]
-        ],
-        type: 'bar',
-        groups: [
-            ['positivo', 'negativo']
-        ]
-    },
-    grid: {
-        y: {
-            lines: [{value:0}]
-        }
-    },
-    axis: {
-        rotated: true
+        x: 'x',
+      columns: [
+        ['x',1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,
+        27,28,29,30,31],
+        ['Days', {{array_month}}]
+      ]
     }
+    
 });
+
 </script>
 
 <script>
 
-var chart1 = c3.generate({
-    bindto: '#chart1',
+var chart = c3.generate({
+    bindto: '#chart2',
     data: {
-        columns: [
-            ['data1', 30, 200, 100, 400, 150, 250],
-            ['data2',{{ array }}]
-        ]
-        
+        x: 'x',
+      columns: [
+        ['x','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+        ['Months', {{array_year}}]
+      ]
+    },
+    axis: {
+        x: {
+            type: 'category' // this needed to load string x value
+        }
     }
     
-    
 });
+
 </script>
 {% endblock %}
