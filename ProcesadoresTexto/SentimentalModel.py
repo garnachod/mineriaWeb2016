@@ -20,6 +20,7 @@ class SentimentalModel(object):
 		self.logreg_model = None
 		#lenguaje uno u otro ["es", "en"]
 		self.lang = None
+		self.d2v_ = None
 
 		#si la localizacion del modelo no es none
 		if model_location is not None:
@@ -89,6 +90,7 @@ class SentimentalModel(object):
 
 		#Modelo que nos genera los vectores
 		self.d2v = data['text_model']
+		self.d2v_ = Doc2Vec()
 		#Almacenamos el modelo (regresion logistica)
 		self.logreg = data['clasf_model']
 		self.logreg_model = joblib.load(self.logreg)
@@ -142,7 +144,7 @@ class SentimentalModel(object):
 			print "No se puede procesar el Tweet, ya que no contiene texto"
 			return None
 
-		d2v_ = Doc2Vec()
-		vecX = d2v_.simulateVectorsFromVectorText(tw_clean, self.d2v)
+		
+		vecX = self.d2v_.simulateVectorsFromVectorText(tw_clean, self.d2v)
 
 		return vecX
