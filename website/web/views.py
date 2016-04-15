@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from .models import Tarea
 from API.APISentimientos import APISentimientos
 import datetime
+import json
 
 
 def createTask(tipo, username, idioma):
@@ -19,8 +20,8 @@ def index(request):
 	return HttpResponse(template.render(context, request))
 
 def dashboard(request):
-	if 'search' in request.POST and 'lang' in search.POST:
-		createTask('SentimentsByMentions', request.POST['search'], request.POST['lang'])
+	if 'search' in request.GET and 'lang' in request.GET:
+		createTask('SentimentsByMentions', request.GET['search'], request.GET['lang'])
 		
 	tareas = Tarea.objects.order_by('-inicio')
 	context = {'tareas' : tareas}
@@ -48,8 +49,22 @@ def task(request):
 
 
 def statistics(request):
+
+
 	tareas = Tarea.objects.order_by('-inicio')
-	context = {'tareas' : tareas}
+
+	array = []
+	for t in tareas:
+		array.append(t.inicio)
+	
+
+	print "HOLAAAAAAAAAAAA:"
+	#array = [1,2,3,4]
+	#array = [50, 20, 10, 40, 15, 25]
+	print array
+
+	#json_tar = json.dumps(array)
+	context = {'tareas' : tareas, 'array' : array}
 	
 	return render(request, "mineria/statistics.html", context)
 

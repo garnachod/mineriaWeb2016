@@ -87,16 +87,15 @@
                                 <h3 class="panel-title">Sentimientos</h3>
                             </div>
                             <div class="panel-body">
-                                <div id="chart"></div>
+                                <div id="chart1"></div>
                             </div>
                         </div>
 
-                         <div class="panel panel-default">
-                            <div class="panel-heading">
+                         <div class="panel-heading">
                                 <h3 class="panel-title">Sentimientos</h3>
                             </div>
                             <div class="panel-body">
-                               <div id="chartContainer" style="height: 300px; width: 100%;">
+                                <div id="chart1"></div>
                             </div>
                         </div>
                         <div class="list-group">
@@ -104,6 +103,7 @@
                         <a href="/task.html?id={{ tarea.id }}" class="list-group-item">
                                         
                                         <i class="fa fa-fw fa-check"></i> {{ tarea.inicio }}
+                                        {{ array }}
                                     </a>
                                     {% endfor %}
                                     
@@ -159,19 +159,18 @@ var chart = c3.generate({
 </script>
 
 <script>
+
 var chart1 = c3.generate({
-    bindto: '#chart',
+    bindto: '#chart1',
     data: {
-    {{NAME}}
-     
+        columns: [
+            ['data1', 30, 200, 100, 400, 150, 250],
+            ['data2',{{ array }}]
+        ]
         
-    },
-    grid: {
-        y: {
-            lines: [{value:0}]
-        }
-    },
- 
     }
+    
+    
 });
+</script>
 {% endblock %}
