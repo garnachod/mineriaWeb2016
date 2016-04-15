@@ -100,7 +100,7 @@
                                         <i class="fa fa-clock-o fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge">13</div>
+                                        <div class="huge">{{ pending }}</div>
                                         <div>Pending Tasks!</div>
                                     </div>
                                 </div>
@@ -116,7 +116,7 @@
                                         <i class="fa fa-check-circle-o fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge">12</div>
+                                        <div class="huge">{{ finished }}</div>
                                         <div>Completed Tasks!</div>
                                     </div>
                                 </div>
@@ -138,6 +138,11 @@
                                     {% for tarea in tareas %}
                                     <a href="/task.html?id={{ tarea.id }}" class="list-group-item">
                                         <span class="badge">{{ tarea.idioma }}</span>
+                                        {% if tarea.finished == True %}
+                                            <span class="badge">Terminada</span>
+                                        {% else %}
+                                            <span class="badge">No Terminada</span>
+                                        {% endif %}
                                         <i class="fa fa-fw fa-check"></i> {{ tarea.username }}
                                     </a>
                                     {% endfor %}

@@ -4,26 +4,48 @@ from django.template import loader
 from django.shortcuts import render, redirect
 from .models import Tarea
 from API.APISentimientos import APISentimientos
+from collections import namedtuple
 import datetime
 
 
 def createTask(tipo, username, idioma):
-	t = Tarea(tipo=tipo, username=username, idioma=idioma, inicio=datetime.datetime.now())
-	t.save()
+	try:
+		tarea = Tarea.objects.get(username=username.lower(), idioma=idioma, tipo=tipo)
+	except Exception, e:
+		#si no existe la tarea, lanzar tambien la api
+		t = Tarea(tipo=tipo, username=username.lower(), idioma=idioma, inicio=datetime.datetime.now())
+		t.save()
+		tarea = Tarea.objects.get(username=username.lower(), idioma=idioma, tipo=tipo)
+		if tipo == 'SentimentsByMentions':
+			APISentimientos.getSentimentsByMentions(tarea.username.lower(), tarea.idioma.lower())
 
 
 def index(request):
+
 	template = loader.get_template('mineria/index.html')
 	context = {}
 
 	return HttpResponse(template.render(context, request))
 
 def dashboard(request):
-	if 'search' in request.POST and 'lang' in search.POST:
-		createTask('SentimentsByMentions', request.POST['search'], request.POST['lang'])
+	if 'search' in request.GET and 'lang' in request.GET:
+		createTask('SentimentsByMentions', request.GET['search'], request.GET['lang'])
 		
 	tareas = Tarea.objects.order_by('-inicio')
-	context = {'tareas' : tareas}
+	Task = namedtuple('Task', 'username, idioma, finished, id')
+	tareas_ = []
+	finished_count = 0
+	no_finished_count = 0
+	for tarea in tareas:
+		fin = APISentimientos.isTaskFinished(tarea.username.lower(), tarea.idioma.lower(), tarea.tipo, download=False)
+		if fin == False:
+			no_finished_count += 1
+			tareas_.append(Task(tarea.username, tarea.idioma, False, tarea.id))
+		else:
+			finished_count += 1
+			tareas_.append(Task(tarea.username, tarea.idioma, True, tarea.id))
+
+	context = {'tareas' : tareas_, 'pending' : no_finished_count, 'finished' : finished_count}
 	
 	return render(request, "mineria/dashboard.html", context)
 	#return HttpResponse(tareas)
