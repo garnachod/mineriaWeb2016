@@ -5,6 +5,7 @@ from ProcesadoresTexto.SentimentalModel import SentimentalModel
 from Config.Conf import Conf
 import luigi
 import json
+import re
 
 class GenerateSentimentMetions(luigi.Task):
 	lang = luigi.Parameter()
@@ -29,11 +30,16 @@ class GenerateSentimentMetions(luigi.Task):
 		consultas = ConsultasCassandra()
 		tweets = consultas.getStatusTopicsCassandra(self.user, limit=10000)
 		tweets_in = []
+
+		re_tuser = re.compile(r'@*%s'%self.user)
+
 		for tweet in tweets:
 			if tweet.lang == self.lang:
-				tweets_in.append(tweet)
+				if re_tuser.search(tweet.status.lower()) is not None:
+					tweets_in.append(tweet)
 
 		sents = sentimentModel.classifyMentions(tweets_in)
+
 
 		sentsOut =  {"pos" : sents["1"], "neg" : sents["-1"]}
 		with self.output().open("w") as outfile:

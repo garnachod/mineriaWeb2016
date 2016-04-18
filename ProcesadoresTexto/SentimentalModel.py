@@ -140,10 +140,9 @@ class SentimentalModel(object):
 
 		#Preprocesado del texto/Tweet
 		tw_clean = self.clean(tweet)
-		if len(tw_clean.split(" ")) <= 1:
+		if len(tw_clean.split(" ")) <= 3:
 			print "No se puede procesar el Tweet, ya que no contiene texto"
 			return None
-
 		
 		vecX = self.d2v_.simulateVectorsFromVectorText(tw_clean, self.d2v)
 
