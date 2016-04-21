@@ -11,6 +11,7 @@ import calendar
 
 
 def createTask(tipo, username, idioma):
+
 	try:
 		tarea = Tarea.objects.get(username=username.lower(), idioma=idioma, tipo=tipo)
 	except Exception, e:
@@ -30,6 +31,10 @@ def index(request):
 	return HttpResponse(template.render(context, request))
 
 def dashboard(request):
+	if len (request.GET['search']) < 2 or len(request.GET['search']) > 16:
+		template = loader.get_template('mineria/index.html')
+		context = {}
+		return HttpResponse(template.render(context, request))
 	if 'search' in request.GET and 'lang' in request.GET:
 		createTask('SentimentsByMentions', request.GET['search'], request.GET['lang'])
 		
@@ -39,6 +44,9 @@ def dashboard(request):
 	finished_count = 0
 	no_finished_count = 0
 	for tarea in tareas:
+		if len(tarea.username.lower()) <2 or len(tarea.username.lower()) > 16:
+			Tarea.objects.get(pk=tarea.id).delete()
+			continue
 		fin = APISentimientos.isTaskFinished(tarea.username.lower(), tarea.idioma.lower(), tarea.tipo, download=False)
 		if fin == False:
 			no_finished_count += 1
