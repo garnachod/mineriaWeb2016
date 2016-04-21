@@ -8,6 +8,7 @@ from sklearn.cross_validation import train_test_split
 from ProcesadoresTexto.SentimentalModel import SentimentalModel
 from sklearn.externals import joblib
 import luigi
+from sklearn.naive_bayes import GaussianNB
 
 class GenerateNLPByLang(luigi.Task):
 	"""
@@ -154,3 +155,38 @@ class GenerateModelByLang_MLP_rs(GenerateModelByLang_MLP):
 		return [GenerateTextByLang(self.lang), GenerateNLPByLang_research(self.lang)]
 	
 	
+
+class GenerateModelByLang_Naive(GenerateModelByLang):
+	"""docstring for GenerateModelByLang_Naive_Bayes"""
+
+	def output(self):
+		conf = Conf()
+		path = conf.getAbsPath()
+		return luigi.LocalTarget('%s/Data/%sNaive_Bayes.mod_def'%(path, self.lang))
+	
+	def train(self, X_train, y_train):
+		clf = GaussianNB()
+		clf.fit(X_train, y_train)
+		return clf
+
+class GenerateModelByLang_Naive_rs(GenerateModelByLang_Naive):
+	"""docstring for GenerateModelByLang_Naive"""
+
+	def output(self):
+		conf = Conf()
+		path = conf.getAbsPath()
+		return luigi.LocalTarget('%s/Data/%sNaive_rs.mod_def'%(path, self.lang))
+
+	def requires(self):
+		return [GenerateTextByLang(self.lang), GenerateNLPByLang_research(self.lang)]
+
+class GenerateModelByLang_rs(GenerateModelByLang):
+	"""docstring for GenerateModelByLang"""
+
+	def output(self):
+		conf = Conf()
+		path = conf.getAbsPath()
+		return luigi.LocalTarget('%s/Data/%s_rs.mod_def'%(path, self.lang))
+
+	def requires(self):
+		return [GenerateTextByLang(self.lang), GenerateNLPByLang_research(self.lang)]

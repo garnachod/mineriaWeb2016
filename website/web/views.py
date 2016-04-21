@@ -31,10 +31,11 @@ def index(request):
 	return HttpResponse(template.render(context, request))
 
 def dashboard(request):
-	if len (request.GET['search']) < 2 or len(request.GET['search']) > 16:
-		template = loader.get_template('mineria/index.html')
-		context = {}
-		return HttpResponse(template.render(context, request))
+	if 'search' in request.GET:
+		if len (request.GET['search']) < 2 or len(request.GET['search']) > 16:
+			template = loader.get_template('mineria/index.html')
+			context = {}
+			return HttpResponse(template.render(context, request))
 	if 'search' in request.GET and 'lang' in request.GET:
 		createTask('SentimentsByMentions', request.GET['search'], request.GET['lang'])
 		
