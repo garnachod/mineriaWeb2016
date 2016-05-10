@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import sys
-#lib_path = os.path.abspath('/home/dani/github/ConcursoPolicia')
-#if lib_path not in sys.path:
-#	sys.path.append(lib_path)
+
 
 from DBbridge.EscritorTweetsCassandra import EscritorTweetsCassandra
 from DBbridge.EscritorSeguidoresNeo4j import EscritorSeguidoresNeo4j

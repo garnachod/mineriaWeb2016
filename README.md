@@ -35,31 +35,3 @@ python setup.py install
 
 ### Librería de procesamiento de lenguaje natural
 * https://radimrehurek.com/gensim/
-
-## Instrucciones de instalación desde 0 (No hacer Carlos)
-* Instalar Cassandra: probado con Cassandra 2.1.11
-	* Podía funcionar 2.1.13 sin cambiar nada
-	* Podría funciona con otras versiones de Cassandra pero seguramente cambie alguna consulta
-	* Crear keyspace twitter
-* Instalar Neo4J: no hay problemas con la versión por ahora
-	* Configurar la contraseña, si no cambiamos la de por defecto falla
-* Instalar PostgreSQL
-	* Crear dos Bases de datos (policia, twitter)
-* Instalar https://github.com/Stratio/cassandra-lucene-index instalar la misma version que Cassandra
-* Copiar Config/Conf_default.py con el nombre de Conf.py
-	* Configurar los parametros correctos.
-* Instalar las librerias de las que se compone el proyecto:
-	* sudo python setup.py install
-	* remove:
-	* python setup.py install --record files.txt
-	* cat files.txt | xargs rm -rf
-* Lanzar creación de tablas:
-	* DBbridge/Cassandra/Creatablas.py
-	* DBbridge/Neo4j/CreaRelaciones.py
-	* DBbridge/PostgreSQL/CreaTablas.py
-* Instalar las librerías python:
-	* Instalar dependencias con pip install -r requirements.txt
-	* Creat tablas de Django con python manage.py migrate
-* Configurar cronjobs
-* Si Luigi se va a lanzar desde apache:
-	* chown -R www-data:www-data LuigiTasks/

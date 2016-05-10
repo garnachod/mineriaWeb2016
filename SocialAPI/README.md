@@ -1,5 +1,5 @@
 # Social API
-Este módulo se encarga de la descarga de datos desde redes sociales, por ahora sólo twitter
+Este módulo se encarga de la descarga de datos desde redes sociales
 
 ## Diseño de clases UML
 Si se desea descargar información diferente, Extender recolector

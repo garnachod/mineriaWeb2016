@@ -1,7 +1,7 @@
 from collections import namedtuple
 
 class Conf():
-	"""docstring for SparkContexto"""
+	"""docstring for Conf"""
 	class __impl:
 		"""docstring for __impl"""
 		def __init__(self):
@@ -11,21 +11,21 @@ class Conf():
 			#dominio web (sin "http://" ni "/" final)
 
 			#cassandra
-			self.cassandra_keyspace = 'twitter'
-			self.cassandra_keyspace_instagram = 'instagram'
+			self.cassandra_keyspace = ''
+			self.cassandra_keyspace_instagram = ''
 			#SQL
-			self.sql_database = 'twitter'
-			self.sql_database_policia = 'policia'
-			self.sql_user = 'tfg'
-			self.sql_password = 'postgres_tfg'
-			self.sql_host = 'localhost'
-			self.sql_port = '5432'
+			self.sql_database = ''
+			self.sql_database_policia = ''
+			self.sql_user = ''
+			self.sql_password = ''
+			self.sql_host = ''
+			self.sql_port = ''
 			#app
-			self.abspath = '/home/dani/github/ConcursoPolicia'
+			self.abspath = ''
 			#SPARK
-			self.spark_home = '/home/dani/spark-1.4.0'
+			self.spark_home = ''
 			#Neo4j
-			self.neo4j_password = 'tfg_neo4j'
+			self.neo4j_password = ''
 			#vectors
 			self.dimVectors = 50
 

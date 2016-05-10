@@ -8,7 +8,6 @@ class ConexionSQL():
 		""" Implementation of the singleton interface """
 
 		def __init__(self):
-			#self.conn = psycopg2.connect(database="twitter", user="usrtwitter", password="postgres_tfg", host="localhost")
 			infoSQL = Conf().getSQLInfo()
 			self.conn = psycopg2.connect(database=infoSQL.database, user=infoSQL.user, password=infoSQL.password, host=infoSQL.host)
 			infoSQL = Conf().getSQLPoliceInfo()

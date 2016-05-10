@@ -1,8 +1,4 @@
 # -*- coding: utf-8 -*-
-#import os
-#import sys
-#lib_path = os.path.abspath('../../')
-#sys.path.append(lib_path)
 from ConexionSQL import ConexionSQL
 
 
@@ -33,7 +29,7 @@ def crea_tablas():
 
     query = 'INSERT into instagram_tokens (api_key, api_key_secret) VALUES (%s, %s);'
 
-    cur.execute(query, ['24cd6d6d47a643e0b455da9ef27213b5', '6febde6916b1481dacdb213e155f766d'])
+    cur.execute(query, ['xxx', 'xxx'])
 
     conn.commit()
 

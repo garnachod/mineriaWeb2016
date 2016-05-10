@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-#Para prueba unitarias
-#import os
-#import sys
-#lib_path = os.path.abspath('/home/dani/tfg/sources')
-#sys.path.append(lib_path)
 
 from Cassandra.ConexionCassandra import ConexionCassandra
 from collections import namedtuple

@@ -2,11 +2,11 @@
 
 from distutils.core import setup
 
-setup(name='ConcursoPolicia',
+setup(name='Proyecto Mineria',
       version='1.0',
-      description='Buscador de usuarios en twitter',
-      author='Daniel Garnacho',
+      description='Sentimientos de menciones',
+      author='Daniel Garnacho, Carlos Rosado',
       author_email='garnachod@gmail.com',
-      packages=['AnnoyComparators', 'API', 'Config', 'DBbridge', 'DBbridge.PostgreSQL', 'Cassandra', 'Neo4j', 'PostgreSQL', 'LuigiTasks', 'ProcesadoresTexto', 'SocialAPI','SocialAPI.TwitterAPI', 'spark'],
+      packages=['API', 'Config', 'DBbridge', 'DBbridge.PostgreSQL', 'Cassandra', 'Neo4j', 'PostgreSQL', 'LuigiTasks', 'ProcesadoresTexto', 'SocialAPI','SocialAPI.TwitterAPI', 'spark'],
       package_dir={'Cassandra': 'DBbridge/Cassandra', 'Neo4j': 'DBbridge/Neo4j', 'PostgreSQL': 'DBbridge/PostgreSQL'},
     )

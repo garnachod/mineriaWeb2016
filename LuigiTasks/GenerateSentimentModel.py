@@ -9,6 +9,8 @@ from ProcesadoresTexto.SentimentalModel import SentimentalModel
 from sklearn.externals import joblib
 import luigi
 from sklearn.naive_bayes import GaussianNB
+from textblob.classifiers import NaiveBayesClassifier, DecisionTreeClassifier
+from random import shuffle
 
 class GenerateNLPByLang(luigi.Task):
 	"""
@@ -190,3 +192,93 @@ class GenerateModelByLang_rs(GenerateModelByLang):
 
 	def requires(self):
 		return [GenerateTextByLang(self.lang), GenerateNLPByLang_research(self.lang)]
+
+class TestNaiveBayesTextClasiffier(luigi.Task):
+	"""docstring for TestNaiveBayesTextClasiffier"""
+	lang = luigi.Parameter()
+	def output(self):
+		conf = Conf()
+		path = conf.getAbsPath()
+		return luigi.LocalTarget('%s/Data/naive_%s.clasi'%(path, self.lang))
+
+	def requires(self):
+		return [GenerateTextByLang(self.lang)]
+
+	def run(self):
+		d2v = None
+		modelLoc = ""
+		ficheroTweets = None
+		for input in self.input():
+			if "check" in input.path:
+				d2v = Doc2Vec()
+				modelLoc = input.path.replace("check", "model")
+			else:
+				ficheroTweets = input.path
+
+		lab = LabeledLineSentence(ficheroTweets, ides="String")
+		all_train = []
+		for tweet in lab:
+			tag = tweet.tags
+			if "POS" in tag[0] or "NEG" in tag[0]:
+				
+				phrase = ' '.join(str(x) for x in tweet.words)
+				#print phrase
+				try:
+					all_train.append((phrase.encode('ascii', 'ignore'), tag[0].split("_")[0]))
+				except Exception, e:
+					pass
+
+		leng = 2000
+		train = int(leng * 0.80)
+		shuffle(all_train)
+
+		#print all_train[:train]
+		#cl = NaiveBayesClassifier(all_train[:train])
+		#print all_train[train:leng]
+		#print cl.accuracy(all_train[train:leng])
+		from nltk.classify import SklearnClassifier
+		from sklearn.naive_bayes import BernoulliNB
+
+class TestTreeTextClasiffier(luigi.Task):
+	"""docstring for TestNaiveBayesTextClasiffier"""
+	lang = luigi.Parameter()
+	def output(self):
+		conf = Conf()
+		path = conf.getAbsPath()
+		return luigi.LocalTarget('%s/Data/tree_%s.clasi'%(path, self.lang))
+
+	def requires(self):
+		return [GenerateTextByLang(self.lang)]
+
+	def run(self):
+		d2v = None
+		modelLoc = ""
+		ficheroTweets = None
+		for input in self.input():
+			if "check" in input.path:
+				d2v = Doc2Vec()
+				modelLoc = input.path.replace("check", "model")
+			else:
+				ficheroTweets = input.path
+
+		lab = LabeledLineSentence(ficheroTweets, ides="String")
+		all_train = []
+		for tweet in lab:
+			tag = tweet.tags
+			if "POS" in tag[0] or "NEG" in tag[0]:
+				
+				phrase = ' '.join(str(x) for x in tweet.words)
+				#print phrase
+				try:
+					all_train.append((phrase.encode('ascii', 'ignore'), tag[0].split("_")[0]))
+				except Exception, e:
+					pass
+
+		leng = 2000
+		train = int(leng * 0.80)
+		shuffle(all_train)
+
+		#print all_train[:train]
+		cl = DecisionTreeClassifier(all_train[:train])
+		#print all_train[train:leng]
+		print cl.accuracy(all_train[train:leng])

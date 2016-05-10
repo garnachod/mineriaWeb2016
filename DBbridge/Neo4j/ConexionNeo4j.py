@@ -1,8 +1,3 @@
-#import os
-#import sys
-#lib_path = os.path.abspath('/home/dani/tfg/sources')
-#sys.path.append(lib_path)
-
 from Config.Conf import Conf
 from py2neo import Graph,authenticate
 
@@ -14,8 +9,6 @@ class ConexionNeo4j(object):
 		""" Implementation of the singleton interface """
 
 		def __init__(self):
-			#remote_graph = Graph("http://remotehost.com:6789/db/data/")
-			#secure_graph = Graph("https://arthur:excalibur@camelot:1150/db/data/")
 			authenticate("localhost:7474", "neo4j", Conf().getNeo4jPassword())
 			self.graph = Graph()
 			

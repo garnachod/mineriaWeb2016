@@ -1,8 +1,4 @@
 # -*- coding: utf-8 -*-
-#import os
-#import sys
-#lib_path = os.path.abspath('../')
-#sys.path.append(lib_path)
 
 from Neo4j.ConexionNeo4j import ConexionNeo4j
 from blist import blist

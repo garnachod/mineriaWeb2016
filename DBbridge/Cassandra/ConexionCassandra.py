@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-import os
-import sys
-#lib_path = os.path.abspath('/home/dani/tfg/sources')
-#sys.path.append(lib_path)
-
 try:
 	from cassandra.cluster import Cluster
 except:
@@ -17,9 +12,9 @@ class ConexionCassandra():
 		""" Implementation of the singleton interface """
 
 		def __init__(self):
-			#self.conn = psycopg2.connect(database="twitter", user="usrtwitter", password="postgres_tfg", host="localhost")
 			cluster_cass = Cluster()
 			self.session = cluster_cass.connect(Conf().getCassandraKeyspace())
+			self.session.default_timeout = 100
 			self.session_instagram = cluster_cass.connect(Conf().getCassandraKeyspaceInstagram())
 
 		def getSession(self):
