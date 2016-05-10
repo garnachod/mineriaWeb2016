@@ -8,15 +8,7 @@ source venv/bin/activate
 python setup.py install
 
 ## ejemplo del ejecucion de Luigi
-* PYTHONPATH='' luigi --module GenerateSentimenTrain GenerateTextByLang --lang es
-
-### TO DO:
-* API/APISentimientos.py (Llenar de código)
-* website/mineria/models.py (Carlos enterarte del modelo de tareas)
-* LuigiTasks/GenerateSentimenTrain.py (Llenar de código) (Dani o Carlos al menos definir clases)
-* LuigiTasks/GenerateSentimentModel.py (Llenar de  código) (Dani o Carlos al menos definir clases)
-* LuigiTasks/GenerateSentiment.py (lo mismo)
-* UI -> Añadir desplegable de idiomas permitidos
+* luigi --module LuigiTasks.GenerateSentimenTrain GenerateTextByLang --lang es
 
 ### WorkFlow:
 * Se lanza una búsqueda en la web, se permite insertar un usuario de Twitter y el idioma del analisis
