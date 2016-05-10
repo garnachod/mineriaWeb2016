@@ -16,7 +16,7 @@ python setup.py install
 * Si la tarea esta computada se muestran los resultados en la interfaz
 
 
-## Sentimental analysis using Word2Vec (Paragraph Vector)
+## Sentimental analysis using Doc2Vec (Paragraph Vector)
 
 
 ### Papers del proyecto
