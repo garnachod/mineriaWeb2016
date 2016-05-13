@@ -15,7 +15,6 @@ class Conf():
 			self.cassandra_keyspace_instagram = ''
 			#SQL
 			self.sql_database = ''
-			self.sql_database_policia = ''
 			self.sql_user = ''
 			self.sql_password = ''
 			self.sql_host = ''
@@ -47,10 +46,6 @@ class Conf():
 		def getSQLInfo(self):
 			infoSQL = namedtuple('InfoSQL', 'database, user, password, host')
 			return infoSQL(self.sql_database, self.sql_user, self.sql_password, self.sql_host)
-
-		def getSQLPoliceInfo(self):
-			infoSQL = namedtuple('InfoSQL', 'database, user, password, host, port')
-			return infoSQL(self.sql_database_policia, self.sql_user, self.sql_password, self.sql_host, self.sql_port)
 
 		def getNeo4jPassword(self):
 			return self.neo4j_password
